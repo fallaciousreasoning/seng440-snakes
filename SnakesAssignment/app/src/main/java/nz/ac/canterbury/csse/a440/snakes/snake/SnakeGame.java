@@ -15,6 +15,11 @@ public class SnakeGame {
     private Snake snake;
 
     /**
+     * The bounds the game should be played within
+     */
+    private AABB bounds;
+
+    /**
      * Moves the game forward by one frame and tells the renderer to redraw
      */
     public void step() {

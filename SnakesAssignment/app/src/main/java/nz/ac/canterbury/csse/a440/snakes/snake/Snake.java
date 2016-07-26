@@ -24,10 +24,9 @@ public class Snake {
     private Vector3 headingDirection;
 
     /**
-     * Indicates whether the snake has encountered food this iteration. Might be worth making  this
-     * an integer if we want it to be possible to grow the snake multiple blocks at a time.
+     * The number of blocks the snake needs to grow by
      */
-    private boolean eaten;
+    private int grow;
 
     /**
      * Constructs a new snake
@@ -74,9 +73,9 @@ public class Snake {
     public void step() {
         //If the snake hasn't eaten, we should remove the last block (we put a new one
         //on the front each step)
-        if (!eaten) {
+        if (grow <= 0) {
             points.removeLast();
-        }
+        } else grow--;
 
         //Calculate the size of our step
         Vector3 step = headingDirection.mul(blockSize);
@@ -85,15 +84,20 @@ public class Snake {
 
         //Set it as our new head position
         points.addFirst(nextPos);
-
-        //Reset the eaten flag
-        this.eaten = false;
     }
 
     /**
-     * Should be called when the head of the snake encounters some food
+     * Should be called when the head of the snake encounters some food.
+     * @param by The amount to grow the snake by
      */
-    public void eat() {
-        this.eaten = true;
+    public void grow(int by) {
+        grow += by;
+    }
+
+    /**
+     * Grows the snake by one block
+     */
+    public void grow(){
+        grow(1);
     }
 }

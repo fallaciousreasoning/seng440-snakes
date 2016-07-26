@@ -37,6 +37,7 @@ public class Snake {
      */
     public Snake(Vector3 headPosition, Vector3 headingDirection, float blockSize, int length) {
         this.blockSize = blockSize;
+        this.headingDirection = headingDirection;
 
         Vector3 tailDirection =
                 new Vector3(0, -blockSize)
@@ -44,10 +45,18 @@ public class Snake {
 
         points.add(headPosition);
 
-        for (int i = 0; i < length; ++i){
+        for (int i = 0; i < length - 1; ++i){
             Vector3 nextPos = points.get(points.size() - 1).add(tailDirection);
             points.add(nextPos);
         }
+    }
+
+    /**
+     * Gets the amount that the snake will be moved by
+     * @return The amount the snake will be moved by
+     */
+    public Vector3 stepAmount() {
+        return headingDirection.mul(blockSize);
     }
 
     /**
@@ -99,5 +108,13 @@ public class Snake {
      */
     public void grow(){
         grow(1);
+    }
+
+    /**
+     * Gets the length of the snake
+     * @return The length of the snake
+     */
+    public int length() {
+        return points.size();
     }
 }

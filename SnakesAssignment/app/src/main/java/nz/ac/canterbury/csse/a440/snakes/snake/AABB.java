@@ -56,4 +56,34 @@ public class AABB {
     public Vector3 getMax() {
         return max;
     }
+
+    /**
+     * Determines whether an AABB intersects this one
+     * @param other The AABB to check for intersection with
+     * @return Whether the boxes intersect
+     */
+    public boolean intersects(AABB other) {
+        //Check if the boxes don't overlap on any axis. If they don't we know there is no overlap
+        return !(
+                        max.getX() < other.min.getX() ||
+                        min.getX() > other.max.getX() ||
+
+                        max.getY() < other.min.getY() ||
+                        min.getY() > other.max.getY() ||
+
+                        max.getZ() < other.min.getZ() ||
+                        min.getZ() > other.max.getZ()
+        );
+    }
+
+    /**
+     * Checks to see if the AABB contains a point
+     * @param point The point
+     * @return whether the AABB contains it
+     */
+    public boolean contains(Vector3 point) {
+        return point.getX() >= min.getX() && point.getX() <= max.getX() &&
+                point.getY() >= min.getY() && point.getY() <= max.getY() &&
+                point.getZ() >= min.getZ() && point.getZ() <= max.getZ();
+    }
 }

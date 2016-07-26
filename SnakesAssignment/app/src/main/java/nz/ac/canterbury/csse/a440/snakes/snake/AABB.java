@@ -8,6 +8,39 @@ public class AABB {
     private Vector3 max;
 
     /**
+     * Creates a new AABB from a min and max point
+     * @param min The minimum point
+     * @param max The maximum point
+     */
+    public AABB(Vector3 min, Vector3 max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    /**
+     * Creates a new AABB around a point with a width and height
+     * @param centre The centre
+     * @param width The width
+     * @param height The height
+     */
+    public AABB(Vector3 centre, float width, float height) {
+        this(centre, width, height, 0);
+    }
+
+    /**
+     * Creates a new AABB around a point with a width, height and depth
+     * @param centre The centre
+     * @param width The width
+     * @param height The height
+     * @param depth The depth
+     */
+    public AABB(Vector3 centre, float width, float height, float depth) {
+        Vector3 halfSize = new Vector3(width, height, depth).mul(0.5f);
+        min = centre.sub(halfSize);
+        max = centre.add(halfSize);
+    }
+
+    /**
      * Gets the width of the AABB
      * @return the width of the AABB
      */

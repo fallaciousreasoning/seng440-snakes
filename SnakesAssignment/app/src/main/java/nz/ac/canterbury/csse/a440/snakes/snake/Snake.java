@@ -1,6 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * A class representing a snake in the game
@@ -64,6 +65,14 @@ public class Snake {
     }
 
     /**
+     * Gets the next position that the head will be at
+     * @return The next position the head will be at
+     */
+    public Vector3 nextPosition() {
+        return headPosition().add(stepAmount());
+    }
+
+    /**
      * The new direction for the snake to head in.
      * @param direction The new direction for the snake
      */
@@ -81,10 +90,8 @@ public class Snake {
             points.removeLast();
         } else grow--;
 
-        //Calculate the size of our step
-        Vector3 step = stepAmount();
-        //Add it to the current head of the snake
-        Vector3 nextPos = headPosition().add(step);
+        //Get the next position of the snake
+        Vector3 nextPos = nextPosition();
 
         //Set it as our new head position
         points.addFirst(nextPos);
@@ -111,5 +118,31 @@ public class Snake {
      */
     public int length() {
         return points.size();
+    }
+
+    /**
+     * Indicates whether the snake will intersect itself after moving
+     * @return Whether the snake will intersect itself
+     */
+    public boolean willIntersect() {
+        boolean first = false;
+        Vector3 nextPosition = nextPosition();
+
+        for (Vector3 position : points) {
+            //Skip the head. I'd like to do this with a stream but it doesn't exist
+            if (first) {
+                first = true;
+                continue;
+            }
+
+            //Check if this position is part of the snake
+            if (nextPosition.equals(position)) {
+                //If it is, we're done!
+                return true;
+            }
+        }
+
+        //If we didn't find anything, we're all good
+        return false;
     }
 }

@@ -1,7 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 /**
- * Created by jayha on 26/07/2016.
+ * A Game of Snake
  */
 public class SnakeGame {
     /**

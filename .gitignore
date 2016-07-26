@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 **/*.iml
 **/.gradle
 **/local.properties
@@ -9,7 +9,7 @@
 **/captures
 **/nbproject/private
 **/dist
-=======
+
 
 # Created by https://www.gitignore.io/api/android,intellij,windows,linux,macos
 
@@ -157,6 +157,7 @@ $RECYCLE.BIN/
 # Icon must end with two \r
 Icon
 
+*/.idea/*
 
 # Thumbnails
 ._*
@@ -176,4 +177,4 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
->>>>>>> d7f13c95c9aae3946b992b475fd96e35db7e243b
+

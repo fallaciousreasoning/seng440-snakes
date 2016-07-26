@@ -154,4 +154,10 @@ public class Vector3 {
     public String toString() {
         return "Vector3: [X: " + x + ", Y: " + y + ", Z: " + z + "]";
     }
+
+    public static final Vector3 One = new Vector3(1, 1, 1);
+    public static final Vector3 Zero = new Vector3(0, 0, 0);
+    public static final Vector3 UnitX = new Vector3(1, 0, 0);
+    public static final Vector3 UnitY = new Vector3(0, 1, 0);
+    public static final Vector3 UnitZ = new Vector3(0, 0, 1);
 }

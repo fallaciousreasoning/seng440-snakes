@@ -31,7 +31,7 @@ public class Vector3 {
     }
 
     /**
-     * Gets the x coordinate of the point
+     * Gets the x coordinate of the vector
      * @return The x coordinate
      */
     public float getX() {
@@ -39,7 +39,7 @@ public class Vector3 {
     }
 
     /**
-     * Gets the y coordinate of the point
+     * Gets the y coordinate of the vector
      * @return The y coordinate
      */
     public float getY() {
@@ -47,7 +47,7 @@ public class Vector3 {
     }
 
     /**
-     * Gets the z coordinate of the point
+     * Gets the z coordinate of the vector
      * @return The z coordinate
      */
     public float getZ() {
@@ -82,12 +82,30 @@ public class Vector3 {
     }
 
     /**
+     * Returns the multiplication of the vector by a scaler
+     * @param multiplier The scaler
+     * @return The scaled vector
+     */
+    public Vector3 mul(float multiplier) {
+        return new Vector3(x * multiplier, y * multiplier, z * multiplier);
+    }
+
+    /**
      * Returns the division of this vector3 by another another
      * @param vector3 The vector3 to divide by
      * @return A new vector3 representing the combination
      */
     public Vector3 div(Vector3 vector3) {
         return new Vector3(x / vector3.x, y / vector3.y, z / vector3.z);
+    }
+
+    /**
+     * Divides the vector by a scaler
+     * @param by The scaler
+     * @return The scaled vector
+     */
+    public Vector3 div(float by) {
+        return new Vector3(x / by, y / by, z / by);
     }
 
     /**

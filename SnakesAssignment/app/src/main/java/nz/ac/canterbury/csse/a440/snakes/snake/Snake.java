@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by jayha on 26/07/2016.
+ * A class representing a snake in the game
  */
 public class Snake {
     /**
@@ -70,10 +70,10 @@ public class Snake {
     /**
      * The new direction for the snake to head in. This should be a unit vector
      * along the x, y or z axis.
-     * @param newDirection The new direction for the snake
+     * @param direction The new direction for the snake
      */
-    public void setHeadingDirection(Vector3 newDirection) {
-        this.headingDirection = newDirection;
+    public void setDirection(Direction direction) {
+        this.headingDirection = direction.getDirection();
     }
 
     /**

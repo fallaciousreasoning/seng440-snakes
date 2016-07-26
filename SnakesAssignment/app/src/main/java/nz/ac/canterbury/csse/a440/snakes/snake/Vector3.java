@@ -155,6 +155,16 @@ public class Vector3 {
         return "Vector3: [X: " + x + ", Y: " + y + ", Z: " + z + "]";
     }
 
+    /**
+     * Gets the distance between two vectors
+     * @param first The first vector
+     * @param second The second vector
+     * @return The distance between them
+     */
+    public static float distance(Vector3 first, Vector3 second) {
+        return first.sub(second).length();
+    }
+
     public static final Vector3 One = new Vector3(1, 1, 1);
     public static final Vector3 Zero = new Vector3(0, 0, 0);
     public static final Vector3 UnitX = new Vector3(1, 0, 0);

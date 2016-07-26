@@ -149,4 +149,9 @@ public class Vector3 {
     public int hashCode() {
         return (int)(x + y + z);
     }
+
+    @Override
+    public String toString() {
+        return "Vector3: [X: " + x + ", Y: " + y + ", Z: " + z + "]";
+    }
 }

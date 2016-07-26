@@ -1,5 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import java.util.Objects;
+
 /**
  * A class representing a point in 3D space and various
  * helper methods for mathematical operations
@@ -131,5 +133,20 @@ public class Vector3 {
      */
     public Vector3 normalized(){
         return this.div(length());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof Vector3)) return false;
+
+        final float epsilon = 0.00001f;
+
+        Vector3 o = (Vector3)other;
+        return (x - o.x) < epsilon && (y - o.y) < epsilon && (z - o.z) < epsilon;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int)(x + y + z);
     }
 }

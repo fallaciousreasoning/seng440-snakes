@@ -24,7 +24,8 @@ public class Snake {
     private Vector3 headingDirection;
 
     /**
-     * Indicates whether the snake has encountered food this iteration
+     * Indicates whether the snake has encountered food this iteration. Might be worth making  this
+     * an integer if we want it to be possible to grow the snake multiple blocks at a time.
      */
     private boolean eaten;
 

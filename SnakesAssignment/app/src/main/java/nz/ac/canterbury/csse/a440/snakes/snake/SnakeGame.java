@@ -20,6 +20,11 @@ public class SnakeGame {
     private AABB bounds;
 
     /**
+     * The size of a tile
+     */
+    private float tileSize = 1;
+
+    /**
      * Indicates the snake hit a wall
      */
     private boolean hitWall;
@@ -29,8 +34,8 @@ public class SnakeGame {
      */
     private boolean hitSelf;
 
-    public SnakeGame(AABB bounds, int startingLength) {
-        this.bounds = bounds;
+    public SnakeGame(int width, int height, int depth, int startingLength) {
+        this.bounds = new AABB(Vector3.Zero, width*tileSize, height*tileSize, depth*tileSize);
 
         snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
     }
@@ -90,6 +95,14 @@ public class SnakeGame {
     }
 
     /**
+     * Gets the bounds of the game
+     * @return The bounds
+     */
+    public AABB getBounds() {
+        return bounds;
+    }
+
+    /**
      * Indicates the snake has hit a wall
      * @return Whether the snake has hit the wall
      */
@@ -111,5 +124,13 @@ public class SnakeGame {
      */
     public boolean finished() {
         return hitSelf || hitWall;
+    }
+
+    /**
+     * Gets the size of a tile on the board
+     * @return The size of a tile on the board
+     */
+    public float getTileSize() {
+        return tileSize;
     }
 }

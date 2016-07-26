@@ -2,13 +2,14 @@
 **/*.iml
 **/.gradle
 **/local.properties
-**/.idea/workspace.xml
-**/.idea/libraries
+**/.idea/*
 **/.DS_Store
 **/build
 **/captures
 **/nbproject/private
 **/dist
+
+SnakesAssignment/.idea/*
 
 
 # Created by https://www.gitignore.io/api/android,intellij,windows,linux,macos

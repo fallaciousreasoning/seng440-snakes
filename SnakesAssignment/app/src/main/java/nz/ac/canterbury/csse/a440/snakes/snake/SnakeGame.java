@@ -55,6 +55,7 @@ public class SnakeGame {
         //If we haven't died, step!
         else {
             snake.step();
+            //TODO see if there's anything we can eat. If yes; snake.grow(amount);
         }
 
         if (getRenderer() != null) {

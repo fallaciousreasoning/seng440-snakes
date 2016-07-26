@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Sensor acc=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        tv= (TextView) view;
-        tv.setText("ho hum");
+//        tv= (TextView) view;
+//        tv.setText("ho hum");
         lastUpdate = System.currentTimeMillis();
 
     }

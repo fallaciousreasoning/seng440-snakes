@@ -1,7 +1,8 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Objects;
+import java.util.List;
 
 /**
  * A class representing a snake in the game
@@ -13,9 +14,9 @@ public class Snake {
     private final float blockSize;
 
     /**
-     * The points making up a snake
+     * The positions making up a snake
      */
-    private LinkedList<Vector3> points = new LinkedList<>();
+    private LinkedList<Vector3> positions = new LinkedList<>();
 
     /**
      * The direction the snake is heading in
@@ -40,11 +41,11 @@ public class Snake {
 
         Vector3 tailDirection = stepAmount().mul(-1);
 
-        points.add(headPosition);
+        positions.add(headPosition);
 
         for (int i = 0; i < length - 1; ++i){
-            Vector3 nextPos = points.get(points.size() - 1).add(tailDirection);
-            points.add(nextPos);
+            Vector3 nextPos = positions.get(positions.size() - 1).add(tailDirection);
+            positions.add(nextPos);
         }
     }
 
@@ -61,7 +62,7 @@ public class Snake {
      * @return The position of the head of the snake
      */
     public Vector3 headPosition() {
-        return points.get(0);
+        return positions.get(0);
     }
 
     /**
@@ -87,14 +88,14 @@ public class Snake {
         //If the snake hasn't eaten, we should remove the last block (we put a new one
         //on the front each step)
         if (grow <= 0) {
-            points.removeLast();
+            positions.removeLast();
         } else grow--;
 
         //Get the next position of the snake
         Vector3 nextPos = nextPosition();
 
         //Set it as our new head position
-        points.addFirst(nextPos);
+        positions.addFirst(nextPos);
     }
 
     /**
@@ -117,7 +118,15 @@ public class Snake {
      * @return The length of the snake
      */
     public int length() {
-        return points.size();
+        return positions.size();
+    }
+
+    /**
+     * Gets a list of positions that the snake is made up of
+     * @return The positions
+     */
+    public List<Vector3> getPositions(){
+        return Collections.unmodifiableList(positions);
     }
 
     /**
@@ -128,7 +137,7 @@ public class Snake {
         boolean first = false;
         Vector3 nextPosition = nextPosition();
 
-        for (Vector3 position : points) {
+        for (Vector3 position : positions) {
             //Skip the head. I'd like to do this with a stream but it doesn't exist
             if (first) {
                 first = true;

@@ -1,5 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import java.util.Random;
+
 /**
  * A Game of Snake
  */
@@ -33,6 +35,16 @@ public class SnakeGame {
      * Indicates the snake hit itself
      */
     private boolean hitSelf;
+
+    /**
+     * A random number generator
+     */
+    private static Random random = new Random();
+
+    /**
+     * The food the snake is currently trying to eat
+     */
+    private Food food;
 
     public SnakeGame(int width, int height, int depth, int startingLength) {
         this.bounds = new AABB(Vector3.Zero, width*tileSize, height*tileSize, depth*tileSize);
@@ -133,5 +145,13 @@ public class SnakeGame {
      */
     public float getTileSize() {
         return tileSize;
+    }
+
+    /**
+     * The food the snake is trying to eat
+     * @return The food the snake is trying to eat
+     */
+    public Food getFood() {
+        return food;
     }
 }

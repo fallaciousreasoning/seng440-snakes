@@ -1,8 +1,6 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import java.util.Dictionary;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A class representing a snake in the game
@@ -19,9 +17,9 @@ public class Snake {
     private LinkedList<Vector3> points = new LinkedList<>();
 
     /**
-     * The direction the snake is heading
+     * The direction the snake is heading in
      */
-    private Vector3 headingDirection;
+    private Direction direction;
 
     /**
      * The number of blocks the snake needs to grow by
@@ -35,13 +33,11 @@ public class Snake {
      * @param blockSize The size of the blocks the snake is made up of
      * @param length The initial length of the snake
      */
-    public Snake(Vector3 headPosition, Vector3 headingDirection, float blockSize, int length) {
+    public Snake(Vector3 headPosition, Direction headingDirection, float blockSize, int length) {
         this.blockSize = blockSize;
-        this.headingDirection = headingDirection;
+        this.direction = headingDirection;
 
-        Vector3 tailDirection =
-                new Vector3(0, -blockSize)
-                .mul(headingDirection);
+        Vector3 tailDirection = stepAmount().mul(-1);
 
         points.add(headPosition);
 
@@ -56,7 +52,7 @@ public class Snake {
      * @return The amount the snake will be moved by
      */
     public Vector3 stepAmount() {
-        return headingDirection.mul(blockSize);
+        return direction.getDirection().mul(blockSize);
     }
 
     /**
@@ -68,12 +64,11 @@ public class Snake {
     }
 
     /**
-     * The new direction for the snake to head in. This should be a unit vector
-     * along the x, y or z axis.
+     * The new direction for the snake to head in.
      * @param direction The new direction for the snake
      */
     public void setDirection(Direction direction) {
-        this.headingDirection = direction.getDirection();
+        this.direction = direction;
     }
 
     /**
@@ -87,7 +82,7 @@ public class Snake {
         } else grow--;
 
         //Calculate the size of our step
-        Vector3 step = headingDirection.mul(blockSize);
+        Vector3 step = stepAmount();
         //Add it to the current head of the snake
         Vector3 nextPos = headPosition().add(step);
 

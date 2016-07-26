@@ -3,6 +3,7 @@ package nz.ac.canterbury.csse.a440.snakes;
 import org.junit.Before;
 import org.junit.Test;
 
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.Snake;
 import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 
@@ -16,7 +17,7 @@ public class SnakeTest {
 
     @Before
     public void setup() {
-        snake = new Snake(new Vector3(0, 0), new Vector3(1, 0), 1, 3);
+        snake = new Snake(new Vector3(0, 0), Direction.EAST, 1, 3);
 
         assertEquals(new Vector3(0, 0), snake.headPosition());
         assertEquals(new Vector3(1, 0), snake.stepAmount());

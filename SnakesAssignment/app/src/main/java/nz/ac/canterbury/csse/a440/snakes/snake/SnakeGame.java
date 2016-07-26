@@ -50,6 +50,7 @@ public class SnakeGame {
         this.bounds = new AABB(Vector3.Zero, width*tileSize, height*tileSize, depth*tileSize);
 
         snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
+        spawnFood();
     }
 
     /**
@@ -67,12 +68,28 @@ public class SnakeGame {
         //If we haven't died, step!
         else {
             snake.step();
-            //TODO see if there's anything we can eat. If yes; snake.grow(amount);
+
+            //Check if we're close enough to the food to eat it
+            if (Vector3.distance(snake.headPosition(), food.getPosition()) < tileSize){
+                snake.grow(food.getGrowth());
+                spawnFood();
+            }
         }
 
         if (getRenderer() != null) {
             getRenderer().render(this);
         }
+    }
+
+    /**
+     * Adds a new piece of food at a random position on the board
+     */
+    private void spawnFood() {
+        float x = random.nextFloat() * bounds.getWidth() + bounds.getMin().getX();
+        float y = random.nextFloat() * bounds.getHeight() + bounds.getMin().getY();
+        float z = random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ();
+
+        food = new Food(1, new Vector3(x, y, z));
     }
 
     /**

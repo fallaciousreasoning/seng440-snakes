@@ -1,11 +1,16 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 /**
- * Created by jayha on 26/07/2016.
+ * A piece of food for the snake to eat
  */
 public class Food {
     private int growth = 1;
     private Vector3 position;
+
+    public Food(int growth, Vector3 position) {
+        this.growth = growth;
+        this.position = position;
+    }
 
     /**
      * The amount the food causes the snake to grow

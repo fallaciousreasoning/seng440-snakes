@@ -126,4 +126,22 @@ public class CanvasViewRenderer extends View implements Renderable {
     public void render(SnakeGame game) {
         invalidate();
     }
+
+    /**
+     * Gets the current game
+     * @return The current game
+     */
+    public SnakeGame getGame(){
+        return snakeGame;
+    }
+
+    /**
+     * Sets the current game
+     * @param game The new game
+     */
+    public void setGame(SnakeGame game) {
+        this.snakeGame = game;
+        game.setRenderer(this);
+        invalidate();
+    }
 }

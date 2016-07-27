@@ -142,7 +142,7 @@ public class Vector3 {
         final float epsilon = 0.00001f;
 
         Vector3 o = (Vector3)other;
-        return (x - o.x) < epsilon && (y - o.y) < epsilon && (z - o.z) < epsilon;
+        return Math.abs(x - o.x) < epsilon && Math.abs(y - o.y) < epsilon && Math.abs(z - o.z) < epsilon;
     }
 
     @Override

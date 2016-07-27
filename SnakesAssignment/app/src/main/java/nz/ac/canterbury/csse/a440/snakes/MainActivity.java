@@ -23,6 +23,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private long lastUpdate;
@@ -30,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private boolean color = false;
     private boolean debug=false;
     private TextView tv;
+
+    SnakeGame game;
+    GameUpdater updater;
 
 
     @Override
@@ -65,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Sensor acc=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
+        game = gameRenderer.getGame();
+        updater = new GameUpdater(game);
 //        tv= (TextView) view;
 //        tv.setText("ho hum");
         lastUpdate = System.currentTimeMillis();

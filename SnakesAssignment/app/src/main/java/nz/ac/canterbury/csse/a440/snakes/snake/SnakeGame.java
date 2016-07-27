@@ -62,6 +62,11 @@ public class SnakeGame {
      * Moves the game forward by one frame and tells the renderer to redraw
      */
     public void step() {
+        //If we've finished, we shouldn't be attempting to step
+        if (finished()) {
+            return;
+        }
+
         //If we have a snake controller, we should tell the snake where to go
         if (getSnakeController() != null) {
             snake.setDirection(getSnakeController().getDirection());

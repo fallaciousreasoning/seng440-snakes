@@ -84,10 +84,15 @@ public class Snake {
     }
 
     /**
-     * The new direction for the snake to head in.
+     * The new direction for the snake to head in. The direction will not be set if it is backwards
+     * (you can't make the snake go backwards)
      * @param direction The new direction for the snake
      */
     public void setDirection(Direction direction) {
+        if (isBackwards(direction)){
+            //TODO maybe throw an exception so we know something went wrong?
+            return;
+        }
         this.direction = direction;
     }
 

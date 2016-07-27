@@ -157,18 +157,14 @@ public class Snake {
      * @return Whether the snake will intersect itself
      */
     public boolean willIntersect() {
-        boolean first = false;
         Vector3 nextPosition = nextPosition();
 
         for (Vector3 position : positions) {
             //Skip the head. I'd like to do this with a stream but it doesn't exist
-            if (first) {
-                first = true;
-                continue;
-            }
 
-            //Check if this position is part of the snake
-            if (nextPosition.equals(position)) {
+            //Check if this position is part of the snake and it isn't the last block if we don't need to grow
+            //(the last block will move)
+            if (nextPosition.equals(position)&& (!positions.getLast().equals(nextPosition) || grow > 0)) {
                 //If it is, we're done!
                 return true;
             }

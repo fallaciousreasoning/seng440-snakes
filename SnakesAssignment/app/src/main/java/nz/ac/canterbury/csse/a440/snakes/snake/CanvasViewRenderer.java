@@ -49,7 +49,7 @@ public class CanvasViewRenderer extends View implements Renderable {
             a.recycle();
         }
 
-        snakeGame = new SnakeGame(10, 10, 1, 3);
+        snakeGame = new SnakeGame(20, 30, 1, 3);
         snakeGame.setRenderer(this);
 
         snakePaint = new Paint();
@@ -83,25 +83,28 @@ public class CanvasViewRenderer extends View implements Renderable {
         int paddingRight = getPaddingRight();
         int paddingBottom = getPaddingBottom();
 
-        Vector3 paddingOffset = new Vector3(paddingLeft, paddingTop);
+        Vector3 offset = new Vector3(paddingLeft, paddingTop);
 
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
         AABB bounds = snakeGame.getBounds();
-        int widthInTiles = (int)bounds.getWidth();
-        int heightInTiles = (int)bounds.getHeight();
+        float widthInTiles = bounds.getWidth();
+        float heightInTiles = bounds.getHeight();
 
-        int tileWidth = contentWidth/widthInTiles;
-        int tileHeight = contentHeight/heightInTiles;
+        float tileWidth = contentWidth/widthInTiles;
+        float tileHeight = contentHeight/heightInTiles;
 
-        int tileSize = Math.min(tileWidth, tileHeight);
+        float tileSize = Math.min(tileWidth, tileHeight);
 
-        int boardWidth = tileSize * widthInTiles;
-        int boardHeight = tileSize * heightInTiles;
+        float boardWidth = tileSize * widthInTiles;
+        float boardHeight = tileSize * heightInTiles;
+
+        //Centre the board we're rendering
+        offset = offset.add(new Vector3(contentWidth - boardWidth, contentHeight - boardHeight).mul(0.5f));
 
         //Color the board
-        canvas.drawRect(paddingLeft, paddingTop, paddingLeft + boardWidth, paddingTop + boardHeight, boardPaint);
+        canvas.drawRect(offset.getX(), offset.getY(), offset.getX() + boardWidth, offset.getY() + boardHeight, boardPaint);
 
         //Paint the snake
         for (Vector3 position : snakeGame.getSnake().getPositions()){
@@ -110,7 +113,7 @@ public class CanvasViewRenderer extends View implements Renderable {
 
             Vector3 mapped = normalized
                     .mul(tileSize)
-                    .add(paddingOffset);
+                    .add(offset);
 
             canvas.drawRect(
                     mapped.getX(),
@@ -124,7 +127,7 @@ public class CanvasViewRenderer extends View implements Renderable {
         foodPos = foodPos.sub(bounds.getMin())
             //TODO divide by the tile size
             .mul(tileSize)
-            .add(paddingOffset);
+            .add(offset);
 
         canvas.drawRect(foodPos.getX(), foodPos.getY(), foodPos.getX()+ tileSize, foodPos.getY() + tileSize, foodPaint);
     }

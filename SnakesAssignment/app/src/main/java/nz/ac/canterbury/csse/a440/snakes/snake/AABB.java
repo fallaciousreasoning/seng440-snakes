@@ -115,8 +115,8 @@ public class AABB {
      * @return whether the AABB contains it
      */
     public boolean contains(Vector3 point) {
-        return point.getX() >= min.getX() && point.getX() <= max.getX() &&
-                point.getY() >= min.getY() && point.getY() <= max.getY() &&
-                point.getZ() >= min.getZ() && point.getZ() <= max.getZ();
+        return point.getX() >= min.getX() && point.getX() < max.getX() &&
+                point.getY() >= min.getY() && point.getY() < max.getY() &&
+                point.getZ() >= min.getZ() && point.getZ() < max.getZ();
     }
 }

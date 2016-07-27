@@ -83,6 +83,8 @@ public class CanvasViewRenderer extends View implements Renderable {
         int paddingRight = getPaddingRight();
         int paddingBottom = getPaddingBottom();
 
+        Vector3 paddingOffset = new Vector3(paddingLeft, paddingTop);
+
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
@@ -90,13 +92,16 @@ public class CanvasViewRenderer extends View implements Renderable {
         int widthInTiles = (int)bounds.getWidth();
         int heightInTiles = (int)bounds.getHeight();
 
-        int tileWidth = (int)((float)contentWidth/widthInTiles);
-        int tileHeight = (int)((float)contentHeight/heightInTiles);
+        int tileWidth = contentWidth/widthInTiles;
+        int tileHeight = contentHeight/heightInTiles;
 
         int tileSize = Math.min(tileWidth, tileHeight);
 
+        int boardWidth = tileSize * widthInTiles;
+        int boardHeight = tileSize * heightInTiles;
+
         //Color the board
-        canvas.drawRect(0, 0, getWidth(), getHeight(), boardPaint);
+        canvas.drawRect(paddingLeft, paddingTop, paddingLeft + boardWidth, paddingTop + boardHeight, boardPaint);
 
         //Paint the snake
         for (Vector3 position : snakeGame.getSnake().getPositions()){
@@ -104,7 +109,8 @@ public class CanvasViewRenderer extends View implements Renderable {
             Vector3 normalized = position.sub(bounds.getMin());
 
             Vector3 mapped = normalized
-                    .mul(tileSize);
+                    .mul(tileSize)
+                    .add(paddingOffset);
 
             canvas.drawRect(
                     mapped.getX(),
@@ -117,7 +123,8 @@ public class CanvasViewRenderer extends View implements Renderable {
         Vector3 foodPos = snakeGame.getFood().getPosition();
         foodPos = foodPos.sub(bounds.getMin())
             //TODO divide by the tile size
-            .mul(tileSize);
+            .mul(tileSize)
+            .add(paddingOffset);
 
         canvas.drawRect(foodPos.getX(), foodPos.getY(), foodPos.getX()+ tileSize, foodPos.getY() + tileSize, foodPaint);
     }

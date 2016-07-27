@@ -3,6 +3,7 @@ package nz.ac.canterbury.csse.a440.snakes;
 //http://stackoverflow.com/questions/11184503/android-emulator-orientation-change-through-emulator-console-or-adb
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.InjectableSensorManager;
 import android.hardware.MySensorEvent;
@@ -49,9 +50,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-;
-
-        view = findViewById(R.id.tv);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -97,17 +95,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -118,9 +117,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
     }
-
-
-
 
     private void getAccelerometer(SensorEvent event) {
             float[] values = MySensorEvent.getValues(event);
@@ -192,5 +188,4 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         this.gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
-
 }

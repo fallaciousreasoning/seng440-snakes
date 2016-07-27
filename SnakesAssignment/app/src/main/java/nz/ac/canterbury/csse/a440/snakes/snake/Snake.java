@@ -97,6 +97,14 @@ public class Snake {
     }
 
     /**
+     * Gets the direction the snake is currently heading in
+     * @return The direction the snake is heading in
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+
+    /**
      * Makes the snake take a step
      */
     public void step() {

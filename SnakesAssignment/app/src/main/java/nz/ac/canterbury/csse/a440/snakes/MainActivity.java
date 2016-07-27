@@ -11,21 +11,22 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private boolean debug=false;
     private TextView tv;
 
+    private GestureDetectorCompat gestureDetector;
+    private SnakeSwipeController swipeController;
+
+    private SnakeController snakeController;
+
     SnakeGame game;
     GameUpdater updater;
 
@@ -43,18 +49,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+;
 
         view = findViewById(R.id.tv);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-        GridView gv= (GridView) findViewById(R.id.gv);
-
-
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         SnakeApplication app= (SnakeApplication) this.getApplication();
@@ -73,12 +73,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Sensor acc=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
+
         game = gameRenderer.getGame();
         updater = new GameUpdater(game);
-//        tv= (TextView) view;
-//        tv.setText("ho hum");
-        lastUpdate = System.currentTimeMillis();
 
+        //Initialize the swipe controller
+        swipeController = new SnakeSwipeController(game);
+        gestureDetector = new GestureDetectorCompat(getBaseContext(), swipeController);
+
+        //Set the snake controller
+        snakeController = swipeController;
+        game.setSnakeController(snakeController);
+
+        lastUpdate = System.currentTimeMillis();
     }
 
     @Override
@@ -179,4 +186,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onPause();
         sensorManager.unregisterListener(this);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
 }

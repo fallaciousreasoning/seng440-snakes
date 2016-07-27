@@ -12,6 +12,11 @@ public class SnakeGame {
     private Renderable renderer;
 
     /**
+     * The controller that tells the snake how it should move
+     */
+    private SnakeController snakeController;
+
+    /**
      * The snake
      */
     private Snake snake;
@@ -57,6 +62,11 @@ public class SnakeGame {
      * Moves the game forward by one frame and tells the renderer to redraw
      */
     public void step() {
+        //If we have a snake controller, we should tell the snake where to go
+        if (getSnakeController() != null) {
+            snake.setDirection(getSnakeController().getDirection());
+        }
+
         //If the snake is off bounds, set the finished flag
         if (!bounds.contains(snake.nextPosition())){
             hitWall = true;
@@ -90,14 +100,6 @@ public class SnakeGame {
         float z = Math.round(random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ() / tileSize) * tileSize;
 
         food = new Food(1, new Vector3(x, y, z));
-    }
-
-    /**
-     * Sets the direction the snake will be heading
-     * @param direction The direction for the snake to go
-     */
-    public void setDirection(Direction direction) {
-        snake.setDirection(direction);
     }
 
     /**
@@ -170,5 +172,21 @@ public class SnakeGame {
      */
     public Food getFood() {
         return food;
+    }
+
+    /**
+     * Gets the current controller for the snake
+     * @return The controller for the snake
+     */
+    public SnakeController getSnakeController() {
+        return snakeController;
+    }
+
+    /**
+     * Sets the controller for the snake
+     * @param snakeController The controller for the snake
+     */
+    public void setSnakeController(SnakeController snakeController) {
+        this.snakeController = snakeController;
     }
 }

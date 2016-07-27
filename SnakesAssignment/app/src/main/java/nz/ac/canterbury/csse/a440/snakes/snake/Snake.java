@@ -39,7 +39,7 @@ public class Snake {
         this.blockSize = blockSize;
         this.direction = headingDirection;
 
-        Vector3 tailDirection = stepAmount().mul(-1);
+        Vector3 tailDirection = stepAmount(headingDirection).mul(-1);
 
         positions.add(headPosition);
 
@@ -51,9 +51,10 @@ public class Snake {
 
     /**
      * Gets the amount that the snake will be moved by
+     * @param direction The direction to step in
      * @return The amount the snake will be moved by
      */
-    public Vector3 stepAmount() {
+    public Vector3 stepAmount(Direction direction) {
         return direction.getDirection().mul(blockSize);
     }
 
@@ -69,8 +70,17 @@ public class Snake {
      * Gets the next position that the head will be at
      * @return The next position the head will be at
      */
-    public Vector3 nextPosition() {
-        return headPosition().add(stepAmount());
+    public Vector3 nextPosition(){
+        return nextPosition(direction);
+    }
+
+    /**
+     * Gets the next position that the head will be at
+     * @param direction The direction the next position is in
+     * @return The next position the head will be at
+     */
+    public Vector3 nextPosition(Direction direction) {
+        return headPosition().add(stepAmount(direction));
     }
 
     /**
@@ -153,5 +163,15 @@ public class Snake {
 
         //If we didn't find anything, we're all good
         return false;
+    }
+
+    /**
+     * Determines whether a direction would cause the snake to turn 180 degrees
+     * @param direction The direction to test
+     * @return Whether the direction is backwards
+     */
+    public boolean isBackwards(Direction direction) {
+        //The snake is going backwards if our new next position would be the second block of the snake
+        return nextPosition(direction).equals(positions.get(1));
     }
 }

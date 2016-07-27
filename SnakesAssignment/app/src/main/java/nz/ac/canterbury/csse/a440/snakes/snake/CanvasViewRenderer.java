@@ -20,6 +20,24 @@ public class CanvasViewRenderer extends View implements Renderable {
     private Paint boardPaint;
     private Paint foodPaint;
 
+    /**
+     * The paint for drawing text on the canvas
+     */
+    private TextPaint textPaint;
+
+    /**
+     * The height of the text
+     */
+    private float textHeight;
+
+    /**
+     * The width of the text;
+     */
+    private float textWidth;
+
+    /**
+     * The game that this view is rendering
+     */
     private SnakeGame snakeGame;
 
     public CanvasViewRenderer(Context context) {
@@ -63,6 +81,12 @@ public class CanvasViewRenderer extends View implements Renderable {
         foodPaint = new Paint();
         foodPaint.setStyle(Paint.Style.FILL);
         foodPaint.setColor(Color.argb(255, 255, 0, 0));
+
+        textPaint = new TextPaint();
+        textPaint.setTextSize(100);
+        textPaint.setColor(Color.argb(255, 0, 0, 0));
+        textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setTextAlign(Paint.Align.RIGHT);
     }
 
     @Override
@@ -130,10 +154,18 @@ public class CanvasViewRenderer extends View implements Renderable {
             .add(offset);
 
         canvas.drawRect(foodPos.getX(), foodPos.getY(), foodPos.getX()+ tileSize, foodPos.getY() + tileSize, foodPaint);
+
+        canvas.drawText(getScoreString(), offset.getX() + boardWidth - 10, offset.getY() + 10 + textHeight/2, textPaint);
     }
 
     @Override
     public void render(SnakeGame game) {
+        //TODO We should probably do something where we scale the font to the screen size or something
+        String message = getScoreString();
+        textWidth = textPaint.measureText(message);
+        Paint.FontMetrics metrics = textPaint.getFontMetrics();
+        textHeight = Math.abs(metrics.bottom - metrics.top);
+
         invalidate();
     }
 
@@ -153,5 +185,13 @@ public class CanvasViewRenderer extends View implements Renderable {
         this.snakeGame = game;
         game.setRenderer(this);
         invalidate();
+    }
+
+    /**
+     * Gets a string saying the score in the current game
+     * @return The score in the current game
+     */
+    private String getScoreString(){
+        return "Score: " + getGame().getSnake().length();
     }
 }

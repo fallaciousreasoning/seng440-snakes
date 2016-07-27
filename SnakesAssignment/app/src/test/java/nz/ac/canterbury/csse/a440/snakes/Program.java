@@ -41,7 +41,7 @@ public class Program {
                     break;
             }
 
-            game.setDirection(direction);
+            //game.setDirection(direction);
             game.step();
         }
 

@@ -51,6 +51,14 @@ public class Snake {
 
     /**
      * Gets the amount that the snake will be moved by
+     * @return The amount the snake will be moved by
+     */
+    public Vector3 stepAmount(){
+        return stepAmount(direction);
+    }
+
+    /**
+     * Gets the amount that the snake will be moved by
      * @param direction The direction to step in
      * @return The amount the snake will be moved by
      */

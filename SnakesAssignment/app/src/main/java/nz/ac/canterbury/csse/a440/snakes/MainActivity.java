@@ -225,8 +225,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 buttonController = new SnakeButtonController();
                 addControllerButton(controlLayout, Direction.NORTH);
                 addControllerButton(controlLayout, Direction.SOUTH);
-                addControllerButton(controlLayout, Direction.EAST);
                 addControllerButton(controlLayout, Direction.WEST);
+                addControllerButton(controlLayout, Direction.EAST);
                 snakeController = buttonController;
                 break;
             case ACCELEROMETER:

@@ -100,9 +100,9 @@ public class SnakeGame {
      * Adds a new piece of food at a random position on the board
      */
     private void spawnFood() {
-        float x = Math.round(random.nextFloat() * bounds.getWidth() + bounds.getMin().getX() / tileSize) * tileSize;
-        float y = Math.round(random.nextFloat() * bounds.getHeight() + bounds.getMin().getY() / tileSize) * tileSize;
-        float z = Math.round(random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ() / tileSize) * tileSize;
+        float x = (float)Math.floor(random.nextFloat() * bounds.getWidth() + bounds.getMin().getX() / tileSize) * tileSize;
+        float y = (float)Math.floor(random.nextFloat() * bounds.getHeight() + bounds.getMin().getY() / tileSize) * tileSize;
+        float z = (float)Math.round(random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ() / tileSize) * tileSize;
 
         food = new Food(1, new Vector3(x, y, z));
     }

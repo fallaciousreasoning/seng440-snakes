@@ -44,7 +44,7 @@ public class GameUpdater {
      */
     public void setUpdateRate(int updateRate) {
         this.updateRate = updateRate;
-        updateTimer.cancel();
+        updateTimer.purge();
 
         schedule();
     }

@@ -12,6 +12,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         game = gameRenderer.getGame();
         updater = new GameUpdater(game);
+        String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
+        updater.setUpdateRate((int)(1000 / Float.parseFloat(speedString)));
 
         //Initialize the swipe controller
         swipeController = new SnakeSwipeController(game);

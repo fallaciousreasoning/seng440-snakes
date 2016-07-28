@@ -313,6 +313,7 @@ if (!isUseSystem()) {
         }
 
         public void sendString(String s) {
+            if (es == null) return;
             es.sendData(s);
         }
 
@@ -359,6 +360,8 @@ if (!isUseSystem()) {
                             ous.flush();
                         } catch (IOException e) {
                             e.printStackTrace();
+                        } catch (Exception e) {
+                            int foo = 7;
                         }
                     }
                 };

@@ -23,6 +23,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.dx.rop.code.Exceptions;
+
 import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
@@ -48,6 +50,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable ex) {
+                int foo = 7;
+            }
+        });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -61,7 +70,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sensorManager instanceof InjectableSensorManager){
             InjectableSensorManager ism= (InjectableSensorManager) sensorManager;
             //NB this needs to be a setting
+
             ism.createRemoteListener("192.168.137.1",51234);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+
+            }
+            ism.sendList();
         }
 
         for (Sensor s:sensorManager.getSensorList(Sensor.TYPE_ALL)){

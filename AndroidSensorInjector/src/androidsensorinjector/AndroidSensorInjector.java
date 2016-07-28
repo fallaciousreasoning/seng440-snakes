@@ -8,6 +8,9 @@ package androidsensorinjector;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -104,6 +107,8 @@ public class AndroidSensorInjector extends Thread {
 
                 try {
                     //TODO your code to send the json list request
+                    float[] data = new float[0];
+                    ds.sendEvent(new SensorListEvent());
                     //
 
                     //Now for the main event dispatch thread....

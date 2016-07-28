@@ -27,7 +27,7 @@ public class DataSender {
         }
     }
     
-    public void sendEvent(final SensorEvent e){
+    public void sendEvent(final JsonSerializable e){
         if (e==null){ return; }       
         Runnable r =new Runnable(){
 

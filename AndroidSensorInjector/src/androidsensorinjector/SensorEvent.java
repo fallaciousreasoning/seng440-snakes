@@ -9,7 +9,7 @@ package androidsensorinjector;
  *
  * @author comqdhb
  */
-public class SensorEvent {
+public class SensorEvent implements JsonSerializable {
     private final int accuracy;
     private final int sensor;
     private final long timestamp;

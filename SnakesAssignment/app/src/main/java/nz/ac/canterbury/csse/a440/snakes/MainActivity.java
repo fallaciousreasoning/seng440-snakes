@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 snakeController = swipeController;
                 break;
             case BUTTONS:
+                //Initialize the button controller
                 LinearLayout controlLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
                 buttonController = new SnakeButtonController();
                 addControllerButton(controlLayout, Direction.NORTH);

@@ -1,6 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
         android:key="input_method"
+        android:defaultValue="SWIPE"
         android:entries="@array/pref_input_method_titles"
         android:entryValues="@array/pref_input_method_values"
         android:title="@string/pref_input_method"

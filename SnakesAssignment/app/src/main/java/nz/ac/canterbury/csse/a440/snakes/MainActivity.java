@@ -74,11 +74,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //NB this needs to be a setting
 
             ism.createRemoteListener("192.168.137.1",51234);
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-
-            }
         }
 
         for (Sensor s:sensorManager.getSensorList(Sensor.TYPE_ALL)){

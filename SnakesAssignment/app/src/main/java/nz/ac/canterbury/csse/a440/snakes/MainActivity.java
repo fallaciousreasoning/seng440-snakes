@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private View view;
     private boolean color = false;
     private boolean debug=false;
-    private TextView tv;
 
     private GestureDetectorCompat gestureDetector;
     private SnakeSwipeController swipeController;
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             } catch (InterruptedException e) {
 
             }
-            ism.sendList();
         }
 
         for (Sensor s:sensorManager.getSensorList(Sensor.TYPE_ALL)){
@@ -128,7 +127,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            tv.setText(event.timestamp+" "+event.toString());
+            new AlertDialog
+                    .Builder(this)
+                    .setTitle("Stuff!")
+                    .setMessage(event.toString())
+                    .show();
+
             getAccelerometer(event);
         }
 
@@ -153,12 +157,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 lastUpdate = actualTime;
                 Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT).show();
-                if (color) {
-                    view.setBackgroundColor(Color.GREEN);
-                } else {
-                    view.setBackgroundColor(Color.RED);
-                }
-                color = !color;
             }
     }
 

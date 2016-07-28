@@ -3,6 +3,7 @@ package android.hardware;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -252,7 +253,7 @@ if (!isUseSystem()) {
               for (SensorEventListener l:listenersE.keySet()){
                   Set<Sensor> s=listenersE.get(l);
                   if (s.contains(lr.sensor) ){
-                      System.out.println(lr);
+                      Log.d("SENSOR_DATA", lr.toString());
                       l.onSensorChanged(lr);
                   }
               }

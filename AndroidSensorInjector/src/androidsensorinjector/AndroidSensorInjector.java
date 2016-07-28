@@ -107,7 +107,6 @@ public class AndroidSensorInjector extends Thread {
 
                 try {
                     //TODO your code to send the json list request
-                    float[] data = new float[0];
                     ds.sendEvent(new SensorListEvent());
                     //
 

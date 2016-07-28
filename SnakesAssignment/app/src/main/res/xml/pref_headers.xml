@@ -8,7 +8,7 @@
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="nz.ac.canterbury.csse.a440.snakes.SettingsActivity$NotificationPreferenceFragment"
+        android:fragment="nz.ac.canterbury.csse.a440.snakes.SettingsActivity$DebugPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_debug" />
 

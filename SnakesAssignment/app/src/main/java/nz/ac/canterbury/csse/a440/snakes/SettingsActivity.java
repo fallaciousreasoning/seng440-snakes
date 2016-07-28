@@ -48,7 +48,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
+                int index;
+                try {
+                    index = listPreference.findIndexOfValue(stringValue);
+                } catch (NullPointerException e) {
+                    index = 0;
+                }
 
                 // Set the summary to reflect the new value.
                 preference.setSummary(

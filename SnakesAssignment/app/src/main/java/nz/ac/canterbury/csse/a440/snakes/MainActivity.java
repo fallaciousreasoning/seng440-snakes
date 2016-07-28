@@ -34,6 +34,7 @@ import com.android.dx.rop.code.Exceptions;
 import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
+import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
@@ -96,19 +97,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
         updater = new GameUpdater(game, (int)(1000 / Float.parseFloat(speedString)));
 
-        //Initialize the swipe controller
-        swipeController = new SnakeSwipeController(game);
-        gestureDetector = new GestureDetectorCompat(getBaseContext(), swipeController);
-
-        LinearLayout controlLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
-        buttonController = new SnakeButtonController();
-        addControllerButton(controlLayout, Direction.NORTH);
-        addControllerButton(controlLayout, Direction.SOUTH);
-        addControllerButton(controlLayout, Direction.EAST);
-        addControllerButton(controlLayout, Direction.WEST);
+        //Set up the control system
+        setupControls();
 
         //Set the snake controller
-        snakeController = swipeController;
         game.setSnakeController(snakeController);
 
         lastUpdate = System.currentTimeMillis();
@@ -216,6 +208,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return super.onTouchEvent(event);
     }
 
+    private void setupControls() {
+        InputMethod inputMethod = InputMethod.valueOf(PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getString("input_method", "SWIPE"));
+
+        switch (inputMethod){
+            case SWIPE:
+                //Initialize the swipe controller
+                swipeController = new SnakeSwipeController(game);
+                gestureDetector = new GestureDetectorCompat(getBaseContext(), swipeController);
+                snakeController = swipeController;
+                break;
+            case BUTTONS:
+                LinearLayout controlLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
+                buttonController = new SnakeButtonController();
+                addControllerButton(controlLayout, Direction.NORTH);
+                addControllerButton(controlLayout, Direction.SOUTH);
+                addControllerButton(controlLayout, Direction.EAST);
+                addControllerButton(controlLayout, Direction.WEST);
+                snakeController = buttonController;
+                break;
+            case ACCELEROMETER:
+                break;
+            case COMPASS:
+                break;
+        }
+    }
+
+    /**
+     * Adds a controller button for the specified direction to a pane
+     * @param to The pane to add the button to
+     * @param direction The direction for the button
+     */
     private void addControllerButton(LinearLayout to, Direction direction){
         Button button = new Button(this);
 

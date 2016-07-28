@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable ex) {
-                int foo = 7;
+                //TODO log this somewhere?
+                ex.printStackTrace();
             }
         });
 

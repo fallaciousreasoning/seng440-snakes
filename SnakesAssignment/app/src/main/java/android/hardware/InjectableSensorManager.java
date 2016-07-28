@@ -361,8 +361,6 @@ if (!isUseSystem()) {
                             ous.flush();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } catch (Exception e) {
-                            int foo = 7;
                         }
                     }
                 };

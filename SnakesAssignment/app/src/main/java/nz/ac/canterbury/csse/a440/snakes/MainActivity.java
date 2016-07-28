@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sensorManager instanceof InjectableSensorManager){
             InjectableSensorManager ism= (InjectableSensorManager) sensorManager;
             //NB this needs to be a setting
-            ism.createRemoteListener("132.181.102.62",51234);
+            ism.createRemoteListener("192.168.137.1",51234);
         }
 
         for (Sensor s:sensorManager.getSensorList(Sensor.TYPE_ALL)){

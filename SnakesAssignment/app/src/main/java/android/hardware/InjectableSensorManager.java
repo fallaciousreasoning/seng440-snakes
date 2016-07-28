@@ -281,7 +281,7 @@ if (!isUseSystem()) {
 
     public void sendList() {
         JSONObject json=new JSONObject();
-
+        //TODO make the json actually have a list of sensors on the device
         remoteListener.sendString(json.toString());
     }
 

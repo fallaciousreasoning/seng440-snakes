@@ -204,7 +204,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        this.gestureDetector.onTouchEvent(event);
+        if (this.gestureDetector != null) {
+            this.gestureDetector.onTouchEvent(event);
+        }
         return super.onTouchEvent(event);
     }
 

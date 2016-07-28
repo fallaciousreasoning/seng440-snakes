@@ -90,11 +90,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
 
         game = gameRenderer.getGame();
-        updater = new GameUpdater(game);
 
         //TODO maybe don't do this right here?
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
-        updater.setUpdateRate((int)(1000 / Float.parseFloat(speedString)));
+        updater = new GameUpdater(game, (int)(1000 / Float.parseFloat(speedString)));
 
         //Initialize the swipe controller
         swipeController = new SnakeSwipeController(game);

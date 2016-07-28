@@ -13,7 +13,7 @@ public class GameUpdater {
     /**
      * The number of times per second the snake should be updated
      */
-    private int updateRate = (int)(1000.0/1.0);
+    private int updateRate;
 
     /**
      * The snake game to be updated by the updater
@@ -31,21 +31,11 @@ public class GameUpdater {
      */
     private Handler updateHandler = new Handler();
 
-    public GameUpdater(final SnakeGame game){
+    public GameUpdater(final SnakeGame game, int updateRate){
         this.game = game;
+        this.updateRate = updateRate;
 
         updateTimer = new Timer();
-        schedule();
-    }
-
-    /**
-     * Sets the update rate for the game
-     * @param updateRate The update rate (in milliseconds)
-     */
-    public void setUpdateRate(int updateRate) {
-        this.updateRate = updateRate;
-        updateTimer.purge();
-
         schedule();
     }
 

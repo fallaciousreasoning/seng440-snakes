@@ -38,14 +38,11 @@
             android:layout_alignParentLeft="false">
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/buttonControlsContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="foo"/>
         </LinearLayout>
 
         <nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer

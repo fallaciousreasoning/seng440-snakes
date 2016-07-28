@@ -11,6 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
@@ -21,14 +22,20 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.dx.rop.code.Exceptions;
 
 import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
@@ -36,18 +43,17 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private long lastUpdate;
-    private View view;
-    private boolean color = false;
-    private boolean debug=false;
 
     private GestureDetectorCompat gestureDetector;
+
     private SnakeSwipeController swipeController;
+    private SnakeAccelerometerController accelerometerController;
+    private SnakeButtonController buttonController;
 
     private SnakeController snakeController;
 
     SnakeGame game;
     GameUpdater updater;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //Initialize the swipe controller
         swipeController = new SnakeSwipeController(game);
         gestureDetector = new GestureDetectorCompat(getBaseContext(), swipeController);
+
+        LinearLayout controlLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
+        buttonController = new SnakeButtonController();
+        addControllerButton(controlLayout, Direction.NORTH);
+        addControllerButton(controlLayout, Direction.SOUTH);
+        addControllerButton(controlLayout, Direction.EAST);
+        addControllerButton(controlLayout, Direction.WEST);
 
         //Set the snake controller
         snakeController = swipeController;
@@ -201,5 +214,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public boolean onTouchEvent(MotionEvent event){
         this.gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
+    }
+
+    private void addControllerButton(LinearLayout to, Direction direction){
+        Button button = new Button(this);
+
+        int resourceId = android.R.style.TextAppearance_Small;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            button.setTextAppearance(resourceId);
+        } else {
+            button.setTextAppearance(this, resourceId);
+        }
+        button.setText(direction.toString());
+
+        button.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        button.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        to.addView(button);
+
+        buttonController.bindButton(button, direction);
     }
 }

@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         game = gameRenderer.getGame();
         updater = new GameUpdater(game);
+
+        //TODO maybe don't do this right here?
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
         updater.setUpdateRate((int)(1000 / Float.parseFloat(speedString)));
 

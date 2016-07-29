@@ -36,6 +36,11 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="false"
             android:layout_alignParentLeft="false">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scoreText"
+            android:text="Score: 0"/>
 
         <LinearLayout
             android:orientation="horizontal"

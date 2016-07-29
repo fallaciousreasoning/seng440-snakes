@@ -5,8 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -63,7 +61,7 @@ public class CanvasViewRenderer extends View implements Renderable {
         }
 
         snakeGame = new SnakeGame(20, 30, 1, 3);
-        snakeGame.setRenderer(this);
+        snakeGame.addRenderer(this);
 
         snakePaint = new Paint();
         snakePaint.setStyle(Paint.Style.FILL);
@@ -163,8 +161,16 @@ public class CanvasViewRenderer extends View implements Renderable {
      * @param game The new game
      */
     public void setGame(SnakeGame game) {
+        //If we're listening to something else; stop
+        if (this.snakeGame != null) {
+            this.snakeGame.getRenderers().remove(this);
+        }
+
         this.snakeGame = game;
-        game.setRenderer(this);
+
+        if (game == null) return;
+
+        game.addRenderer(this);
         invalidate();
     }
 }

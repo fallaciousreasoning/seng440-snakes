@@ -1,5 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -9,7 +11,7 @@ public class SnakeGame {
     /**
      * The active renderer for the game
      */
-    private Renderable renderer;
+    private Collection<Renderable> renderers = new ArrayList<>();
 
     /**
      * The controller that tells the snake how it should move
@@ -91,9 +93,9 @@ public class SnakeGame {
             }
         }
 
-        if (getRenderer() != null) {
-            getRenderer().render(this);
-        }
+        //Tell all the renderers we've updated
+        for (Renderable renderer : renderers)
+            renderer.render(this);
     }
 
     /**
@@ -108,19 +110,19 @@ public class SnakeGame {
     }
 
     /**
-     * Gets the current renderer for the game
-     * @return gets the current game renderer
+     * Gets the current renderers for the game
+     * @return gets the current game renderers
      */
-    public Renderable getRenderer() {
-        return renderer;
+    public Collection<Renderable> getRenderers() {
+        return renderers;
     }
 
     /**
-     * Sets the current renderer for the game
-     * @param renderer The new renderer for the game
+     * Adds a renderer to the game
+     * @param renderer The renderer to add to the game
      */
-    public void setRenderer(Renderable renderer) {
-        this.renderer = renderer;
+    public void addRenderer(Renderable renderer) {
+        this.renderers.add(renderer);
     }
 
     /**

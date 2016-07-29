@@ -14,7 +14,7 @@ public class Program {
         System.out.println("Hello World");
 
         SnakeGame game = new SnakeGame(10, 10, 1, 3);
-        game.setRenderer(new ASCIIRenderer());
+        game.addRenderer(new ASCIIRenderer());
 
         Scanner scanner = new Scanner(System.in);
 

@@ -11,7 +11,7 @@ public class SnakeGame {
     /**
      * The active renderer for the game
      */
-    private Collection<Renderable> renderers = new ArrayList<>();
+    private Collection<Renderer> renderers = new ArrayList<>();
 
     /**
      * The controller that tells the snake how it should move
@@ -111,7 +111,7 @@ public class SnakeGame {
         }
 
         //Tell all the renderers we've updated
-        for (Renderable renderer : renderers)
+        for (Renderer renderer : renderers)
             renderer.render(this);
     }
 
@@ -143,7 +143,7 @@ public class SnakeGame {
      * Gets the current renderers for the game
      * @return gets the current game renderers
      */
-    public Collection<Renderable> getRenderers() {
+    public Collection<Renderer> getRenderers() {
         return renderers;
     }
 
@@ -151,7 +151,7 @@ public class SnakeGame {
      * Adds a renderer to the game
      * @param renderer The renderer to add to the game
      */
-    public void addRenderer(Renderable renderer) {
+    public void addRenderer(Renderer renderer) {
         this.renderers.add(renderer);
     }
 

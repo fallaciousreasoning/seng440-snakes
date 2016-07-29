@@ -13,7 +13,7 @@ import nz.ac.canterbury.csse.a440.snakes.R;
 /**
  * TODO: document your custom view class.
  */
-public class CanvasViewRenderer extends View implements Renderable {
+public class CanvasViewRenderer extends View implements Renderer {
     private Paint snakePaint;
     private Paint boardPaint;
     private Paint foodPaint;

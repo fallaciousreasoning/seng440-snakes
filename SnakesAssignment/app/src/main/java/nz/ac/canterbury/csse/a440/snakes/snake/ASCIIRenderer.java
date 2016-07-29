@@ -1,16 +1,11 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by jayha on 26/07/2016.
  */
-public class ASCIIRenderer implements Renderable {
+public class ASCIIRenderer implements Renderer {
     private PrintStream output;
 
     private String snakeChar= "*";

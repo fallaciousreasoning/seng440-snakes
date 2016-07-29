@@ -91,7 +91,7 @@ public class AndroidSensorInjector extends Thread {
 
                     @Override
                     public void receiveData(String data) {
-
+                        System.out.println("Received: " + data);
                         listeners.stream().forEach((dal) -> {
                             dal.receiveData(data);
                         });

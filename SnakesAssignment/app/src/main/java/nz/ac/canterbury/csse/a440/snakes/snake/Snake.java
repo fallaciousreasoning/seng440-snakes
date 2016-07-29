@@ -50,7 +50,7 @@ public class Snake {
         positions.add(headPosition);
 
         for (int i = 0; i < length - 1; ++i){
-            Vector3 nextPos = positions.get(positions.size() - 1).add(tailDirection);
+            Vector3 nextPos = positions.getLast().add(tailDirection);
             positions.add(nextPos);
         }
     }

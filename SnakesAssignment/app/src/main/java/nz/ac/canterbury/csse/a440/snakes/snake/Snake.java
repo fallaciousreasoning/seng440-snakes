@@ -14,6 +14,11 @@ public class Snake {
     private final float blockSize;
 
     /**
+     * The starting length of the snake. Useful when we reinitialize the game
+     */
+    private final int startingLength;
+
+    /**
      * The positions making up a snake
      */
     private LinkedList<Vector3> positions = new LinkedList<>();
@@ -38,6 +43,7 @@ public class Snake {
     public Snake(Vector3 headPosition, Direction headingDirection, float blockSize, int length) {
         this.blockSize = blockSize;
         this.direction = headingDirection;
+        this.startingLength = length;
 
         Vector3 tailDirection = stepAmount(headingDirection).mul(-1);
 
@@ -150,6 +156,14 @@ public class Snake {
      */
     public int length() {
         return positions.size();
+    }
+
+    /**
+     * Gets the starting length of the snake
+     * @return The starting length of the snake
+     */
+    public int startingLength() {
+        return startingLength;
     }
 
     /**

@@ -166,6 +166,15 @@ public class SnakeGame {
     }
 
     /**
+     * Calculates the current score for the game
+     * @return The score
+     */
+    public int score() {
+        //The score is the length of the snake minus however long we were when we started
+        return getSnake().length() - getSnake().startingLength();
+    }
+
+    /**
      * Gets the size of a tile on the board
      * @return The size of a tile on the board
      */

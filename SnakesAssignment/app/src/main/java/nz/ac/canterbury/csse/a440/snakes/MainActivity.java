@@ -35,6 +35,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
+import nz.ac.canterbury.csse.a440.snakes.snake.ScoreRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
@@ -89,9 +90,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Sensor acc=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
+        game = new SnakeGame(20, 30, 1, 3);
 
-        game = gameRenderer.getGame();
+        CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
+        gameRenderer.setGame(game);
+
+        TextView scoreText = (TextView)findViewById(R.id.scoreText);
+        ScoreRenderer scoreRenderer = new ScoreRenderer();
+        scoreRenderer.setTextView(scoreText);
+        game.addRenderer(scoreRenderer);
+
+        //gameRenderer.getGame();
 
         //TODO maybe don't do this right here?
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");

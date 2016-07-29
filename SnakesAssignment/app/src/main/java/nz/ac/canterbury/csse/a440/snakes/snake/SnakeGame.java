@@ -34,6 +34,11 @@ public class SnakeGame {
     private float tileSize = 1;
 
     /**
+     * The starting length of the snake. Used when resetting.
+     */
+    private final int startingLength;
+
+    /**
      * Indicates the snake hit a wall
      */
     private boolean hitWall;
@@ -42,6 +47,11 @@ public class SnakeGame {
      * Indicates the snake hit itself
      */
     private boolean hitSelf;
+
+    /**
+     * Indicates whether the snake game has started
+     */
+    private boolean started;
 
     /**
      * A random number generator
@@ -55,9 +65,16 @@ public class SnakeGame {
 
     public SnakeGame(int width, int height, int depth, int startingLength) {
         this.bounds = new AABB(Vector3.Zero, width*tileSize, height*tileSize, depth*tileSize);
+        this.startingLength = startingLength;
 
-        snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
-        spawnFood();
+        reset();
+    }
+
+    /**
+     * Initializes the snake game. The game will not run until this method has been called.
+     */
+    public void start() {
+        started = true;
     }
 
     /**
@@ -65,7 +82,7 @@ public class SnakeGame {
      */
     public void step() {
         //If we've finished, we shouldn't be attempting to step
-        if (finished()) {
+        if (finished() || !started()) {
             return;
         }
 
@@ -96,6 +113,14 @@ public class SnakeGame {
         //Tell all the renderers we've updated
         for (Renderable renderer : renderers)
             renderer.render(this);
+    }
+
+    /**
+     * Resets the game
+     */
+    public void reset() {
+        snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
+        spawnFood();
     }
 
     /**
@@ -134,6 +159,14 @@ public class SnakeGame {
     }
 
     /**
+     * Gets the starting length of the snake
+     * @return The starting length of the snake
+     */
+    public int startingLength() {
+        return startingLength;
+    }
+
+    /**
      * Gets the bounds of the game
      * @return The bounds
      */
@@ -166,12 +199,20 @@ public class SnakeGame {
     }
 
     /**
+     * Indicates whether the game has been started
+     * @return Whether the game has been started
+     */
+    public boolean started() {
+        return started;
+    }
+
+    /**
      * Calculates the current score for the game
      * @return The score
      */
     public int score() {
         //The score is the length of the snake minus however long we were when we started
-        return getSnake().length() - getSnake().startingLength();
+        return getSnake().length() - startingLength();
     }
 
     /**

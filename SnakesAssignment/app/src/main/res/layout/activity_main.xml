@@ -50,12 +50,25 @@
             android:layout_marginBottom="20dp">
         </LinearLayout>
 
-        <nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ccc"
-            android:id="@+id/gameRenderer"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            android:layout_height="match_parent">
+
+            <nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ccc"
+                android:id="@+id/gameRenderer"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gameStatusText"
+                android:text="@string/gameStatusStart"
+                android:layout_centerInParent="true"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
+        </RelativeLayout>
 
         </LinearLayout>
     </RelativeLayout>

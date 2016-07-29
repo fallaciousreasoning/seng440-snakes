@@ -41,6 +41,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
@@ -100,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         scoreRenderer.setTextView(scoreText);
         game.addRenderer(scoreRenderer);
 
+        TextView gameStatusText = (TextView)findViewById(R.id.gameStatusText);
+        StartFinishRenderer startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
+        startFinishRenderer.setTextView(gameStatusText);
+        game.addRenderer(startFinishRenderer);
         //gameRenderer.getGame();
 
         //TODO maybe don't do this right here?

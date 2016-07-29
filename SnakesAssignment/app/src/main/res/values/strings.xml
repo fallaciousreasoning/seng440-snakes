@@ -31,4 +31,6 @@
     <string name="pref_game_speed_title">Game Speed</string>
     <string name="pref_sensor_injector_title">Sensor Injector IP</string>
     <string name="pref_sensor_injector_default">127.0.0.1</string>
+    <string name="gameStatusStart">Tap to start</string>
+    <string name="gameStatusReset">Tap to restart</string>
 </resources>

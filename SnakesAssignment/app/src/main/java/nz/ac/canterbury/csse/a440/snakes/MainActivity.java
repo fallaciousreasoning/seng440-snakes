@@ -43,7 +43,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private long lastUpdate;
 
@@ -75,9 +75,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        accelerometerController = new SnakeAccelerometerController();
+
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         SnakeApplication app= (SnakeApplication) this.getApplication();
-        InjectableSensorManager.setUseSystem(false);
+        InjectableSensorManager.setUseSystem(true);
         sensorManager = app.ism;
         if (sensorManager instanceof InjectableSensorManager){
             InjectableSensorManager ism= (InjectableSensorManager) sensorManager;
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             System.out.println(s.getName() + " "+s.getType());
         }
 
-        Sensor acc=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        Sensor acc=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         game = new SnakeGame(20, 30, 1, 3);
 
@@ -147,41 +151,41 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            new AlertDialog
-                    .Builder(this)
-                    .setTitle("Stuff!")
-                    .setMessage(event.toString())
-                    .show();
+//    @Override
+//    public void onSensorChanged(SensorEvent event) {
+//        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+//            new AlertDialog
+//                    .Builder(this)
+//                    .setTitle("Stuff!")
+//                    .setMessage(event.toString())
+//                    .show();
+//
+//            getAccelerometer(event);
+//        }
+//
+//    }
 
-            getAccelerometer(event);
-        }
-
-    }
-
-    private void getAccelerometer(SensorEvent event) {
-            float[] values = MySensorEvent.getValues(event);
-            // Movement
-            float x = values[0];
-            float y = values[1];
-            float z = values[2];
-
-            float accelationSquareRoot = (x * x + y * y + z * z)
-                    / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
-            long actualTime = event.timestamp;
-        System.out.println("acc2 = "+accelationSquareRoot);
-            if (accelationSquareRoot >= 2) //
-            {
-                Angles a=new Angles(values);
-                if (actualTime - lastUpdate < 200) {
-                    return;
-                }
-                lastUpdate = actualTime;
-                Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT).show();
-            }
-    }
+//    private void getAccelerometer(SensorEvent event) {
+//            float[] values = MySensorEvent.getValues(event);
+//            // Movement
+//            float x = values[0];
+//            float y = values[1];
+//            float z = values[2];
+//
+//            float accelationSquareRoot = (x * x + y * y + z * z)
+//                    / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+//            long actualTime = event.timestamp;
+//        System.out.println("acc2 = "+accelationSquareRoot);
+//            if (accelationSquareRoot >= 2) //
+//            {
+//                Angles a=new Angles(values);
+//                if (actualTime - lastUpdate < 200) {
+//                    return;
+//                }
+//                lastUpdate = actualTime;
+//                Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT).show();
+//            }
+//    }
 
     //http://www.st.com/content/ccc/resource/technical/document/application_note/8e/28/c0/ea/1f/ed/4e/48/CD00268887.pdf/files/CD00268887.pdf/jcr:content/translations/en.CD00268887.pdf
     private class Angles{
@@ -196,11 +200,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             roll=Math.atan(y/Math.sqrt(x*x+z*z));
         }
     }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
+//
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//
+//    }
 
     @Override
     protected void onResume() {
@@ -208,16 +212,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // register this class as a listener for the orientation and
         // accelerometer sensors
 
-        sensorManager.registerListener(this,
+        boolean working = sensorManager.registerListener(accelerometerController,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
+        System.err.println(working);
     }
 
     @Override
     protected void onPause() {
         // unregister listener
         super.onPause();
-        sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(accelerometerController);
     }
 
     @Override
@@ -253,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 snakeController = buttonController;
                 break;
             case ACCELEROMETER:
-                break;
+                snakeController = accelerometerController;
             case COMPASS:
                 break;
         }

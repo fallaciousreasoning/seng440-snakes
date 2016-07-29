@@ -110,9 +110,9 @@ private static boolean useSystem=true;
 
     @Override
     public boolean registerListener(SensorListener listener, int sensors) {
-if (!isUseSystem()) {
-    return regList(listener, sensors);
-}
+        if (!isUseSystem()) {
+            return regList(listener, sensors);
+        }
 
         return sm.registerListener(listener, sensors);
 

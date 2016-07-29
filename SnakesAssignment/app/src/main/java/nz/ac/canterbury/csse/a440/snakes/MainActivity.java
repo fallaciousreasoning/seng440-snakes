@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private long lastUpdate;
 
     private GestureDetectorCompat gestureDetector;
+    private AggregateGestureListener gestureListener;
 
     private SnakeSwipeController swipeController;
     private SnakeAccelerometerController accelerometerController;
@@ -110,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //TODO maybe don't do this right here?
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
         updater = new GameUpdater(game, (int)(1000 / Float.parseFloat(speedString)));
+
+        gestureListener = new AggregateGestureListener();
+        gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
 
         //Set up the control system
         setupControls();
@@ -232,8 +236,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         switch (inputMethod){
             case SWIPE:
                 //Initialize the swipe controller
-                swipeController = new SnakeSwipeController(game);
-                gestureDetector = new GestureDetectorCompat(getBaseContext(), swipeController);
+                if (swipeController == null) {
+                    swipeController = new SnakeSwipeController(game);
+                    gestureListener.addGestureListener(swipeController);
+                }
                 snakeController = swipeController;
                 break;
             case BUTTONS:

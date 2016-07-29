@@ -14,11 +14,6 @@ public class Snake {
     private final float blockSize;
 
     /**
-     * The starting length of the snake. Useful when we reinitialize the game
-     */
-    private final int startingLength;
-
-    /**
      * The positions making up a snake
      */
     private LinkedList<Vector3> positions = new LinkedList<>();
@@ -43,7 +38,6 @@ public class Snake {
     public Snake(Vector3 headPosition, Direction headingDirection, float blockSize, int length) {
         this.blockSize = blockSize;
         this.direction = headingDirection;
-        this.startingLength = length;
 
         Vector3 tailDirection = stepAmount(headingDirection).mul(-1);
 
@@ -159,14 +153,6 @@ public class Snake {
     }
 
     /**
-     * Gets the starting length of the snake
-     * @return The starting length of the snake
-     */
-    public int startingLength() {
-        return startingLength;
-    }
-
-    /**
      * Gets a list of positions that the snake is made up of
      * @return The positions
      */
@@ -181,19 +167,7 @@ public class Snake {
     public boolean willIntersect() {
         Vector3 nextPosition = nextPosition();
 
-        for (Vector3 position : positions) {
-            //Skip the head. I'd like to do this with a stream but it doesn't exist
-
-            //Check if this position is part of the snake and it isn't the last block if we don't need to grow
-            //(the last block will move)
-            if (nextPosition.equals(position)&& (!positions.getLast().equals(nextPosition) || grow > 0)) {
-                //If it is, we're done!
-                return true;
-            }
-        }
-
-        //If we didn't find anything, we're all good
-        return false;
+        return onSnake(nextPosition, true);
     }
 
     /**
@@ -204,5 +178,36 @@ public class Snake {
     public boolean isBackwards(Direction direction) {
         //The snake is going backwards if our new next position would be the second block of the snake
         return nextPosition(direction).equals(positions.get(1));
+    }
+
+    /**
+     * Indicates whether a position is on the snake
+     * @param position The position
+     * @return Whether it is on the snake
+     */
+    public boolean onSnake(Vector3 position) {
+        return onSnake(position, false);
+    }
+
+    /**
+     * Indicates whether or not a position is on the snake
+     * @param position The position
+     * @param nextFrame Indicates whether we should only care about the next frame
+     * @return Whether it is on the snake
+     */
+    private boolean onSnake(Vector3 position, boolean nextFrame) {
+        for (Vector3 snakePosition : positions) {
+            //Skip the head. I'd like to do this with a stream but it doesn't exist
+
+            //Check if this position is part of the snake and it isn't the last block if we don't need to grow
+            //(the last block will move)
+            if (snakePosition.equals(position)&& (!positions.getLast().equals(position) || grow > 0 || !nextFrame)) {
+                //If it is, we're done!
+                return true;
+            }
+        }
+
+        //If we didn't find anything, we're all good
+        return false;
     }
 }

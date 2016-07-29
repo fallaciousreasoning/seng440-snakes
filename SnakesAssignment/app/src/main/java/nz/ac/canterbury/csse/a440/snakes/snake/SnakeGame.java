@@ -34,6 +34,11 @@ public class SnakeGame {
     private float tileSize = 1;
 
     /**
+     * The starting length of the snake. Used when resetting.
+     */
+    private final int startingLength;
+
+    /**
      * Indicates the snake hit a wall
      */
     private boolean hitWall;
@@ -42,6 +47,11 @@ public class SnakeGame {
      * Indicates the snake hit itself
      */
     private boolean hitSelf;
+
+    /**
+     * Indicates whether the snake game has started
+     */
+    private boolean started;
 
     /**
      * A random number generator
@@ -55,9 +65,16 @@ public class SnakeGame {
 
     public SnakeGame(int width, int height, int depth, int startingLength) {
         this.bounds = new AABB(Vector3.Zero, width*tileSize, height*tileSize, depth*tileSize);
+        this.startingLength = startingLength;
 
-        snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
-        spawnFood();
+        reset();
+    }
+
+    /**
+     * Initializes the snake game. The game will not run until this method has been called.
+     */
+    public void start() {
+        started = true;
     }
 
     /**
@@ -65,7 +82,7 @@ public class SnakeGame {
      */
     public void step() {
         //If we've finished, we shouldn't be attempting to step
-        if (finished()) {
+        if (finished() || !started()) {
             return;
         }
 
@@ -99,14 +116,27 @@ public class SnakeGame {
     }
 
     /**
+     * Resets the game
+     */
+    public void reset() {
+        snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
+        spawnFood();
+    }
+
+    /**
      * Adds a new piece of food at a random position on the board
      */
     private void spawnFood() {
-        float x = (float)Math.floor(random.nextFloat() * bounds.getWidth() + bounds.getMin().getX() / tileSize) * tileSize;
-        float y = (float)Math.floor(random.nextFloat() * bounds.getHeight() + bounds.getMin().getY() / tileSize) * tileSize;
-        float z = (float)Math.round(random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ() / tileSize) * tileSize;
+        Vector3 position;
 
-        food = new Food(1, new Vector3(x, y, z));
+        do {
+            float x = (float) Math.floor(random.nextFloat() * bounds.getWidth() + bounds.getMin().getX() / tileSize) * tileSize;
+            float y = (float) Math.floor(random.nextFloat() * bounds.getHeight() + bounds.getMin().getY() / tileSize) * tileSize;
+            float z = (float) Math.round(random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ() / tileSize) * tileSize;
+            position = new Vector3(x, y, z);
+        }while (getSnake().onSnake(position));
+
+        food = new Food(1, position);
     }
 
     /**
@@ -131,6 +161,14 @@ public class SnakeGame {
      */
     public Snake getSnake() {
         return snake;
+    }
+
+    /**
+     * Gets the starting length of the snake
+     * @return The starting length of the snake
+     */
+    public int startingLength() {
+        return startingLength;
     }
 
     /**
@@ -166,12 +204,20 @@ public class SnakeGame {
     }
 
     /**
+     * Indicates whether the game has been started
+     * @return Whether the game has been started
+     */
+    public boolean started() {
+        return started;
+    }
+
+    /**
      * Calculates the current score for the game
      * @return The score
      */
     public int score() {
         //The score is the length of the snake minus however long we were when we started
-        return getSnake().length() - getSnake().startingLength();
+        return getSnake().length() - startingLength();
     }
 
     /**

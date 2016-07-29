@@ -27,4 +27,9 @@ public class SnakeButtonController implements SnakeController{
     public Direction getDirection() {
         return direction;
     }
+
+    @Override
+    public void reset() {
+        direction = Direction.NORTH;
+    }
 }

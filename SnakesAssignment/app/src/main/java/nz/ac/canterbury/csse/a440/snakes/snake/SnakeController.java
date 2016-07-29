@@ -10,4 +10,9 @@ public interface SnakeController {
      * @return The direction the snake should move in
      */
     Direction getDirection();
+
+    /**
+     * Tells the controller to set its direction to the default
+     */
+    void reset();
 }

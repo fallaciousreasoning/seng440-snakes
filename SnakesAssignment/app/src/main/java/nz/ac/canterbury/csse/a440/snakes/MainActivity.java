@@ -41,6 +41,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity {
@@ -118,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
         gestureListener = new AggregateGestureListener();
         gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
+
+        StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
+        gestureListener.addGestureListener(startFinishGestureListener);
 
         //Set up the control system
         setupControls();

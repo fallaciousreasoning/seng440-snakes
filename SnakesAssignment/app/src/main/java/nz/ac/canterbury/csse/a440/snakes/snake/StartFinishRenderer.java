@@ -37,7 +37,7 @@ public class StartFinishRenderer implements Renderer {
         if (textView == null) return;
 
         if (!game.started()) textView.setText(startText);
-        else if (!game.finished()) textView.setText(finishText);
+        else if (game.finished()) textView.setText(finishText);
         else textView.setText("");
     }
 }

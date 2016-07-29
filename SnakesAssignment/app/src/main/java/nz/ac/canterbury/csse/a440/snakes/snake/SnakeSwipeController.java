@@ -38,4 +38,9 @@ public class SnakeSwipeController extends GestureDetector.SimpleOnGestureListene
     public Direction getDirection() {
         return direction;
     }
+
+    @Override
+    public void reset() {
+        direction = Direction.NORTH;
+    }
 }

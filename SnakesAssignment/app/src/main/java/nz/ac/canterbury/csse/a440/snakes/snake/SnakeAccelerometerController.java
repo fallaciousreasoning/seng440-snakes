@@ -27,6 +27,11 @@ public class SnakeAccelerometerController implements SnakeController, SensorEven
     }
 
     @Override
+    public void reset() {
+        direction = Direction.NORTH;
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent event) {
         System.err.println("sensor event");
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {

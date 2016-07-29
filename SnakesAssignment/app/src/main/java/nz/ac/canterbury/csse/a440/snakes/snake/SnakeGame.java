@@ -75,6 +75,7 @@ public class SnakeGame {
      */
     public void start() {
         started = true;
+        notifyListeners();
     }
 
     /**
@@ -110,6 +111,13 @@ public class SnakeGame {
             }
         }
 
+        notifyListeners();
+    }
+
+    /**
+     * Notifies listeners that the game has been updated
+     */
+    private void notifyListeners() {
         //Tell all the renderers we've updated
         for (Renderer renderer : renderers)
             renderer.render(this);
@@ -121,6 +129,14 @@ public class SnakeGame {
     public void reset() {
         snake = new Snake(bounds.getCentre(), Direction.NORTH, 1, startingLength);
         spawnFood();
+
+        started = false;
+        hitWall = false;
+        hitSelf = false;
+
+        snakeController.reset();
+
+        notifyListeners();
     }
 
     /**

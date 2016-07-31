@@ -19,16 +19,6 @@ public class CanvasViewRenderer extends View implements Renderer {
     private Paint foodPaint;
 
     /**
-     * The height of the text
-     */
-    private float textHeight;
-
-    /**
-     * The width of the text;
-     */
-    private float textWidth;
-
-    /**
      * The game that this view is rendering
      */
     private SnakeGame snakeGame;

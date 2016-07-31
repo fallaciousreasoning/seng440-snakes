@@ -134,7 +134,9 @@ public class SnakeGame {
         hitWall = false;
         hitSelf = false;
 
-        snakeController.reset();
+        if (snakeController != null) {
+            snakeController.reset();
+        }
 
         notifyListeners();
     }

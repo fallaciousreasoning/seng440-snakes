@@ -51,6 +51,9 @@ public class AndroidSensorInjector extends Thread {
     private AndroidSensorInjector() throws IOException {
         q = new ConcurrentLinkedQueue();
         listeners = new HashSet<>();
+
+        listeners.add(new SensorListReceiver());
+
         start();
     }
 
@@ -99,7 +102,7 @@ public class AndroidSensorInjector extends Thread {
 
                     @Override
                     public void ended() {
-                        ok = false;
+                        ok = true;
                     }
                 });
 

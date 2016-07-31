@@ -16,11 +16,8 @@ public class SensorListReceiver implements RemoteEventListener {
         JSONObject list = new JSONObject(data);
         Set<String> sensorList = new HashSet<>();
 
-        for (Object sensor : list.getJSONArray("sensors")) {
-            if (!(sensor instanceof String)) {
-                throw new RuntimeException("What on earth are you doing?");
-            }
-
+        String[] sensors = list.getString("sensors").split(",");
+        for (String sensor : sensors) {
             sensorList.add(sensor.toString());
         }
 

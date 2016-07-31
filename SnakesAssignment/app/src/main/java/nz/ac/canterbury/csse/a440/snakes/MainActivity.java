@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         SnakeApplication app = (SnakeApplication) this.getApplication();
-        InjectableSensorManager.setUseSystem(true);
+        InjectableSensorManager.setUseSystem(false);
         sensorManager = app.ism;
         if (sensorManager instanceof InjectableSensorManager) {
             InjectableSensorManager ism = (InjectableSensorManager) sensorManager;
             //NB this needs to be a setting
 
-            ism.createRemoteListener("192.168.137.1", 51234);
+            ism.createRemoteListener("192.168.2.9", 51234);
         }
 
         for (Sensor s : sensorManager.getSensorList(Sensor.TYPE_ALL)) {

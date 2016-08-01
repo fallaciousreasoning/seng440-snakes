@@ -54,6 +54,18 @@ import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String[] INITIAL_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.INTERNET
+    };
+    private static final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    private static final int INITIAL_REQUEST=1337;
+    private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
+    private static final int LOCATION_COARSE_REQUEST=INITIAL_REQUEST+2;
+    private static final int INTERNET_REQUEST=INITIAL_REQUEST+3;
     private SensorManager sensorManager;
     private LocationManager locationManager;
 
@@ -90,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        if (!canAccessLocation() || !canAccessLocationCoarse() || !canAccessInternet()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
+            }
+        }
 
         try {
             LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
@@ -126,6 +143,18 @@ public class MainActivity extends AppCompatActivity {
 
         StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
         gestureListener.addGestureListener(startFinishGestureListener);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch(requestCode) {
+            case LOCATION_REQUEST:
+                break;
+            case LOCATION_COARSE_REQUEST:
+                break;
+            case INITIAL_REQUEST:
+                break;
+        }
     }
 
     @Override
@@ -183,18 +212,19 @@ public class MainActivity extends AppCompatActivity {
                 sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-        //Set the update rate
-        String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
-        updater.setUpdateRate((int) (1000 / Float.parseFloat(speedString)));
-
         //Setup the controls
         setupControls();
         try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, gpsController);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, (float) 0.1, gpsController);
         }
         catch (SecurityException e) {
             e.printStackTrace();
         }
+
+
+        //Set the update rate
+        String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
+        updater.setUpdateRate((int) (1000 / Float.parseFloat(speedString)));
     }
 
     @Override
@@ -208,6 +238,25 @@ public class MainActivity extends AppCompatActivity {
         catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean canAccessLocation() {
+        return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private boolean canAccessLocationCoarse() {
+        return(hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+    }
+
+    private boolean canAccessInternet() {
+        return(hasPermission(Manifest.permission.INTERNET));
+    }
+
+    private boolean hasPermission(String perm) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(perm));
+        }
+        return true;
     }
 
     @Override

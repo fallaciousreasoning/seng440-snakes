@@ -12,8 +12,6 @@ import android.os.Bundle;
 public class SnakeGPSController implements SnakeController, LocationListener {
     Direction direction = Direction.NORTH;
     String provider;
-    private int currentLong = 0;
-    private int currentLat = 0;
     private int prevousLong = 0;
     private int previousLat = 0;
 
@@ -26,9 +24,9 @@ public class SnakeGPSController implements SnakeController, LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        currentLat = (int) (location.getLatitude());
-        currentLong = (int) (location.getLongitude());
-        if (currentLat == 0 && currentLong == 0) {
+        int currentLat = (int) (location.getLatitude());
+        int currentLong = (int) (location.getLongitude());
+        if (previousLat == 0 && prevousLong == 0) {
             previousLat = currentLat;
             prevousLong = currentLong;
             return;
@@ -83,5 +81,7 @@ public class SnakeGPSController implements SnakeController, LocationListener {
     @Override
     public void reset() {
         direction = Direction.NORTH;
+        previousLat = 0;
+        prevousLong = 0;
     }
 }

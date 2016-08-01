@@ -18,12 +18,14 @@
         <item>Buttons</item>
         <item>Accelerometer</item>
         <item>Compass</item>
+        <item>GPS</item>
     </string-array>
     <string-array name="pref_input_method_values">
         <item>SWIPE</item> <!-- Swipe -->
         <item>BUTTONS</item> <!-- Buttons -->
         <item>ACCELEROMETER</item> <!-- Accelerometer -->
         <item>COMPASS</item> <!-- Compass -->
+        <item>GPS</item>
     </string-array>
 
     <!-- Game Speed Settings -->

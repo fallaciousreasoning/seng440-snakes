@@ -81,27 +81,6 @@ public class MainActivity extends AppCompatActivity {
         compassController = new SnakeCompassController();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        SnakeApplication app = (SnakeApplication) this.getApplication();
-
-        //Check if we should enable the sensor injector
-        boolean sensor_injector_enabled = PreferenceManager
-                .getDefaultSharedPreferences(this)
-                .getBoolean("sensor_injector_enabled", false);
-        InjectableSensorManager.setUseSystem(!sensor_injector_enabled);
-        sensorManager = app.ism;
-        if (sensorManager instanceof InjectableSensorManager) {
-            InjectableSensorManager ism = (InjectableSensorManager) sensorManager;
-            //Get the ip for the sensor injector
-            String ip = PreferenceManager
-                    .getDefaultSharedPreferences(this)
-                    .getString("sensor_injector_ip", "127.0.0.1");
-            ism.createRemoteListener(ip, 51234);
-        }
-
-        for (Sensor s : sensorManager.getSensorList(Sensor.TYPE_ALL)) {
-            System.out.println(s.getName() + " " + s.getType());
-        }
-
 
         game = new SnakeGame(20, 30, 1, 3);
 
@@ -117,23 +96,14 @@ public class MainActivity extends AppCompatActivity {
         StartFinishRenderer startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
         startFinishRenderer.setTextView(gameStatusText);
         game.addRenderer(startFinishRenderer);
-        //gameRenderer.getGame();
 
-        //TODO maybe don't do this right here?
-        String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
-        updater = new GameUpdater(game, (int) (1000 / Float.parseFloat(speedString)));
+        updater = new GameUpdater(game);
 
         gestureListener = new AggregateGestureListener();
         gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
 
         StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
         gestureListener.addGestureListener(startFinishGestureListener);
-
-        //Set up the control system
-        setupControls();
-
-        //Set the snake controller
-        game.setSnakeController(snakeController);
     }
 
     @Override
@@ -164,6 +134,22 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // register this class as a listener for the orientation and
         // accelerometer sensors
+        SnakeApplication app = (SnakeApplication) this.getApplication();
+
+        //Check if we should enable the sensor injector
+        boolean sensor_injector_enabled = PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getBoolean("sensor_injector_enabled", false);
+        InjectableSensorManager.setUseSystem(!sensor_injector_enabled);
+        sensorManager = app.ism;
+        if (sensorManager instanceof InjectableSensorManager) {
+            InjectableSensorManager ism = (InjectableSensorManager) sensorManager;
+            //Get the ip for the sensor injector
+            String ip = PreferenceManager
+                    .getDefaultSharedPreferences(this)
+                    .getString("sensor_injector_ip", "127.0.0.1");
+            ism.createRemoteListener(ip, 51234);
+        }
 
         sensorManager.registerListener(accelerometerController,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -175,6 +161,11 @@ public class MainActivity extends AppCompatActivity {
                 sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
+        //Set the update rate
+        String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
+        updater.setUpdateRate((int) (1000 / Float.parseFloat(speedString)));
+
+        //Setup the controls
         setupControls();
     }
 

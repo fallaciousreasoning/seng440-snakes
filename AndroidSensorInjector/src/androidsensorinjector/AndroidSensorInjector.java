@@ -51,6 +51,9 @@ public class AndroidSensorInjector extends Thread {
     private AndroidSensorInjector() throws IOException {
         q = new ConcurrentLinkedQueue();
         listeners = new HashSet<>();
+
+        listeners.add(new SensorListReceiver());
+
         start();
     }
 
@@ -99,7 +102,7 @@ public class AndroidSensorInjector extends Thread {
 
                     @Override
                     public void ended() {
-                        ok = false;
+                        ok = true;
                     }
                 });
 
@@ -115,7 +118,7 @@ public class AndroidSensorInjector extends Thread {
                         while (!q.isEmpty()) {
                             ds.sendEvent(q.remove());
                         }
-                        Thread.sleep(1200);
+                        Thread.sleep(50);
                     }
 
                 } catch (Exception iOE) {

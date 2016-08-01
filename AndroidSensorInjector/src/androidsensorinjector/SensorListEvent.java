@@ -23,7 +23,7 @@ public class SensorListEvent implements JsonSerializable {
     public String json() {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
-        builder.append("\"TYPE\": list\"");
+        builder.append("\"TYPE\": \"list\"");
         builder.append("}");
         return builder.toString();
     }

@@ -28,20 +28,15 @@ public class MySensorEvent  extends SensorEvent {
             for (int i=0;i<length;i++){
                 v[i]=(float) fa.getDouble(i);
             }
-            /*
+
             Class c =this.getClass();
-            //now to use reflection to overcome the nasty final problem
+            //now to use reflection to try and set the final variable values
             try {
-                Field[] fas=c.getFields();
-                for (Field f:fas){
-                    //System.out.println(f.getName());
-                }
-            Field df = c.getField("values");
-            setFinal(df,v);
+                Field df = c.getField("values");
+                setFinal(df,v);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            */
         } catch (JSONException e) {
             e.printStackTrace();
         }

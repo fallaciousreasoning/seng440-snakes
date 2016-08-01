@@ -6,6 +6,8 @@
 package androidsensorinjector;
 
 import javax.swing.JOptionPane;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -16,15 +18,42 @@ public class SensorControllerGUI extends javax.swing.JFrame {
     private static final float g=9.81f;
 
     /**
+     * A map mapping keys to commands
+     */
+    private HashMap<Integer, InputDirection> keymap = new HashMap<>();
+
+    /**
      * Creates new form SensorController
      */
     public SensorControllerGUI() {
         initComponents();
+
+        //Initialize sensor mapping
+        SensorInfo accelerometerSensor = new SensorInfo();
+        accelerometerSensor.setName("Accelerometer");
+        accelerometerSensor.setId(1);
+
+        MessageBuilder.setAccelerometer(accelerometerSensor);
+
+        //Setup accelerometer keys
+        //W north
+        registerKey(87, InputMethod.Accelerometer, Direction.NORTH);
+        //S north
+        registerKey(83, InputMethod.Accelerometer, Direction.SOUTH);
+        //D north
+        registerKey(68, InputMethod.Accelerometer, Direction.EAST);
+        //A north
+        registerKey(65, InputMethod.Accelerometer, Direction.WEST);
+
         asi=AndroidSensorInjector.getInjector();
         if (asi==null){
             JOptionPane.showMessageDialog(rootPane, "Could not start the injector!");
             System.exit(1);
         }
+    }
+
+    private void registerKey(int keyCode, InputMethod method, Direction direction) {
+        keymap.put(keyCode, new InputDirection(method, direction));
     }
 
     /**
@@ -48,7 +77,7 @@ public class SensorControllerGUI extends javax.swing.JFrame {
             }
         });
 
-        msgLabel.setText("With the form active use different keys to create sensor events");
+        msgLabel.setText("With the form active use different keys to createEvents sensor events");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,9 +102,18 @@ public class SensorControllerGUI extends javax.swing.JFrame {
     
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         System.out.println("key pressed was "+evt.getKeyCode()+' '+evt.getKeyChar());
-        //DEMO idea.....
-        SensorEvent se = new SensorEvent("sensorEvent", 0, 1, System.currentTimeMillis(), new float[]{g,0,g});
-        asi.addEvent(se);
+
+        if (!keymap.containsKey(evt.getKeyCode())) {
+            return;
+        }
+
+        InputDirection inputDir = keymap.get(evt.getKeyCode());
+        List<SensorEvent> events = new MessageBuilder()
+                .setInputMethod(inputDir.getMethod())
+                .setDirection(inputDir.getDirection())
+                .createEvents();
+        for (SensorEvent event : events)
+            asi.addEvent(event);
         //DEMO
     }//GEN-LAST:event_formKeyPressed
 

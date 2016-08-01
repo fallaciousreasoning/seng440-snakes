@@ -1,28 +1,51 @@
 package androidsensorinjector;
 
 import jdk.internal.util.xml.impl.Input;
+import sun.management.Sensor;
 import sun.management.snmp.jvminstr.NotificationTarget;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Helps build messages
  */
 public class MessageBuilder {
-    /**
-     * A hashmap which maps input methods to sensors
-     */
-    private static HashMap<InputMethod, SensorInfo> sensorInfo = new HashMap<>();
+    private static SensorInfo accelerometer;
+    private static SensorInfo compass;
+    private static SensorInfo gps;
 
     /**
-     * Maps an input method to a sensor
-     * @param sensor The sensor
+     * Sets the accelerometer
+     * @param sensor The accelerometer
      */
-    public static void registerInputMethod(InputMethod method, SensorInfo sensor) {
-        sensorInfo.put(method, sensor);
+    public static void setAccelerometer(SensorInfo sensor) {
+        accelerometer = sensor;
     }
+
+    /**
+     * Sets the GPS
+     * @param sensor The GPS
+     */
+    public static void setGps(SensorInfo sensor) {
+        gps = sensor;
+    }
+
+    /**
+     * Sets the compass
+     * @param sensor The compass
+     */
+    public static void setCompass(SensorInfo sensor) {
+        compass = sensor;
+    }
+
+    /**
+     * The list of sensors we have to send messages to
+     */
+    private List<SensorInfo> requiredSensors = new ArrayList<>();
 
     /**
      * A map of builders for different sensors
@@ -53,33 +76,7 @@ public class MessageBuilder {
      * Creates a new message builder
      */
     public MessageBuilder() {
-        builders.put(InputMethod.Accelerometer, dir -> {
-            float[] values = new float[3];
-            float magicNumber = 10;
-
-            values[2] = magicNumber;
-
-            switch (dir) {
-                case NORTH:
-                    values[1] = -magicNumber;
-                    values[0] = 0;
-                    break;
-                case SOUTH:
-                    values[1] = magicNumber;
-                    values[0] = 0;
-                    break;
-                case EAST:
-                    values[0] = -magicNumber;
-                    values[1] = 0;
-                    break;
-                case WEST:
-                    values[0] = magicNumber;
-                    values[1] = 0;
-                    break;
-            }
-
-            return values;
-        });
+        builders.put(InputMethod.Accelerometer, new AccelerometerValuesBuilder());
     }
 
     /**
@@ -88,6 +85,21 @@ public class MessageBuilder {
      * @return The builder
      */
     public MessageBuilder setInputMethod(InputMethod method) {
+        requiredSensors.clear();
+        //Work out what sensors we need
+        switch (method) {
+            case Accelerometer:
+                requiredSensors.add(accelerometer);
+                break;
+            case GPS:
+                requiredSensors.add(gps);
+                break;
+            case Compass:
+                requiredSensors.add(accelerometer);
+                requiredSensors.add(compass);
+                break;
+        }
+
         this.inputMethod = method;
         return this;
     }
@@ -123,16 +135,22 @@ public class MessageBuilder {
     }
 
     /**
-     * Creates the sensor event
-     * @return The sensor event
+     * Creates the sensor events required for this messages
+     * @return The sensor events
      */
-    public SensorEvent create() {
+    public List<SensorEvent> createEvents() {
         SensorValueBuilder builder = builders.get(inputMethod);
-        SensorInfo sensor = sensorInfo.get(inputMethod);
 
-        float[] values = builder.getValues(direction);
+        List<float[]> values = builder.getValues(direction);
 
         long timeStamp = this.timeStamp == -1 ? System.currentTimeMillis() : this.timeStamp;
-        return new SensorEvent("sensorEvent", accuracy, sensor.getId(), timeStamp, values);
+
+        List<SensorEvent> events = new ArrayList<>();
+        for (int i = 0; i < requiredSensors.size(); ++i) {
+            SensorInfo sensor = requiredSensors.get(i);
+            SensorEvent event = new SensorEvent("sensorEvent", accuracy, sensor.getId(), timeStamp, values.get(i));
+            events.add(event);
+        }
+        return events;
     }
 }

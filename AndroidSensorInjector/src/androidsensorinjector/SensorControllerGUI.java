@@ -76,7 +76,7 @@ public class SensorControllerGUI extends javax.swing.JFrame {
             }
         });
 
-        msgLabel.setText("With the form active use different keys to create sensor events");
+        msgLabel.setText("With the form active use different keys to createEvents sensor events");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,7 +110,7 @@ public class SensorControllerGUI extends javax.swing.JFrame {
         SensorEvent event = new MessageBuilder()
                 .setInputMethod(inputDir.getMethod())
                 .setDirection(inputDir.getDirection())
-                .create();
+                .createEvents();
         asi.addEvent(event);
         //DEMO
     }//GEN-LAST:event_formKeyPressed

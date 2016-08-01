@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Statgit - Language Statistics</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+<div class="content">
+<div class="breadcrumb">
+  <a href="index.html">Statgit</a> &gt;&gt;
+</div>
+<h1>Languages</h1>
+
+<dl>
+  <dt>Total languages</dt>
+  <dd>7</dd>
+
+  <dt>Lines</dt>
+  <dd>14,174</dd>
+
+  <dt>Lines of code</dt>
+  <dd>8,989    (63.42%)</dd>
+
+  <dt>Lines of comments</dt>
+  <dd>3,869    (27.30%)</dd>
+
+  <dt>Blank lines</dt>
+  <dd>1,316    (9.28%)</dd>
+</dl>
+
+<div id="chart_languages" style="width: 400px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = data = google.visualization.arrayToDataTable([
+      ["Lines of Code", "Value"]
+      , ["Java", 5647], ["XML", 3084], ["Bourne Again Shell", 121], ["DOS Batch", 64], ["Groovy", 48], ["Prolog", 15], ["Ant", 10]    ]);
+
+    // Set chart options
+    var options = {
+      title: "Lines of Code",
+      width: 400,
+      height: 300,
+      chartArea: {width: '80%', height: '80%', left: 25, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById("chart_languages"));
+    chart.draw(data, options);
+  }
+</script>
+
+<table class="statistics">
+  <thead>
+    <tr><th>Language</th><th>Files</th><th>Lines of Code</th><th>LOC per File</th><th>Comments</th><th>Comments per File</th><th>Blank Lines</th><th>Blank Lines per File</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="language"><a href="language_Java.html" class="">Java</a></th><td>70 (64.81%)</td><td>5,647 (62.82%)</td><td>80.7</td><td>3,466 (89.58%)</td><td>49.5</td><td>1,195 (90.81%)</td><td>17.1</td></tr>
+<tr><th class="language"><a href="language_XML.html" class="">XML</a></th><td>30 (27.78%)</td><td>3,084 (34.31%)</td><td>102.8</td><td>267 (6.90%)</td><td>8.9</td><td>41 (3.12%)</td><td>1.4</td></tr>
+<tr><th class="language"><a href="language_Bourne_Again_Shell.html" class="">Bourne Again Shell</a></th><td>1 (0.93%)</td><td>121 (1.35%)</td><td>121.0</td><td>20 (0.52%)</td><td>20.0</td><td>19 (1.44%)</td><td>19.0</td></tr>
+<tr><th class="language"><a href="language_DOS_Batch.html" class="">DOS Batch</a></th><td>1 (0.93%)</td><td>64 (0.71%)</td><td>64.0</td><td>2 (0.05%)</td><td>2.0</td><td>24 (1.82%)</td><td>24.0</td></tr>
+<tr><th class="language"><a href="language_Groovy.html" class="">Groovy</a></th><td>3 (2.78%)</td><td>48 (0.53%)</td><td>16.0</td><td>4 (0.10%)</td><td>1.3</td><td>9 (0.68%)</td><td>3.0</td></tr>
+<tr><th class="language"><a href="language_Prolog.html" class="">Prolog</a></th><td>1 (0.93%)</td><td>15 (0.17%)</td><td>15.0</td><td>0 (0.00%)</td><td>0.0</td><td>2 (0.15%)</td><td>2.0</td></tr>
+<tr><th class="language"><a href="language_Ant.html" class="">Ant</a></th><td>2 (1.85%)</td><td>10 (0.11%)</td><td>5.0</td><td>110 (2.84%)</td><td>55.0</td><td>26 (1.98%)</td><td>13.0</td></tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Total</th>
+      <td>108</td>
+      <td>8,989</td>
+      <td>83.2</td>
+      <td>3,869</td>
+      <td>35.8</td>
+      <td>1,316</td>
+      <td>12.2</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h2>Language History</h2>
+
+
+<div id="chart_history" style="width: 800px; height: 600px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+        data.addColumn('number', "Java");
+        data.addColumn('number', "XML");
+        data.addColumn('number', "Bourne Again Shell");
+        data.addColumn('number', "DOS Batch");
+        data.addColumn('number', "Groovy");
+        data.addColumn('number', "Prolog");
+        data.addColumn('number', "Ant");
+    
+    data.addRows([
+      [new Date(2016, 08-1, 01, 22, 09, 06), 5647, 3084, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 10, 29, 45), 5647, 3084, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 44, 58), 5604, 3082, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 42, 52), 5503, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 42, 32), 5269, 3070, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 29, 27), 5502, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 19, 49), 5498, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 17, 13), 5498, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 03, 06, 06), 5492, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 58, 22), 5492, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 53, 14), 5492, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 46, 45), 5492, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 44, 30), 5490, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 40, 28), 5484, 3079, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 31, 08), 5484, 3070, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 02, 28, 20), 5466, 3070, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 00, 28, 27), 5426, 3070, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 00, 27, 39), 5426, 3070, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 00, 26, 19), 5426, 3070, 121, 64, 48, 15, 10],[new Date(2016, 08-1, 01, 00, 22, 00), 5426, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 31, 23, 22, 00), 5267, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 31, 05, 29, 49), 5268, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 31, 04, 56, 31), 5215, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 50, 31), 5215, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 48, 26), 5190, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 37, 24), 5168, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 31, 37), 5094, 3070, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 21, 10), 5093, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 21, 04), 5073, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 04, 09, 57), 5066, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 03, 50, 57), 5071, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 03, 49, 35), 5067, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 03, 22, 56), 5051, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 03, 03, 32), 5017, 3057, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 02, 57, 56), 5014, 3056, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 02, 57, 14), 5013, 3056, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 29, 02, 54, 54), 5013, 3051, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 09, 36, 26), 5027, 3051, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 09, 26, 46), 5027, 3051, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 09, 24, 16), 5025, 3051, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 09, 22, 53), 5025, 3050, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 09, 22, 29), 5025, 3050, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 08, 33, 59), 4992, 3051, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 08, 05, 24), 4966, 3054, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 04, 36, 31), 4970, 3054, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 04, 17, 57), 4970, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 04, 11, 25), 4975, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 04, 11, 13), 4967, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 04, 06, 34), 4949, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 04, 05, 58), 4949, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 03, 54, 08), 4946, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 03, 47, 56), 4979, 3029, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 03, 29, 58), 4979, 3083, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 03, 28, 27), 4981, 3083, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 03, 00, 15), 4984, 3083, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 01, 50, 26), 4913, 3083, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 28, 01, 01, 45), 4913, 3083, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 27, 07, 49, 43), 4914, 3083, 121, 64, 48, 15, 10],[new Date(2016, 07-1, 27, 07, 24, 52), 4668, 2938, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 07, 18, 52), 4660, 2938, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 06, 47, 19), 4642, 2938, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 06, 38, 45), 4641, 2938, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 06, 20, 13), 4636, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 06, 14, 03), 4641, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 06, 00, 00), 4638, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 31, 07), 4594, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 29, 36), 4594, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 13, 50), 4583, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 11, 51), 4580, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 06, 41), 4574, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 04, 36), 4574, 2939, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 27, 05, 00, 06), 4574, 2941, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 09, 19, 37), 4532, 2940, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 07, 18, 52), 4439, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 07, 13, 39), 4424, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 07, 12, 10), 4421, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 07, 07, 23), 4404, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 07, 05, 55), 4404, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 06, 57, 14), 4369, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 06, 39, 28), 4321, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 06, 38, 43), 4321, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 06, 21, 43), 4277, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 06, 21, 32), 4304, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 06, 11, 20), 4265, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 06, 09, 26), 4260, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 06, 05, 46), 4248, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 05, 57, 21), 4233, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 05, 53, 38), 4213, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 05, 51, 48), 4207, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 05, 46, 43), 4210, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 05, 43, 31), 4206, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 05, 36, 11), 4172, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 04, 50, 21), 4129, 2912, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 26, 04, 36, 58), 4156, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 04, 25, 20), 4113, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 04, 15, 53), 4098, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 04, 13, 31), 4096, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 04, 12, 21), 4096, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 03, 58, 01), 4063, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 03, 56, 37), 4043, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 03, 54, 34), 4037, 2959, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 03, 52, 28), 4037, 2976, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 26, 02, 51, 20), 3984, 2976, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 20, 01, 24, 11), 3984, 2976, 121, 128, 70, 30, 10],[new Date(2016, 07-1, 20, 00, 55, 28), 3957, 2929, 121, 64, 47, 15, 10],[new Date(2016, 07-1, 20, 00, 36, 59), 3367, 2654, 0, 0, 0, 0, 10],[new Date(2016, 07-1, 20, 00, 34, 34), 81, 1327, 0, 0, 0, 0, 5],[new Date(2016, 07-1, 19, 03, 28, 35), 27, 56, 121, 64, 40, 15, 0]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 600,
+      vAxis: {minValue: 0},
+      isStacked: true,
+      title: "Lines of Code",
+      chartArea: {width: '80%', height: '65%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.AreaChart(document.getElementById("chart_history"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Comments</h2>
+
+
+<div id="chart_comments" style="width: 600px; height: 400px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', "Comments %");
+
+    data.addRows([
+      [new Date(2016, 07-1, 19), 8.69],[new Date(2016, 07-1, 20), 27.52],[new Date(2016, 07-1, 26), 28.19],[new Date(2016, 07-1, 27), 27.93],[new Date(2016, 07-1, 28), 27.79],[new Date(2016, 07-1, 29), 27.90],[new Date(2016, 07-1, 31), 27.56],[new Date(2016, 08-1, 01), 27.30]    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height: 400,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "Comments %", minValue: 0},
+      chartArea: {width: '70%', height: '70%', left: 100, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.LineChart(document.getElementById("chart_comments"));
+    chart.draw(data, options);
+  }
+</script>
+</div>
+
+<div class="footer">
+  Generated by <a href="https://github.com/soundasleep/statgit/" class="github">statgit</a> Mon, 01 Aug 2016 23:49:19 +0000</div>
+
+</body>
+</html>

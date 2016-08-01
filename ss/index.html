@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Statgit - git@eng-git.canterbury.ac.nz:dmw99/seng440-project1.git</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+<div class="content">
+<h1>Development statistics for git@eng-git.canterbury.ac.nz:dmw99/seng440-project1.git</h1>
+
+<dl>
+  <dt>Generated</dt>
+  <dd>Mon, 01 Aug 2016 23:49:19 +0000</dd>
+
+  <dt>Commits</dt>
+  <dd>108</dd>
+
+  <dt>Latest commit</dt>
+  <dd>
+    2c4bf029c606cc15ed1349b485502eb2040ef08f    <br>
+    <i>fix inaccuracy of gps input method</i>
+  </dd>
+
+  <dt>Report period</dt>
+  <dd>
+    2016-07-19 to 2016-08-01    (13 days)
+  </dd>
+
+  <dt>Total files</dt>
+  <dd>108</dd>
+
+  <dt>Total lines of code</dt>
+  <dd>8,989</dd>
+
+  <dt>Authors</dt>
+  <dd>4</dd>
+
+</dl>
+
+<ul class="navigation">
+  <li><a href="authors.html">Authors</a></li>
+  <li><a href="loc.html">Lines of code</a></li>
+  <li><a href="languages.html">Language statistics</a></li>
+  <li><a href="files.html">File statistics</a></li>
+                    <li><a href="gemfile.html">Gemfile statistics</a></li>
+    <li><a href="churn.html">Churn</a></li>
+</ul>
+
+<h2>Lines of Code</h2>
+
+
+<div id="chart_loc" style="width: 600px; height: 400px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', "LOC");
+
+    data.addRows([
+      [new Date(2016, 07-1, 19), 323],[new Date(2016, 07-1, 20), 7319],[new Date(2016, 07-1, 26), 7729],[new Date(2016, 07-1, 27), 8255],[new Date(2016, 07-1, 28), 8336],[new Date(2016, 07-1, 29), 8543],[new Date(2016, 07-1, 31), 8595],[new Date(2016, 08-1, 01), 8989]    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height: 400,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "LOC", minValue: 0},
+      chartArea: {width: '70%', height: '70%', left: 100, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.LineChart(document.getElementById("chart_loc"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Languages</h2>
+
+<div id="chart_languages" style="width: 400px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = data = google.visualization.arrayToDataTable([
+      ["Lines of Code", "Value"]
+      , ["Java", 5647], ["XML", 3084], ["Bourne Again Shell", 121], ["DOS Batch", 64], ["Groovy", 48], ["Prolog", 15], ["Ant", 10]    ]);
+
+    // Set chart options
+    var options = {
+      title: "Lines of Code",
+      width: 400,
+      height: 300,
+      chartArea: {width: '80%', height: '80%', left: 25, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById("chart_languages"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Top Authors</h2>
+
+<div id="chart_authors_pie_commits" style="width: 500px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = data = google.visualization.arrayToDataTable([
+      ["Commits", "Value"]
+      , ["jay.harris@outlook.co.nz", 94], ["woolley.dion@gmail.com", 10], ["d.h.bowes@herts.ac.uk", 3], ["david.bowes@canterbury.ac.nz", 1]    ]);
+
+    // Set chart options
+    var options = {
+      title: "Commits",
+      width: 500,
+      height: 300,
+      chartArea: {width: '80%', height: '80%', left: 25, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById("chart_authors_pie_commits"));
+    chart.draw(data, options);
+  }
+</script>
+
+<div id="chart_authors_pie_changes" style="width: 500px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = data = google.visualization.arrayToDataTable([
+      ["Changes", "Value"]
+      , ["d.h.bowes@herts.ac.uk", 11451], ["jay.harris@outlook.co.nz", 4801], ["woolley.dion@gmail.com", 2353], ["david.bowes@canterbury.ac.nz", 620]    ]);
+
+    // Set chart options
+    var options = {
+      title: "Changes",
+      width: 500,
+      height: 300,
+      chartArea: {width: '80%', height: '80%', left: 25, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById("chart_authors_pie_changes"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Tag Cloud of Words in Commit Log Messages</h2>
+
+<ul class="tag_cloud">
+<li class="tag00">aabb</li><li class="tag100">adds</li><li class="tag00">branch</li><li class="tag20">bug</li><li class="tag20">can</li><li class="tag00">change</li><li class="tag20">class</li><li class="tag10">code</li><li class="tag00">control</li><li class="tag00">controller</li><li class="tag00">could</li><li class="tag00">determining</li><li class="tag10">direction</li><li class="tag40">fixes</li><li class="tag10">food</li><li class="tag70">for</li><li class="tag10">from</li><li class="tag40">game</li><li class="tag00">gps</li><li class="tag00">has</li><li class="tag00">how</li><li class="tag10">injector</li><li class="tag10">input</li><li class="tag00">make</li><li class="tag10">makes</li><li class="tag10">master</li><li class="tag00">merge</li><li class="tag10">method</li><li class="tag10">methods</li><li class="tag10">more</li><li class="tag00">our</li><li class="tag00">preferences</li><li class="tag00">project</li><li class="tag00">renderer</li><li class="tag00">score</li><li class="tag30">sensor</li><li class="tag00">setting</li><li class="tag10">settings</li><li class="tag80">snake</li><li class="tag20">some</li><li class="tag00">speed</li><li class="tag00">stuff</li><li class="tag00">text</li><li class="tag00">that</li><li class="tag40">updates</li><li class="tag00">vector3</li><li class="tag10">where</li><li class="tag10">will</li><li class="tag10">with</li><li class="tag20">you</li></ul>
+</div>
+
+<div class="footer">
+  Generated by <a href="https://github.com/soundasleep/statgit/" class="github">statgit</a> Mon, 01 Aug 2016 23:49:19 +0000</div>
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Statgit - Author Statistics - woolley.dion@gmail.com</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+<div class="content">
+
+<div class="breadcrumb">
+  <a href="index.html">Statgit</a> &gt;&gt;
+  <a href="authors.html">Authors</a> &gt;&gt;
+</div>
+<h1>woolley.dion@gmail.com</h1>
+
+<dl>
+  <dt>Name</dt>
+  <dd>Dion Woolley</dd>
+
+  <dt>First commit</dt>
+  <dd>
+    d7f13c95c9aae3946b992b475fd96e35db7e243b    <br>
+    <i>init commit</i>
+  </dd>
+
+  <dt>Last commit</dt>
+  <dd>
+    2c4bf029c606cc15ed1349b485502eb2040ef08f    <br>
+    <i>fix inaccuracy of gps input method</i>
+  </dd>
+
+  <dt>Commits</dt>
+  <dd>10</dd>
+
+  <dt>Changes</dt>
+  <dd>
+    1,637 additions,
+    716 deletions  </dd>
+</dl>
+
+<h2>Commit Activity</h2>
+
+<div id="chart_commits" style="width: 800px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Date', "Hour"]
+      ,
+[new Date(2016, 07-1, 19), 3.47],
+[new Date(2016, 07-1, 26), 4.83],
+[new Date(2016, 07-1, 29), 4.35],
+[new Date(2016, 07-1, 29), 4.35],
+[new Date(2016, 07-1, 31), 5.48],
+[new Date(2016, 08-1, 01), 3.70],
+[new Date(2016, 08-1, 01), 3.70],
+[new Date(2016, 08-1, 01), 3.73],
+[new Date(2016, 08-1, 01), 10.48],
+[new Date(2016, 08-1, 01), 22.15]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 300,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "Hour", minValue: 0},
+      legend: 'none',
+      // title: "Commit Activity",
+      chartArea: {width: '80%', height: '55%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ScatterChart(document.getElementById("chart_commits"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Day</h3>
+
+<div id="chart_commits_day" style="width: 400px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["Mon", 5],
+["Tue", 2],
+["Wed", 0],
+["Thu", 0],
+["Fri", 2],
+["Sat", 0],
+["Sun", 1]    ]);
+
+    // Set chart options
+    var options = {
+      width: 400,
+      height: 300,
+      hAxis: {title: "Commit Activity per Day"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_day"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Hour</h3>
+
+<div id="chart_commits_hour" style="width: 800px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["0h", 0],
+["1h", 0],
+["2h", 0],
+["3h", 4],
+["4h", 3],
+["5h", 1],
+["6h", 0],
+["7h", 0],
+["8h", 0],
+["9h", 0],
+["10h", 1],
+["11h", 0],
+["12h", 0],
+["13h", 0],
+["14h", 0],
+["15h", 0],
+["16h", 0],
+["17h", 0],
+["18h", 0],
+["19h", 0],
+["20h", 0],
+["21h", 0],
+["22h", 1],
+["23h", 0]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 300,
+      hAxis: {title: "Commit Activity per Hour"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_hour"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Week</h3>
+
+<div id="chart_commits_week" style="width: 600px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["2016-29", 1],
+["2016-30", 4],
+["2016-31", 5]    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height: 300,
+      hAxis: {title: "Commit Activity per Week"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_week"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Files with Most Revisions</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Commits</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/MainActivity.java</span></th><td class="number">6</td></tr>
+<tr><th class="filename"><span class="file exists">.gitignore</span></th><td class="number">3</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeGPSController.java</span></th><td class="number">3</td></tr>
+<tr><th class="filename"><span class="file deleted">gradle/wrapper/gradle-wrapper.properties</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">gradlew</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">gradle.properties</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">gradlew.bat</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">build.gradle</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/InjectableSensorManager.java</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/values/strings.xml</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/Snake.java</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/src/test/java/nz/afml/wooll/seng440_project1/ExampleUnitTest.java</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">settings.gradle</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeAccelerometerController.java</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/src/androidTest/java/nz/afml/wooll/seng440_project1/ApplicationTest.java</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/src/main/AndroidManifest.xml</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/proguard-rules.pro</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/build.gradle</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/src/main/res/values/styles.xml</span></th><td class="number">2</td></tr>
+<tr><th class="filename"><span class="file deleted">app/src/main/java/nz/afml/wooll/seng440_project1/MainActivity.java</span></th><td class="number">2</td></tr>
+  </tbody>
+</table>
+
+<h2>Tag Cloud of Words in Commit Log Messages</h2>
+
+<ul class="tag_cloud">
+<li class="tag00">accelerometer</li><li class="tag30">add</li><li class="tag00">added</li><li class="tag30">branch</li><li class="tag00">changes</li><li class="tag00">commit</li><li class="tag00">compas</li><li class="tag00">compass</li><li class="tag00">controls</li><li class="tag00">files</li><li class="tag30">fix</li><li class="tag30">gps</li><li class="tag00">inaccuracy</li><li class="tag00">init</li><li class="tag00">input</li><li class="tag30">into</li><li class="tag100">master</li><li class="tag00">merge</li><li class="tag30">merged</li><li class="tag00">method</li><li class="tag00">remove</li><li class="tag00">settings</li><li class="tag30">support</li><li class="tag00">unneeded</li></ul>
+<h2>Most Owned Files</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Blame %</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeCompassController.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeGPSController.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">.gitignore</span></th><td class="number">93.41%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeAccelerometerController.java</span></th><td class="number">76.47%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/MainActivity.java</span></th><td class="number">32.64%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/InputMethod.java</span></th><td class="number">9.09%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/AndroidManifest.xml</span></th><td class="number">6.67%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/values/strings.xml</span></th><td class="number">4.88%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/InjectableSensorManager.java</span></th><td class="number">0.77%</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/Snake.java</span></th><td class="number">0.47%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+  Generated by <a href="https://github.com/soundasleep/statgit/" class="github">statgit</a> Mon, 01 Aug 2016 23:49:19 +0000</div>
+
+</body>
+</html>

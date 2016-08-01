@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Statgit - File Statistics</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+<div class="content">
+<div class="breadcrumb">
+  <a href="index.html">Statgit</a> &gt;&gt;
+</div>
+<h1>File Statistics</h1>
+
+<dl>
+  <dt>Total files</dt>
+  <dd>108</dd>
+
+  <dt>Average file size</dt>
+  <dd>83 lines of code</dd>
+</dl>
+
+<h2>File Count</h2>
+
+
+<div id="chart_files" style="width: 800px; height: 600px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', "Files");
+
+    data.addRows([
+      [new Date(2016, 07-1, 19), 16],[new Date(2016, 07-1, 20), 72],[new Date(2016, 07-1, 26), 76],[new Date(2016, 07-1, 27), 88],[new Date(2016, 07-1, 28), 93],[new Date(2016, 07-1, 29), 97],[new Date(2016, 07-1, 31), 98],[new Date(2016, 08-1, 01), 108]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 600,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "Files", minValue: 0},
+      chartArea: {width: '70%', height: '70%', left: 100, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.LineChart(document.getElementById("chart_files"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Average Lines of Code per File</h2>
+
+
+<div id="chart_average" style="width: 800px; height: 600px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', "LOC/File");
+
+    data.addRows([
+      [new Date(2016, 07-1, 19), 20.19],[new Date(2016, 07-1, 20), 101.65],[new Date(2016, 07-1, 26), 101.70],[new Date(2016, 07-1, 27), 93.81],[new Date(2016, 07-1, 28), 89.63],[new Date(2016, 07-1, 29), 88.07],[new Date(2016, 07-1, 31), 87.70],[new Date(2016, 08-1, 01), 83.23]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 600,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "LOC\/File", minValue: 0},
+      chartArea: {width: '70%', height: '70%', left: 100, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.LineChart(document.getElementById("chart_average"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Files with Most Revisions</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Revisions</th><th>Size</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/MainActivity.java</span></th><td class="number">35</td><td class="number">12.71 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeGame.java</span></th><td class="number">21</td><td class="number">6.49 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/Snake.java</span></th><td class="number">20</td><td class="number">6.04 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/layout/activity_main.xml</span></th><td class="number">10</td><td class="number">3.11 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/CanvasViewRenderer.java</span></th><td class="number">9</td><td class="number">4.76 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/InjectableSensorManager.java</span></th><td class="number">9</td><td class="number">10.77 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/values/strings.xml</span></th><td class="number">8</td><td class="number">1.63 KB</td></tr>
+<tr><th class="filename"><span class="file exists">.gitignore</span></th><td class="number">7</td><td class="number">2.70 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/Vector3.java</span></th><td class="number">7</td><td class="number">4.55 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/AndroidSensorInjector.java</span></th><td class="number">7</td><td class="number">3.45 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/GameUpdater.java</span></th><td class="number">6</td><td class="number">1.74 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/SensorControllerGUI.java</span></th><td class="number">5</td><td class="number">6.17 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeAccelerometerController.java</span></th><td class="number">5</td><td class="number">1.77 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/AABB.java</span></th><td class="number">5</td><td class="number">3.25 KB</td></tr>
+<tr><th class="filename"><span class="file deleted">app/proguard-rules.pro</span></th><td class="number">4</td><td class="number">0.00 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/xml/pref_general.xml</span></th><td class="number">4</td><td class="number">0.84 KB</td></tr>
+<tr><th class="filename"><span class="file deleted">app/.gitignore</span></th><td class="number">4</td><td class="number">0.00 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/xml/pref_debug.xml</span></th><td class="number">4</td><td class="number">0.72 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/MessageBuilder.java</span></th><td class="number">4</td><td class="number">3.87 KB</td></tr>
+<tr><th class="filename"><span class="file deleted">app/build.gradle</span></th><td class="number">4</td><td class="number">0.00 KB</td></tr>
+  </tbody>
+</table>
+
+<h2>Existing Files with Most Revisions</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Revisions</th><th>Size</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/MainActivity.java</span></th><td class="number">35</td><td class="number">12.71 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeGame.java</span></th><td class="number">21</td><td class="number">6.49 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/Snake.java</span></th><td class="number">20</td><td class="number">6.04 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/layout/activity_main.xml</span></th><td class="number">10</td><td class="number">3.11 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/CanvasViewRenderer.java</span></th><td class="number">9</td><td class="number">4.76 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/InjectableSensorManager.java</span></th><td class="number">9</td><td class="number">10.77 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/values/strings.xml</span></th><td class="number">8</td><td class="number">1.63 KB</td></tr>
+<tr><th class="filename"><span class="file exists">.gitignore</span></th><td class="number">7</td><td class="number">2.70 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/Vector3.java</span></th><td class="number">7</td><td class="number">4.55 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/AndroidSensorInjector.java</span></th><td class="number">7</td><td class="number">3.45 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/GameUpdater.java</span></th><td class="number">6</td><td class="number">1.74 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeAccelerometerController.java</span></th><td class="number">5</td><td class="number">1.77 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/AABB.java</span></th><td class="number">5</td><td class="number">3.25 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/SensorControllerGUI.java</span></th><td class="number">5</td><td class="number">6.17 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/xml/pref_general.xml</span></th><td class="number">4</td><td class="number">0.84 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/MessageBuilder.java</span></th><td class="number">4</td><td class="number">3.87 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/xml/pref_debug.xml</span></th><td class="number">4</td><td class="number">0.72 KB</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONObject.java</span></th><td class="number">3</td><td class="number">61.17 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/res/xml/pref_headers.xml</span></th><td class="number">3</td><td class="number">0.60 KB</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/test/java/nz/ac/canterbury/csse/a440/snakes/SnakeTest.java</span></th><td class="number">3</td><td class="number">1.47 KB</td></tr>
+  </tbody>
+</table>
+
+<h2>Largest files</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Size</th><th>Revisions</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/nbproject/build-impl.xml</span></th><td class="number">77.55 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidMinecraft/nbproject/build-impl.xml</span></th><td class="number">77.53 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONObject.java</span></th><td class="number">61.17 KB</td><td class="number">3</td></tr>
+<tr><th class="filename"><span class="file deleted">SnakesAssignment/gradle/wrapper/gradle-wrapper.jar</span></th><td class="number">52.38 KB</td><td class="number">0</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONArray.java</span></th><td class="number">36.52 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file deleted">AndroidMinecraft/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar</span></th><td class="number">22.43 KB</td><td class="number">0</td></tr>
+<tr><th class="filename"><span class="file deleted">AndroidSensorInjector/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar</span></th><td class="number">22.43 KB</td><td class="number">0</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONML.java</span></th><td class="number">16.83 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/XML.java</span></th><td class="number">16.22 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/MainActivity.java</span></th><td class="number">12.71 KB</td><td class="number">35</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONTokener.java</span></th><td class="number">12.70 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/InjectableSensorManager.java</span></th><td class="number">10.77 KB</td><td class="number">9</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONWriter.java</span></th><td class="number">10.43 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/XMLTokener.java</span></th><td class="number">10.41 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file deleted">SnakesAssignment/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png</span></th><td class="number">10.24 KB</td><td class="number">0</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/CDL.java</span></th><td class="number">9.67 KB</td><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/SettingsActivity.java</span></th><td class="number">7.85 KB</td><td class="number">3</td></tr>
+<tr><th class="filename"><span class="file deleted">SnakesAssignment/app/src/main/res/mipmap-xxhdpi/ic_launcher.png</span></th><td class="number">7.54 KB</td><td class="number">0</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/snake/SnakeGame.java</span></th><td class="number">6.49 KB</td><td class="number">21</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/Cookie.java</span></th><td class="number">6.38 KB</td><td class="number">1</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+  Generated by <a href="https://github.com/soundasleep/statgit/" class="github">statgit</a> Mon, 01 Aug 2016 23:49:19 +0000</div>
+
+</body>
+</html>

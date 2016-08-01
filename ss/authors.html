@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Statgit - Author Statistics</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+<div class="content">
+<div class="breadcrumb">
+  <a href="index.html">Statgit</a> &gt;&gt;
+</div>
+<h1>Authors</h1>
+
+<dl>
+  <dt>Total authors</dt>
+  <dd>4</dd>
+</dl>
+
+<h2>Commit Activity</h2>
+
+<div id="chart_commits" style="width: 800px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Date', "Hour"]
+      ,
+[new Date(2016, 07-1, 19), 3.47],
+[new Date(2016, 07-1, 20), 0.57],
+[new Date(2016, 07-1, 20), 0.60],
+[new Date(2016, 07-1, 20), 0.92],
+[new Date(2016, 07-1, 20), 1.40],
+[new Date(2016, 07-1, 26), 2.85],
+[new Date(2016, 07-1, 26), 3.87],
+[new Date(2016, 07-1, 26), 3.90],
+[new Date(2016, 07-1, 26), 3.93],
+[new Date(2016, 07-1, 26), 3.97],
+[new Date(2016, 07-1, 26), 4.20],
+[new Date(2016, 07-1, 26), 4.22],
+[new Date(2016, 07-1, 26), 4.25],
+[new Date(2016, 07-1, 26), 4.42],
+[new Date(2016, 07-1, 26), 4.60],
+[new Date(2016, 07-1, 26), 4.83],
+[new Date(2016, 07-1, 26), 5.60],
+[new Date(2016, 07-1, 26), 5.72],
+[new Date(2016, 07-1, 26), 5.77],
+[new Date(2016, 07-1, 26), 5.85],
+[new Date(2016, 07-1, 26), 5.88],
+[new Date(2016, 07-1, 26), 5.95],
+[new Date(2016, 07-1, 26), 6.08],
+[new Date(2016, 07-1, 26), 6.15],
+[new Date(2016, 07-1, 26), 6.18],
+[new Date(2016, 07-1, 26), 6.35],
+[new Date(2016, 07-1, 26), 6.35],
+[new Date(2016, 07-1, 26), 6.63],
+[new Date(2016, 07-1, 26), 6.65],
+[new Date(2016, 07-1, 26), 6.95],
+[new Date(2016, 07-1, 26), 7.08],
+[new Date(2016, 07-1, 26), 7.12],
+[new Date(2016, 07-1, 26), 7.20],
+[new Date(2016, 07-1, 26), 7.22],
+[new Date(2016, 07-1, 26), 7.30],
+[new Date(2016, 07-1, 26), 9.32],
+[new Date(2016, 07-1, 27), 5.00],
+[new Date(2016, 07-1, 27), 5.07],
+[new Date(2016, 07-1, 27), 5.10],
+[new Date(2016, 07-1, 27), 5.18],
+[new Date(2016, 07-1, 27), 5.22],
+[new Date(2016, 07-1, 27), 5.48],
+[new Date(2016, 07-1, 27), 5.52],
+[new Date(2016, 07-1, 27), 6.00],
+[new Date(2016, 07-1, 27), 6.23],
+[new Date(2016, 07-1, 27), 6.33],
+[new Date(2016, 07-1, 27), 6.63],
+[new Date(2016, 07-1, 27), 6.78],
+[new Date(2016, 07-1, 27), 7.30],
+[new Date(2016, 07-1, 27), 7.40],
+[new Date(2016, 07-1, 27), 7.82],
+[new Date(2016, 07-1, 28), 1.02],
+[new Date(2016, 07-1, 28), 1.83],
+[new Date(2016, 07-1, 28), 3.00],
+[new Date(2016, 07-1, 28), 3.47],
+[new Date(2016, 07-1, 28), 3.48],
+[new Date(2016, 07-1, 28), 3.78],
+[new Date(2016, 07-1, 28), 3.90],
+[new Date(2016, 07-1, 28), 4.08],
+[new Date(2016, 07-1, 28), 4.10],
+[new Date(2016, 07-1, 28), 4.18],
+[new Date(2016, 07-1, 28), 4.18],
+[new Date(2016, 07-1, 28), 4.28],
+[new Date(2016, 07-1, 28), 4.60],
+[new Date(2016, 07-1, 28), 8.08],
+[new Date(2016, 07-1, 28), 8.55],
+[new Date(2016, 07-1, 28), 9.37],
+[new Date(2016, 07-1, 28), 9.37],
+[new Date(2016, 07-1, 28), 9.40],
+[new Date(2016, 07-1, 28), 9.43],
+[new Date(2016, 07-1, 28), 9.60],
+[new Date(2016, 07-1, 29), 2.90],
+[new Date(2016, 07-1, 29), 2.95],
+[new Date(2016, 07-1, 29), 2.95],
+[new Date(2016, 07-1, 29), 3.05],
+[new Date(2016, 07-1, 29), 3.37],
+[new Date(2016, 07-1, 29), 3.82],
+[new Date(2016, 07-1, 29), 3.83],
+[new Date(2016, 07-1, 29), 4.15],
+[new Date(2016, 07-1, 29), 4.35],
+[new Date(2016, 07-1, 29), 4.35],
+[new Date(2016, 07-1, 29), 4.52],
+[new Date(2016, 07-1, 29), 4.62],
+[new Date(2016, 07-1, 29), 4.80],
+[new Date(2016, 07-1, 29), 4.83],
+[new Date(2016, 07-1, 31), 4.93],
+[new Date(2016, 07-1, 31), 5.48],
+[new Date(2016, 07-1, 31), 23.37],
+[new Date(2016, 08-1, 01), 0.37],
+[new Date(2016, 08-1, 01), 0.43],
+[new Date(2016, 08-1, 01), 0.45],
+[new Date(2016, 08-1, 01), 0.47],
+[new Date(2016, 08-1, 01), 2.47],
+[new Date(2016, 08-1, 01), 2.52],
+[new Date(2016, 08-1, 01), 2.67],
+[new Date(2016, 08-1, 01), 2.73],
+[new Date(2016, 08-1, 01), 2.77],
+[new Date(2016, 08-1, 01), 2.88],
+[new Date(2016, 08-1, 01), 2.97],
+[new Date(2016, 08-1, 01), 3.10],
+[new Date(2016, 08-1, 01), 3.28],
+[new Date(2016, 08-1, 01), 3.32],
+[new Date(2016, 08-1, 01), 3.48],
+[new Date(2016, 08-1, 01), 3.70],
+[new Date(2016, 08-1, 01), 3.70],
+[new Date(2016, 08-1, 01), 3.73],
+[new Date(2016, 08-1, 01), 10.48],
+[new Date(2016, 08-1, 01), 22.15]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 300,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "Hour", minValue: 0},
+      legend: 'none',
+      // title: "Commit Activity",
+      chartArea: {width: '80%', height: '55%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ScatterChart(document.getElementById("chart_commits"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Day</h3>
+
+<div id="chart_commits_day" style="width: 400px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["Mon", 20],
+["Tue", 32],
+["Wed", 19],
+["Thu", 20],
+["Fri", 14],
+["Sat", 0],
+["Sun", 3]    ]);
+
+    // Set chart options
+    var options = {
+      width: 400,
+      height: 300,
+      hAxis: {title: "Commit Activity per Day"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_day"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Hour</h3>
+
+<div id="chart_commits_hour" style="width: 800px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["0h", 7],
+["1h", 3],
+["2h", 11],
+["3h", 21],
+["4h", 20],
+["5h", 14],
+["6h", 13],
+["7h", 8],
+["8h", 2],
+["9h", 6],
+["10h", 1],
+["11h", 0],
+["12h", 0],
+["13h", 0],
+["14h", 0],
+["15h", 0],
+["16h", 0],
+["17h", 0],
+["18h", 0],
+["19h", 0],
+["20h", 0],
+["21h", 0],
+["22h", 1],
+["23h", 1]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 300,
+      hAxis: {title: "Commit Activity per Hour"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_hour"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Week</h3>
+
+<div id="chart_commits_week" style="width: 600px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["2016-29", 5],
+["2016-30", 83],
+["2016-31", 20]    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height: 300,
+      hAxis: {title: "Commit Activity per Week"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_week"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Top Authors</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>Author</th><th>Commits</th><th>Changes</th><th>Last Commit</th></tr>
+  </thead>
+  <tbody>
+<tr><th><a href="developer_jay_harris@outlook_co_nz.html" class="">jay.harris@outlook.co.nz</a></th><td class="number">94</td><td class="number">4,801</td><td class="date">2016-08-01</td></tr>
+<tr><th><a href="developer_woolley_dion@gmail_com.html" class="">woolley.dion@gmail.com</a></th><td class="number">10</td><td class="number">2,353</td><td class="date">2016-08-01</td></tr>
+<tr><th><a href="developer_d_h_bowes@herts_ac_uk.html" class="">d.h.bowes@herts.ac.uk</a></th><td class="number">3</td><td class="number">11,451</td><td class="date">2016-07-20</td></tr>
+<tr><th><a href="developer_david_bowes@canterbury_ac_nz.html" class="">david.bowes@canterbury.ac.nz</a></th><td class="number">1</td><td class="number">620</td><td class="date">2016-07-20</td></tr>
+  </tbody>
+</table>
+
+<h2>Ownership <small>(blame)</small></h2>
+
+<div id="chart_authors_pie_blame" style="width: 400px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = data = google.visualization.arrayToDataTable([
+      ["Lines", "Value"]
+      , ["d.h.bowes@herts.ac.uk", 12454], ["jay.harris@outlook.co.nz", 2897], ["woolley.dion@gmail.com", 512], ["david.bowes@canterbury.ac.nz", 0]    ]);
+
+    // Set chart options
+    var options = {
+      title: "Lines",
+      width: 400,
+      height: 300,
+      chartArea: {width: '80%', height: '80%', left: 25, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById("chart_authors_pie_blame"));
+    chart.draw(data, options);
+  }
+</script>
+</div>
+
+<div class="footer">
+  Generated by <a href="https://github.com/soundasleep/statgit/" class="github">statgit</a> Mon, 01 Aug 2016 23:49:19 +0000</div>
+
+</body>
+</html>

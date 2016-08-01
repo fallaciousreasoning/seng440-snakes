@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Statgit - Author Statistics - d.h.bowes@herts.ac.uk</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+<div class="content">
+
+<div class="breadcrumb">
+  <a href="index.html">Statgit</a> &gt;&gt;
+  <a href="authors.html">Authors</a> &gt;&gt;
+</div>
+<h1>d.h.bowes@herts.ac.uk</h1>
+
+<dl>
+  <dt>Name</dt>
+  <dd>comqdhb</dd>
+
+  <dt>First commit</dt>
+  <dd>
+    d59c7c0e3970e6159cee5383806b5855063f0ecf    <br>
+    <i>Initial MC code</i>
+  </dd>
+
+  <dt>Last commit</dt>
+  <dd>
+    f1860fd058dff3456dc5d676f552c23928cdc4c0    <br>
+    <i>Adding Android Studio project</i>
+  </dd>
+
+  <dt>Commits</dt>
+  <dd>3</dd>
+
+  <dt>Changes</dt>
+  <dd>
+    11,451 additions,
+    0 deletions  </dd>
+</dl>
+
+<h2>Commit Activity</h2>
+
+<div id="chart_commits" style="width: 800px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Date', "Hour"]
+      ,
+[new Date(2016, 07-1, 20), 0.57],
+[new Date(2016, 07-1, 20), 0.60],
+[new Date(2016, 07-1, 20), 0.92]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 300,
+      hAxis: {title: 'Date'},
+      vAxis: {title: "Hour", minValue: 0},
+      legend: 'none',
+      // title: "Commit Activity",
+      chartArea: {width: '80%', height: '55%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ScatterChart(document.getElementById("chart_commits"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Day</h3>
+
+<div id="chart_commits_day" style="width: 400px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["Mon", 0],
+["Tue", 0],
+["Wed", 3],
+["Thu", 0],
+["Fri", 0],
+["Sat", 0],
+["Sun", 0]    ]);
+
+    // Set chart options
+    var options = {
+      width: 400,
+      height: 300,
+      hAxis: {title: "Commit Activity per Day"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_day"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Hour</h3>
+
+<div id="chart_commits_hour" style="width: 800px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["0h", 3],
+["1h", 0],
+["2h", 0],
+["3h", 0],
+["4h", 0],
+["5h", 0],
+["6h", 0],
+["7h", 0],
+["8h", 0],
+["9h", 0],
+["10h", 0],
+["11h", 0],
+["12h", 0],
+["13h", 0],
+["14h", 0],
+["15h", 0],
+["16h", 0],
+["17h", 0],
+["18h", 0],
+["19h", 0],
+["20h", 0],
+["21h", 0],
+["22h", 0],
+["23h", 0]    ]);
+
+    // Set chart options
+    var options = {
+      width: 800,
+      height: 300,
+      hAxis: {title: "Commit Activity per Hour"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_hour"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h3>Per Week</h3>
+
+<div id="chart_commits_week" style="width: 600px; height: 300px;"></div>
+
+<script type="text/javascript">
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Key', "Commits"]
+      ,
+["2016-29", 3]    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height: 300,
+      hAxis: {title: "Commit Activity per Week"},
+      vAxis: {title: "Commits", minValue: 0},
+      chartArea: {width: '75%', height: '70%', left: 50, top: 25}
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_commits_week"));
+    chart.draw(data, options);
+  }
+</script>
+
+<h2>Files with Most Revisions</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Commits</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/build.gradle</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/.gitignore</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/vcs.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/proguard-rules.pro</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/androidTest/java/nz/ac/canterbury/csse/a440/snakes/ApplicationTest.java</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/InjectableSensorManager.java</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/DataHandlerFactory.java</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/AndroidManifest.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/runConfigurations.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/modules.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/.name</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">.gitignore</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/XMLTokener.java</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/compiler.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/copyright/profiles_settings.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/misc.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/gradle.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/.idea/encodings.xml</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/android/hardware/MySensorEvent.java</span></th><td class="number">1</td></tr>
+<tr><th class="filename"><span class="file exists">SnakesAssignment/app/src/main/java/nz/ac/canterbury/csse/a440/snakes/MainActivity.java</span></th><td class="number">1</td></tr>
+  </tbody>
+</table>
+
+<h2>Tag Cloud of Words in Commit Log Messages</h2>
+
+<ul class="tag_cloud">
+<li class="tag00">adding</li><li class="tag00">android</li><li class="tag100">code</li><li class="tag100">initial</li><li class="tag00">project</li><li class="tag00">sensor</li><li class="tag00">studio</li></ul>
+<h2>Most Owned Files</h2>
+
+<table class="statistics">
+  <thead>
+    <tr><th>File</th><th>Blame %</th></tr>
+  </thead>
+  <tbody>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/CDL.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONString.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONML.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/XMLTokener.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONStringer.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/XML.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/CookieList.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/Cookie.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONArray.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/README</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/ReceiverThread.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/RemoteEventListener.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file deleted">SnakesAssignment/gradle/wrapper/gradle-wrapper.jar</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/SensorControllerGUI.form</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/androidsensorinjector/DemoDataSource.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/HTTP.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONWriter.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/HTTPTokener.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/JSONTokener.java</span></th><td class="number">100.00%</td></tr>
+<tr><th class="filename"><span class="file exists">AndroidSensorInjector/src/org/json/Property.java</span></th><td class="number">100.00%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+  Generated by <a href="https://github.com/soundasleep/statgit/" class="github">statgit</a> Mon, 01 Aug 2016 23:49:19 +0000</div>
+
+</body>
+</html>

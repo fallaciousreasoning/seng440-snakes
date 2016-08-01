@@ -15,11 +15,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Exchanger;
 
 /**
  * Created by comqdhb on 17/07/2016.
@@ -281,9 +283,27 @@ private static boolean useSystem=true;
     }
 
     public void sendList() {
-        JSONObject json=new JSONObject();
-        //TODO make the json actually have a list of sensors on the device
-        remoteListener.sendString(json.toString());
+        try {
+            JSONObject json = new JSONObject();
+            json.put("TYPE", "list");
+
+            //We do it this way because JSON.org is hopeless and won't serialize my lists like I want
+            StringBuilder sensors = new StringBuilder();
+
+            for (Sensor s : getSensorList(Sensor.TYPE_ALL)) {
+                if (sensors.length() > 0) {
+                    sensors.append(",");
+                }
+                sensors.append(s.getName());
+            }
+
+            json.put("sensors", sensors.toString());
+
+            //TODO make the json actually have a list of sensors on the device
+            remoteListener.sendString(json.toString());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

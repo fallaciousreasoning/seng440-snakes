@@ -174,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
         sensorManager.registerListener(compassController,
                 sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
                 SensorManager.SENSOR_DELAY_NORMAL);
+
+        setupControls();
     }
 
     @Override
@@ -196,6 +198,9 @@ public class MainActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this)
                 .getString("input_method", "SWIPE"));
 
+        LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
+        buttonsLayout.setVisibility(View.INVISIBLE);
+
         switch (inputMethod){
             case SWIPE:
                 //Initialize the swipe controller
@@ -207,12 +212,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case BUTTONS:
                 //Initialize the button controller
-                LinearLayout controlLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
-                buttonController = new SnakeButtonController();
-                addControllerButton(controlLayout, Direction.NORTH);
-                addControllerButton(controlLayout, Direction.SOUTH);
-                addControllerButton(controlLayout, Direction.WEST);
-                addControllerButton(controlLayout, Direction.EAST);
+                buttonsLayout.setVisibility(View.VISIBLE);
+
+                if (buttonController == null) {
+                    buttonController = new SnakeButtonController();
+                    addControllerButton(buttonsLayout, Direction.NORTH);
+                    addControllerButton(buttonsLayout, Direction.SOUTH);
+                    addControllerButton(buttonsLayout, Direction.WEST);
+                    addControllerButton(buttonsLayout, Direction.EAST);
+                }
                 snakeController = buttonController;
                 break;
             case ACCELEROMETER:
@@ -221,6 +229,8 @@ public class MainActivity extends AppCompatActivity {
             case COMPASS:
                 break;
         }
+
+        game.setSnakeController(snakeController);
     }
 
     /**

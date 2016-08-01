@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         boolean sensor_injector_enabled = PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getBoolean("sensor_injector_enabled", false);
-        InjectableSensorManager.setUseSystem(sensor_injector_enabled);
+        InjectableSensorManager.setUseSystem(!sensor_injector_enabled);
         sensorManager = app.ism;
         if (sensorManager instanceof InjectableSensorManager) {
             InjectableSensorManager ism = (InjectableSensorManager) sensorManager;

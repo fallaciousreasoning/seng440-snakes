@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 .getString("input_method", "SWIPE"));
 
         LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
-        buttonsLayout.setVisibility(View.INVISIBLE);
+        buttonsLayout.setVisibility(View.GONE);
 
         switch (inputMethod){
             case SWIPE:

@@ -2,8 +2,10 @@ package nz.ac.canterbury.csse.a440.snakes;
 
 //http://stackoverflow.com/questions/11184503/android-emulator-orientation-change-through-emulator-console-or-adb
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.InjectableSensorManager;
 import android.hardware.MySensorEvent;
@@ -11,9 +13,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +47,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeCompassController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGPSController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
@@ -47,6 +55,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity {
     private SensorManager sensorManager;
+    private LocationManager locationManager;
 
     private GestureDetectorCompat gestureDetector;
     private AggregateGestureListener gestureListener;
@@ -55,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private SnakeAccelerometerController accelerometerController;
     private SnakeCompassController compassController;
     private SnakeButtonController buttonController;
+    private SnakeGPSController gpsController;
 
     private SnakeController snakeController;
 
@@ -77,10 +87,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+
+        try {
+            LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+            Location location = locationManager.getLastKnownLocation(provider.getName());
+            gpsController = new SnakeGPSController(location);
+        }
+        catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
         accelerometerController = new SnakeAccelerometerController();
         compassController = new SnakeCompassController();
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         game = new SnakeGame(20, 30, 1, 3);
 
@@ -167,6 +189,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Setup the controls
         setupControls();
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, gpsController);
+        }
+        catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -174,6 +202,12 @@ public class MainActivity extends AppCompatActivity {
         // unregister listener
         super.onPause();
         sensorManager.unregisterListener(accelerometerController);
+        try {
+            locationManager.removeUpdates(gpsController);
+        }
+        catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -219,6 +253,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case COMPASS:
                 snakeController = compassController;
+                break;
+            case GPS:
+                snakeController = gpsController;
                 break;
         }
 

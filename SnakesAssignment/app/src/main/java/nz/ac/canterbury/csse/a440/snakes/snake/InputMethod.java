@@ -8,7 +8,8 @@ public enum InputMethod {
     SWIPE,
     BUTTONS,
     ACCELEROMETER,
-    COMPASS;
+    COMPASS,
+    GPS;
 
     /**
      * Gets a InputMethod from a number

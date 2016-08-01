@@ -7,4 +7,10 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_sensor_injector_title" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:summaryOn="@string/sensor_injector_enabled_text"
+        android:summaryOff="@string/sensor_injector_disabled_text"
+        android:key="sensor_injector_enabled"
+        />
 </PreferenceScreen>

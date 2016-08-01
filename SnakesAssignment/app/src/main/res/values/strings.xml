@@ -33,4 +33,7 @@
     <string name="pref_sensor_injector_default">127.0.0.1</string>
     <string name="gameStatusStart">Tap to start</string>
     <string name="gameStatusReset">Tap to restart</string>
+    <string name="enable_sensor_injector_text">Enable Sensor Injector</string>
+    <string name="sensor_injector_enabled_text">Sensor Injection Enabled</string>
+    <string name="sensor_injector_disabled_text">Sensor Injection Disabled</string>
 </resources>

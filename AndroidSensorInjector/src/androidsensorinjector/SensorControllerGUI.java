@@ -7,6 +7,7 @@ package androidsensorinjector;
 
 import javax.swing.JOptionPane;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -32,7 +33,7 @@ public class SensorControllerGUI extends javax.swing.JFrame {
         accelerometerSensor.setName("Accelerometer");
         accelerometerSensor.setId(1);
 
-        MessageBuilder.registerInputMethod(InputMethod.Accelerometer, accelerometerSensor);
+        MessageBuilder.setAccelerometer(accelerometerSensor);
 
         //Setup accelerometer keys
         //W north
@@ -107,11 +108,12 @@ public class SensorControllerGUI extends javax.swing.JFrame {
         }
 
         InputDirection inputDir = keymap.get(evt.getKeyCode());
-        SensorEvent event = new MessageBuilder()
+        List<SensorEvent> events = new MessageBuilder()
                 .setInputMethod(inputDir.getMethod())
                 .setDirection(inputDir.getDirection())
                 .createEvents();
-        asi.addEvent(event);
+        for (SensorEvent event : events)
+            asi.addEvent(event);
         //DEMO
     }//GEN-LAST:event_formKeyPressed
 

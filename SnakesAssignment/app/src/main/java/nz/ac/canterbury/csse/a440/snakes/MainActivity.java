@@ -212,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 snakeController = accelerometerController;
                 break;
             case COMPASS:
+                snakeController = compassController;
                 break;
         }
     }

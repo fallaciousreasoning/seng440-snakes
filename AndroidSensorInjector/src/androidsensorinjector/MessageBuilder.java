@@ -29,11 +29,29 @@ public class MessageBuilder {
      */
     private HashMap<InputMethod, SensorValueBuilder> builders = new HashMap<>();
 
+    /**
+     * The input method to build this command for
+     */
     private InputMethod inputMethod;
+
+    /**
+     * The input direction to send
+     */
     private Direction direction;
+
+    /**
+     * The accuracy of the injected event
+     */
     private int accuracy = 0;
+
+    /**
+     * The timestamp for the injected event. Defaults to no
+     */
     private long timeStamp = -1;
 
+    /**
+     * Creates a new message builder
+     */
     public MessageBuilder() {
         builders.put(InputMethod.Accelerometer, dir -> {
             float[] values = new float[3];
@@ -64,26 +82,50 @@ public class MessageBuilder {
         });
     }
 
+    /**
+     * Sets the input method
+     * @param method The input method
+     * @return The builder
+     */
     public MessageBuilder setInputMethod(InputMethod method) {
         this.inputMethod = method;
         return this;
     }
 
+    /**
+     * Sets the input direction
+     * @param direction The direction
+     * @return The builder
+     */
     public MessageBuilder setDirection(Direction direction) {
         this.direction = direction;
         return this;
     }
 
+    /**
+     * Sets the accuracy
+     * @param accuracy The accuracy
+     * @return The builder
+     */
     public MessageBuilder setAccuracy(int accuracy) {
         this.accuracy = accuracy;
         return this;
     }
 
+    /**
+     * Sets the timestamp
+     * @param timeStamp The timestamp
+     * @return The builder
+     */
     public MessageBuilder setTimeStamp(long timeStamp){
         this.timeStamp = timeStamp;
         return this;
     }
 
+    /**
+     * Creates the sensor event
+     * @return The sensor event
+     */
     public SensorEvent create() {
         SensorValueBuilder builder = builders.get(inputMethod);
         SensorInfo sensor = sensorInfo.get(inputMethod);

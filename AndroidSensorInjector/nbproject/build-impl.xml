@@ -196,7 +196,7 @@ is divided into following sections:
         <condition property="do.depend.true">
             <istrue value="${do.depend}"/>
         </condition>
-        <path id="endorsed.classpath.path" path="${endorsed.classpath}"/>
+        <path type="endorsed.classpath.path" path="${endorsed.classpath}"/>
         <condition else="" property="endorsed.classpath.cmd.line.arg" value="-Xbootclasspath/p:'${toString:endorsed.classpath.path}'">
             <and>
                 <isset property="endorsed.classpath"/>
@@ -462,7 +462,7 @@ is divided into following sections:
                 <condition else="" property="testng.methods.arg" value="@{testincludes}.@{testmethods}">
                     <isset property="test.method"/>
                 </condition>
-                <union id="test.set">
+                <union type="test.set">
                     <fileset dir="${test.src.dir}" excludes="@{excludes},**/*.xml,${excludes}" includes="@{includes}">
                         <filename name="@{testincludes}"/>
                     </fileset>

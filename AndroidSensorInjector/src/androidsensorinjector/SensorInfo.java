@@ -4,23 +4,23 @@ package androidsensorinjector;
  * A class for holding information about sensors
  */
 public class SensorInfo {
-    private int id;
+    private int type;
     private String name;
 
     /**
-     * Gets the id of the sensor
-     * @return The id of the sensor
+     * Gets the type of the sensor
+     * @return The type of the sensor
      */
-    public int getId() {
-        return id;
+    public int getType() {
+        return type;
     }
 
     /**
-     * Sets the id of the sensor
-     * @param id The id
+     * Sets the type of the sensor
+     * @param type The type
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setType(int type) {
+        this.type = type;
     }
 
     /**

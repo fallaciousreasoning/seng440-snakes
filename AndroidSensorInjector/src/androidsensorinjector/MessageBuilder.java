@@ -1,51 +1,17 @@
 package androidsensorinjector;
 
-import jdk.internal.util.xml.impl.Input;
-import sun.management.Sensor;
-import sun.management.snmp.jvminstr.NotificationTarget;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
  * Helps build messages
  */
 public class MessageBuilder {
-    private static SensorInfo accelerometer;
-    private static SensorInfo compass;
-    private static SensorInfo gps;
-
-    /**
-     * Sets the accelerometer
-     * @param sensor The accelerometer
-     */
-    public static void setAccelerometer(SensorInfo sensor) {
-        accelerometer = sensor;
-    }
-
-    /**
-     * Sets the GPS
-     * @param sensor The GPS
-     */
-    public static void setGps(SensorInfo sensor) {
-        gps = sensor;
-    }
-
-    /**
-     * Sets the compass
-     * @param sensor The compass
-     */
-    public static void setCompass(SensorInfo sensor) {
-        compass = sensor;
-    }
-
     /**
      * The list of sensors we have to send messages to
      */
-    private List<SensorInfo> requiredSensors = new ArrayList<>();
+    private List<Integer> requiredSensors = new ArrayList<>();
 
     /**
      * A map of builders for different sensors
@@ -89,14 +55,14 @@ public class MessageBuilder {
         //Work out what sensors we need
         switch (method) {
             case Accelerometer:
-                requiredSensors.add(accelerometer);
+                requiredSensors.add(InputMethod.Accelerometer.getType());
                 break;
             case GPS:
-                requiredSensors.add(gps);
+                requiredSensors.add(InputMethod.GPS.getType());
                 break;
             case Compass:
-                requiredSensors.add(accelerometer);
-                requiredSensors.add(compass);
+                requiredSensors.add(InputMethod.Accelerometer.getType());
+                requiredSensors.add(InputMethod.Compass.getType());
                 break;
         }
 
@@ -147,8 +113,8 @@ public class MessageBuilder {
 
         List<SensorEvent> events = new ArrayList<>();
         for (int i = 0; i < requiredSensors.size(); ++i) {
-            SensorInfo sensor = requiredSensors.get(i);
-            SensorEvent event = new SensorEvent("sensorEvent", accuracy, sensor.getId(), timeStamp, values.get(i));
+            Integer sensor = requiredSensors.get(i);
+            SensorEvent event = new SensorEvent("sensorEvent", accuracy, sensor, timeStamp, values.get(i));
             events.add(event);
         }
         return events;

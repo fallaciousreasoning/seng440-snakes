@@ -31,7 +31,7 @@ public class SensorControllerGUI extends javax.swing.JFrame {
         //Initialize sensor mapping
         SensorInfo accelerometerSensor = new SensorInfo();
         accelerometerSensor.setName("Accelerometer");
-        accelerometerSensor.setId(1);
+        accelerometerSensor.setType(1);
 
         MessageBuilder.setAccelerometer(accelerometerSensor);
 

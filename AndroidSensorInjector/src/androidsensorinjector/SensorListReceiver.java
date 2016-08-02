@@ -2,7 +2,9 @@ package androidsensorinjector;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,15 +16,23 @@ public class SensorListReceiver implements RemoteEventListener {
     @Override
     public void receiveData(String data) {
         JSONObject list = new JSONObject(data);
-        Set<String> sensorList = new HashSet<>();
 
+        List<SensorInfo> sensorList = new ArrayList<>();
+
+        //I admit, this is not how I should be doing things. However, org.json is a pain
         String[] sensors = list.getString("sensors").split(",");
-        for (String sensor : sensors) {
-            sensorList.add(sensor.toString());
+        String[] types = list.getString("types").split(",");
+
+        for (int i = 0; i < sensors.length; ++i) {
+            SensorInfo info = new SensorInfo();
+            info.setName(sensors[i]);
+            info.setType(Integer.parseInt(types[i]));
+            sensorList.add(info);
         }
 
         availableSensors = new SensorListEvent();
         availableSensors.setSensors(sensorList);
+        InputMethod.initTypes(sensorList);
     }
 
     /**

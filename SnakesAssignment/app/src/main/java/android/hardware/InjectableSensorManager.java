@@ -289,15 +289,19 @@ private static boolean useSystem=true;
 
             //We do it this way because JSON.org is hopeless and won't serialize my lists like I want
             StringBuilder sensors = new StringBuilder();
+            StringBuilder types = new StringBuilder();
 
             for (Sensor s : getSensorList(Sensor.TYPE_ALL)) {
                 if (sensors.length() > 0) {
                     sensors.append(",");
+                    types.append(",");
                 }
-                sensors.append(s.getName());
+                sensors.append(s.getStringType());
+                types.append(s.getType());
             }
 
             json.put("sensors", sensors.toString());
+            json.put("types", types.toString());
 
             //TODO make the json actually have a list of sensors on the device
             remoteListener.sendString(json.toString());

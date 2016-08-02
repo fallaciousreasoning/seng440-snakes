@@ -28,13 +28,6 @@ public class SensorControllerGUI extends javax.swing.JFrame {
     public SensorControllerGUI() {
         initComponents();
 
-        //Initialize sensor mapping
-        SensorInfo accelerometerSensor = new SensorInfo();
-        accelerometerSensor.setName("Accelerometer");
-        accelerometerSensor.setType(1);
-
-        MessageBuilder.setAccelerometer(accelerometerSensor);
-
         //Setup accelerometer keys
         //W north
         registerKey(87, InputMethod.Accelerometer, Direction.NORTH);

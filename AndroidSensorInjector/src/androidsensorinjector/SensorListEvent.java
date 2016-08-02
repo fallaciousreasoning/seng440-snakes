@@ -1,6 +1,7 @@
 package androidsensorinjector;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,13 +10,13 @@ import java.util.Set;
 public class SensorListEvent implements JsonSerializable {
     private final String TYPE = "list";
 
-    private Set<String> sensors;
+    private List<SensorInfo> sensors;
 
-    public Set<String> getSensors() {
+    public List<SensorInfo> getSensors() {
         return sensors;
     }
 
-    public void setSensors(Set<String> sensors) {
+    public void setSensors(List<SensorInfo> sensors) {
         this.sensors = sensors;
     }
 

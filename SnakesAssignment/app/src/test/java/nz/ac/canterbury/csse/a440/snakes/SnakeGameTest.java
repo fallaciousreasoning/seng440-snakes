@@ -143,7 +143,35 @@ public class SnakeGameTest {
 
     @Test
     public void testHitTail() {
+        snakeGame.start();
 
+        //We need at least a length of five
+        snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition(direction));
+
+        //Step to eat
+        snakeGame.step();
+
+        //We need at least a length of five
+        snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition(direction));
+
+        //Step to eat and grow
+        snakeGame.step();
+
+        //Step to grow
+        snakeGame.step();
+
+        assertEquals(5, snakeGame.getSnake().length());
+
+        direction = Direction.WEST;
+        snakeGame.step();
+
+        direction = Direction.SOUTH;
+        snakeGame.step();
+
+        direction = Direction.EAST;
+        snakeGame.step();
+
+        assertTrue(snakeGame.hitSelf());
     }
 
     @Test

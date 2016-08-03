@@ -1,5 +1,6 @@
 package nz.ac.canterbury.csse.a440.snakes;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
@@ -17,7 +18,8 @@ public class SnakeGameTest {
     private SnakeController controller;
     private Direction direction;
 
-    private void setup() {
+    @Before
+    public void setup() {
         snakeGame = new SnakeGame(20, 30, 1, 3);
 
         controller = new SnakeController() {
@@ -76,6 +78,30 @@ public class SnakeGameTest {
 
     @Test
     public void testMove() {
+        Vector3 startPosition = snakeGame.getSnake().headPosition();
+
+        snakeGame.start();
+
+        direction = Direction.WEST;
+
+        snakeGame.step();
+        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+
+        startPosition = snakeGame.getSnake().headPosition();
+        direction = Direction.SOUTH;
+        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+
+        startPosition = snakeGame.getSnake().headPosition();
+        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+
+        startPosition = snakeGame.getSnake().headPosition();
+        direction = Direction.EAST;
+        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+
+        startPosition = snakeGame.getSnake().headPosition();
+        direction = Direction.NORTH;
+        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+
     }
 
     @Test

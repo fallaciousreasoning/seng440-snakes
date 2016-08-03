@@ -120,7 +120,25 @@ public class SnakeGameTest {
 
     @Test
     public void testHitWall() {
+        for (Direction direction : Direction.values()) {
+            snakeGame.start();
 
+            if (snakeGame.getSnake().isBackwards(direction)) {
+                this.direction = Direction.WEST;
+                snakeGame.step();
+            }
+
+            this.direction = direction;
+
+            while (snakeGame.getBounds().contains(snakeGame.getSnake().nextPosition(this.direction))) {
+                snakeGame.step();
+                assertFalse(snakeGame.hitWall());
+            }
+
+            snakeGame.step();
+            assertTrue(snakeGame.hitWall());
+            snakeGame.reset();
+        }
     }
 
     @Test

@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class SnakeGameTest {
     private SnakeGame snakeGame;
     private SnakeController controller;
-    private Direction direction;
+    private Direction direction = Direction.NORTH;
 
     @Before
     public void setup() {
@@ -49,6 +49,7 @@ public class SnakeGameTest {
         assertEquals(position, snakeGame.getSnake().headPosition());
 
         snakeGame.start();
+        snakeGame.step();
         assertNotEquals(position, snakeGame.getSnake().headPosition());
     }
 
@@ -61,11 +62,20 @@ public class SnakeGameTest {
         snakeGame.start();
 
         snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition());
+
+        //Step to eat
+        snakeGame.step();
+
+        //Put the food somewhere we can't get it
+        snakeGame.getFood().setPosition(new Vector3(0, 0, 0));
+
+        //Step to grow
+        snakeGame.step();
+
         assertEquals(length + 1, snakeGame.getSnake().length());
         assertEquals(score + 1, snakeGame.score());
 
-        snakeGame.step();
-        snakeGame.step();
+        //Step for fun
         snakeGame.step();
 
         assertNotEquals(headPosition, snakeGame.getSnake().headPosition());
@@ -85,22 +95,26 @@ public class SnakeGameTest {
         direction = Direction.WEST;
 
         snakeGame.step();
-        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
 
         startPosition = snakeGame.getSnake().headPosition();
         direction = Direction.SOUTH;
-        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+        snakeGame.step();
+        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
 
         startPosition = snakeGame.getSnake().headPosition();
-        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+        snakeGame.step();
+        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
 
         startPosition = snakeGame.getSnake().headPosition();
         direction = Direction.EAST;
-        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+        snakeGame.step();
+        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
 
         startPosition = snakeGame.getSnake().headPosition();
         direction = Direction.NORTH;
-        assertEquals(startPosition.add(snakeGame.getSnake().nextPosition(direction)), snakeGame.getSnake().headPosition());
+        snakeGame.step();
+        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
 
     }
 

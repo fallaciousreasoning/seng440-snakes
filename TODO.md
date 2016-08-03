@@ -25,7 +25,7 @@ Advanced Android features:
 
 - [X] Allow the snake to be controlled using the accelerometer of the Android device.  Tilting the mobile forward should change the direction of the snake to make it go up etc. When the phone is not tilted (held flat), the snake should continue travelling in the same direction as before. (4 marks)
 - [X] Allow the snake to be controlled by the Android compass sensor.  Rotate the mobile in order to control the direction of travel.  Point the phone North to make the snake go up etc. (3 marks)
-- [ ] Allow the head of the snake to be controlled by your GPS location. (3 marks)
+- [X] Allow the head of the snake to be controlled by your GPS location. (3 marks)
 - [X] In a), b) and c), there will either need to be a different screen for each method of input, or new settings to determine the mode of play: (key presses, accelerometer, compass) (2 marks)
 
 ## Task 4: (3 marks)

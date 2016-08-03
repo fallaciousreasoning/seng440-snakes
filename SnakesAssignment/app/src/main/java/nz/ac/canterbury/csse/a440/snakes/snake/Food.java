@@ -27,4 +27,10 @@ public class Food {
     public Vector3 getPosition() {
         return position;
     }
+
+    /**
+     * Sets the position of the food. Used in testing.
+     * @param position The position of the food
+     */
+    public void setPosition(Vector3 position) { this.position = position;}
 }

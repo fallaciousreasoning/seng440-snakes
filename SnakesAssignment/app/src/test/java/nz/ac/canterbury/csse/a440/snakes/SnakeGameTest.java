@@ -176,6 +176,17 @@ public class SnakeGameTest {
 
     @Test
     public void testEatFood() {
+        snakeGame.start();
 
+        int eat = 3;
+
+        for (int i = 0; i < eat; ++i){
+            snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition(direction));
+            snakeGame.step();
+        }
+
+        snakeGame.step();
+        assertEquals(eat, snakeGame.score());
+        assertEquals(snakeGame.startingLength() + eat, snakeGame.getSnake().length());
     }
 }

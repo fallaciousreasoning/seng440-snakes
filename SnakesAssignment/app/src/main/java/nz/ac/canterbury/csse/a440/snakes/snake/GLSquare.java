@@ -26,7 +26,7 @@ import android.opengl.GLES20;
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
  */
-public class Square {
+public class GLSquare {
     private final int mProgram;
 
     private final FloatBuffer vertexBuffer;
@@ -50,7 +50,7 @@ public class Square {
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public Square(Vector3 min, Vector3 max, float [] color, int program) {
+    public GLSquare(Vector3 min, Vector3 max, float [] color, int program) {
         this.color = color;
         this.mProgram = program;
 

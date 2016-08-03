@@ -40,7 +40,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
 
-    private Square testSquare;
+    private GLSquare testSquare;
     private SnakeGame snakeGame;
 
     public SnakeGLRenderer(){
@@ -86,7 +86,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         GLES20.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
         Vector3 halfSize = new Vector3(0.5f, 0.5f);
-        testSquare = new Square(halfSize.mul(-1), halfSize, new float[]{ 0.2f, 0.709803922f, 0.898039216f, 1.0f }, mProgram);
+        testSquare = new GLSquare(halfSize.mul(-1), halfSize, new float[]{ 0.2f, 0.709803922f, 0.898039216f, 1.0f }, mProgram);
     }
 
     @Override

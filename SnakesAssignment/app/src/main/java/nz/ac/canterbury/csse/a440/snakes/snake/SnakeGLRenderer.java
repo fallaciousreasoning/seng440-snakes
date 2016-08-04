@@ -22,7 +22,6 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
-    private final float[] mRotationMatrix = new float[16];
 
     private final float[] backgroundColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.8f);
     private final float[] snakeColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.4f);

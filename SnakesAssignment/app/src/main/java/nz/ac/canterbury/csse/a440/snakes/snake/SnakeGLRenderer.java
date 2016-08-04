@@ -31,7 +31,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private float aspectRatio;
 
     private SnakeGame snakeGame;
-    private boolean render3D;
+    private boolean render3D = true;
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {

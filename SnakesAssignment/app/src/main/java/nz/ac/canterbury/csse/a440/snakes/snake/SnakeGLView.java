@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
@@ -48,6 +49,9 @@ public class SnakeGLView extends GLSurfaceView implements Renderer {
         render(snakeGame);
 
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        GLES20.glDepthFunc(GLES20.GL_LESS);
+
         requestRender();
     }
 

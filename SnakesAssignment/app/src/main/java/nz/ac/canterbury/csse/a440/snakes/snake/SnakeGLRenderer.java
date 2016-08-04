@@ -24,10 +24,12 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
 
-    private final float[] backgroundColor = {1.0f, 1.0f, 1.0f, 1.0f};
-    private final float[] snakeColor = {0.1f, 0.1f, 0.1f, 1.0f};
-    private final float[] foodColor = {1, 0, 0, 1};
-    private final float[] snakeHeadColor = {0, 0, 0, 1.0f};
+    private final float[] backgroundColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.8f);
+    private final float[] snakeColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.1f);
+    private final float[] foodColor = GLColor.Red;
+    private final float[] snakeHeadColor = GLColor.Black;
+
+    private float aspectRatio;
 
     private SnakeGame snakeGame;
 
@@ -60,12 +62,40 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         //Don't draw anything if the game is null
         if (snakeGame == null) return;
 
-        GLDrawable food = new GLSquare();
+        float tileWidth = 2*aspectRatio/snakeGame.getBounds().getWidth();
+        float tileHeight = 2/snakeGame.getBounds().getHeight();
+        float tileSize = Math.max(tileWidth, tileHeight);
+
+        Vector3 offset = new Vector3(2*aspectRatio - tileSize * snakeGame.getBounds().getWidth(), 2 - tileSize*snakeGame.getBounds().getHeight(), 0)
+                .mul(-0.5f);
+
+        Vector3 foodPosition = toGLCoordinates(
+                snakeGame
+                .getFood()
+                .getPosition());
+
+        GLDrawable food = new GLSquare(foodPosition, tileSize, tileSize, foodColor);
         drawables.add(food);
+
+        for (Vector3 position : snakeGame.getSnake().getPositions()) {
+            Vector3 drawPosition = toGLCoordinates(position);
+            drawables.add(new GLSquare(drawPosition, tileSize, tileSize, snakeColor));
+        }
 
         //Render everything
         for (GLDrawable drawable : drawables)
             drawable.draw(mMVPMatrix);
+    }
+
+    /**
+     * Gets the GL coordinates for a game position
+     * @param position The position of the snake
+     * @return The gl coordinates
+     */
+    private Vector3 toGLCoordinates(Vector3 position) {
+        return position
+                .sub(new Vector3(0, 0, position.getZ()))
+                .div(new Vector3(snakeGame.getBounds().getWidth(), snakeGame.getBounds().getHeight(), snakeGame.getBounds().getDepth()).mul(0.5f));
     }
 
     @Override
@@ -74,12 +104,11 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         // such as screen rotation
         GLES20.glViewport(0, 0, width, height);
 
-        float ratio = (float) width / height;
+        aspectRatio = (float) width / height;
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
-
+        Matrix.frustumM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1, 1, 3, 7);
     }
 
     /**

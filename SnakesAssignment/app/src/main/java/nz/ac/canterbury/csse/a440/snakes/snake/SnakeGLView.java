@@ -45,6 +45,8 @@ public class SnakeGLView extends GLSurfaceView implements Renderer {
         renderer = new SnakeGLRenderer();
         setRenderer(renderer);
 
+        render(snakeGame);
+
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         requestRender();
     }

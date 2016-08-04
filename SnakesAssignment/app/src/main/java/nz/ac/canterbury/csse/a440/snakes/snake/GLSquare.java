@@ -56,22 +56,42 @@ public class GLSquare implements GLDrawable {
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
-    static float squareCoords[] = {
-            -0.5f,  0.5f, 0.0f,   // top left
-            -0.5f, -0.5f, 0.0f,   // bottom left
-            0.5f, -0.5f, 0.0f,   // bottom right
-            0.5f,  0.5f, 0.0f }; // top right
+    private final float squareCoords[] = new float[12];
 
     private final short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; // order to draw vertices
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    float color[] = { 0.2f, 0.709803922f, 0.898039216f, 1.0f };
+    private final float color[];
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public GLSquare() {
+    public GLSquare(Vector3 centre, float width, float height, float color[]) {
+        this.color = color;
+
+        Vector3 halfSize = new Vector3(width, height).mul(0.5f);
+        Vector3 topLeft = centre.sub(halfSize);
+        Vector3 bottomLeft = centre.sub(new Vector3(halfSize.getX(), -halfSize.getY()));
+        Vector3 bottomRight = centre.add(halfSize);
+        Vector3 topRight = centre.add(new Vector3(halfSize.getX(), -halfSize.getY()));
+
+        squareCoords[0] = topLeft.getX();
+        squareCoords[1] = topLeft.getY();
+        squareCoords[2] = topLeft.getZ();
+
+        squareCoords[3] = bottomLeft.getX();
+        squareCoords[4] = bottomLeft.getY();
+        squareCoords[5] = bottomLeft.getZ();
+
+        squareCoords[6] = bottomRight.getX();
+        squareCoords[7] = bottomRight.getY();
+        squareCoords[8] = bottomRight.getZ();
+
+        squareCoords[9] = topRight.getX();
+        squareCoords[10] = topRight.getY();
+        squareCoords[11] = topRight.getZ();
+
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (# of coordinate values * 4 bytes per float)

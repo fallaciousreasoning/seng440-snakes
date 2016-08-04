@@ -25,13 +25,14 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private final float[] mRotationMatrix = new float[16];
 
     private final float[] backgroundColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.8f);
-    private final float[] snakeColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.1f);
+    private final float[] snakeColor = GLColor.Lerp(GLColor.Black, GLColor.White, 0.4f);
     private final float[] foodColor = GLColor.Red;
     private final float[] snakeHeadColor = GLColor.Black;
 
     private float aspectRatio;
 
     private SnakeGame snakeGame;
+    private boolean render3D;
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
@@ -71,17 +72,35 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
                 .getFood()
                 .getPosition(), tileSize);
 
-        GLDrawable food = new GLCube(foodPosition, tileSize, foodColor);
+        GLDrawable food = getDrawable(foodPosition, tileSize, foodColor);
+
         drawables.add(food);
 
         for (Vector3 position : snakeGame.getSnake().getPositions()) {
             Vector3 drawPosition = toGLCoordinates(position, tileSize);
-            drawables.add(new GLSquare(drawPosition, tileSize, snakeColor));
+            drawables.add(getDrawable(drawPosition, tileSize, snakeColor));
         }
+
+        Vector3 position = toGLCoordinates(snakeGame.getSnake().headPosition(), tileSize);
+        drawables.add(getDrawable(position, tileSize, snakeHeadColor));
+
 
         //Render everything
         for (GLDrawable drawable : drawables)
             drawable.draw(mMVPMatrix);
+    }
+
+    /**
+     * Creates a new drawable
+     * @param position The position
+     * @param tileSize The tilesize
+     * @param color The color
+     * @return The drawable
+     */
+    private GLDrawable getDrawable(Vector3 position, float tileSize, float[] color) {
+        return isRender3D() ?
+                new GLCube(position, tileSize, color) :
+                new GLSquare(position, tileSize, color);
     }
 
     /**
@@ -156,5 +175,21 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     @Override
     public void render(SnakeGame game) {
         this.snakeGame = game;
+    }
+
+    /**
+     * Indicates whether the game should be rendered in 3D
+     * @return Whether the game should render in 3D
+     */
+    public boolean isRender3D() {
+        return render3D;
+    }
+
+    /**
+     * Sets whether the game is rendered in 3D
+     * @param render3D Whether the game should be rendered in 3D
+     */
+    public void setRender3D(boolean render3D) {
+        this.render3D = render3D;
     }
 }

@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
         gameGLRenderer = (SnakeGLView) findViewById(R.id.gameGLRenderer);
         game.addRenderer(gameGLRenderer);
+        //Call this so the view is setup properly
+        gameGLRenderer.render(game);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         ScoreRenderer scoreRenderer = new ScoreRenderer();

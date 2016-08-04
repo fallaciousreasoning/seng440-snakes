@@ -67,10 +67,10 @@ public class GLSquare implements GLDrawable {
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public GLSquare(Vector3 centre, float width, float height, float color[]) {
+    public GLSquare(Vector3 centre, float size, float color[]) {
         this.color = color;
 
-        Vector3 halfSize = new Vector3(width, height).mul(0.5f);
+        Vector3 halfSize = new Vector3(size, size).mul(0.5f);
         Vector3 topLeft = centre.sub(halfSize);
         Vector3 bottomLeft = centre.sub(new Vector3(halfSize.getX(), -halfSize.getY()));
         Vector3 bottomRight = centre.add(halfSize);

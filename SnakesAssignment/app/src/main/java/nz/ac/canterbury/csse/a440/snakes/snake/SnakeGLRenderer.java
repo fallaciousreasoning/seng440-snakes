@@ -71,12 +71,12 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
                 .getFood()
                 .getPosition(), tileSize);
 
-        GLDrawable food = new GLSquare(foodPosition, tileSize, tileSize, foodColor);
+        GLDrawable food = new GLCube(foodPosition, tileSize, foodColor);
         drawables.add(food);
 
         for (Vector3 position : snakeGame.getSnake().getPositions()) {
             Vector3 drawPosition = toGLCoordinates(position, tileSize);
-            drawables.add(new GLSquare(drawPosition, tileSize, tileSize, snakeColor));
+            drawables.add(new GLSquare(drawPosition, tileSize, snakeColor));
         }
 
         //Render everything

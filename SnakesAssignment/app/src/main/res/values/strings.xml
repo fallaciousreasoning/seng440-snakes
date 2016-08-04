@@ -38,4 +38,6 @@
     <string name="enable_sensor_injector_text">Enable Sensor Injector</string>
     <string name="sensor_injector_enabled_text">Sensor Injection Enabled</string>
     <string name="sensor_injector_disabled_text">Sensor Injection Disabled</string>
+    <string name="allow_3d_on">3D Enabled</string>
+    <string name="allow_3d_off">3D Disabled</string>
 </resources>

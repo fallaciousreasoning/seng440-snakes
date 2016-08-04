@@ -17,6 +17,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private SnakeGPSController gpsController;
 
     private SnakeController snakeController;
+    private GLSurfaceView gameGLRenderer;
 
     SnakeGame game;
     GameUpdater updater;
@@ -125,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
         CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
         gameRenderer.setGame(game);
+
+        gameGLRenderer = (GLSurfaceView)findViewById(R.id.gameGLRenderer);
+
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         ScoreRenderer scoreRenderer = new ScoreRenderer();
@@ -225,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
         //Set the update rate
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
         updater.setUpdateRate((int) (1000 / Float.parseFloat(speedString)));
+
+        gameGLRenderer.onResume();
     }
 
     @Override
@@ -238,6 +245,8 @@ public class MainActivity extends AppCompatActivity {
         catch (SecurityException e) {
             e.printStackTrace();
         }
+
+        gameGLRenderer.onPause();
     }
 
     private boolean canAccessLocation() {

@@ -59,6 +59,13 @@
                 android:layout_height="match_parent"
                 android:background="#ccc"
                 android:id="@+id/gameRenderer"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:visibility="gone"/>
+
+            <nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/gameGLRenderer"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <TextView
@@ -67,7 +74,8 @@
                 android:id="@+id/gameStatusText"
                 android:text="@string/gameStatusStart"
                 android:layout_centerInParent="true"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         </LinearLayout>

@@ -66,9 +66,6 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         float tileHeight = 2/(snakeGame.getBounds().getHeight() + 1);
         float tileSize = Math.max(tileWidth, tileHeight);
 
-        Vector3 offset = new Vector3(2*aspectRatio - tileSize * snakeGame.getBounds().getWidth(), 2 - tileSize*snakeGame.getBounds().getHeight(), 0)
-                .mul(-0.5f);
-
         Vector3 foodPosition = toGLCoordinates(
                 snakeGame
                 .getFood()

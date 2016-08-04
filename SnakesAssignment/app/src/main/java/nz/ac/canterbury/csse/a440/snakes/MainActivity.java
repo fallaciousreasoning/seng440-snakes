@@ -48,6 +48,8 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeCompassController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLView;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGPSController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private SnakeGPSController gpsController;
 
     private SnakeController snakeController;
-    private GLSurfaceView gameGLRenderer;
+    private SnakeGLView gameGLRenderer;
 
     SnakeGame game;
     GameUpdater updater;
@@ -128,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
         CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
         gameRenderer.setGame(game);
 
-        gameGLRenderer = (GLSurfaceView)findViewById(R.id.gameGLRenderer);
-
+        gameGLRenderer = (SnakeGLView) findViewById(R.id.gameGLRenderer);
+        game.addRenderer(gameGLRenderer);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         ScoreRenderer scoreRenderer = new ScoreRenderer();

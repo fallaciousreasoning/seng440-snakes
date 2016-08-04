@@ -62,8 +62,8 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         //Don't draw anything if the game is null
         if (snakeGame == null) return;
 
-        float tileWidth = 2*aspectRatio/snakeGame.getBounds().getWidth();
-        float tileHeight = 2/snakeGame.getBounds().getHeight();
+        float tileWidth = 2*aspectRatio/(snakeGame.getBounds().getWidth() + 1);
+        float tileHeight = 2/(snakeGame.getBounds().getHeight() + 1);
         float tileSize = Math.max(tileWidth, tileHeight);
 
         Vector3 offset = new Vector3(2*aspectRatio - tileSize * snakeGame.getBounds().getWidth(), 2 - tileSize*snakeGame.getBounds().getHeight(), 0)
@@ -72,13 +72,13 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         Vector3 foodPosition = toGLCoordinates(
                 snakeGame
                 .getFood()
-                .getPosition());
+                .getPosition(), tileSize);
 
         GLDrawable food = new GLSquare(foodPosition, tileSize, tileSize, foodColor);
         drawables.add(food);
 
         for (Vector3 position : snakeGame.getSnake().getPositions()) {
-            Vector3 drawPosition = toGLCoordinates(position);
+            Vector3 drawPosition = toGLCoordinates(position, tileSize);
             drawables.add(new GLSquare(drawPosition, tileSize, tileSize, snakeColor));
         }
 
@@ -92,10 +92,12 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
      * @param position The position of the snake
      * @return The gl coordinates
      */
-    private Vector3 toGLCoordinates(Vector3 position) {
+    private Vector3 toGLCoordinates(Vector3 position, float tileSize) {
+        Vector3 halfSize = new Vector3(tileSize, tileSize, tileSize).mul(0.5f);
         return position
                 .sub(new Vector3(0, 0, position.getZ()))
-                .div(new Vector3(snakeGame.getBounds().getWidth(), snakeGame.getBounds().getHeight(), snakeGame.getBounds().getDepth()).mul(0.5f));
+                .mul(tileSize)
+                .add(halfSize);
     }
 
     @Override
@@ -108,7 +110,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1, 1, 3, 7);
+        Matrix.frustumM(mProjectionMatrix, 0, aspectRatio, -aspectRatio, 1, -1, 3, 7);
     }
 
     /**

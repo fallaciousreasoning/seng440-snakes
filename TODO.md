@@ -16,9 +16,9 @@ Develop the desktop application:
 
 - [X] Currently the desktop application does not know what sensors the mobile device has.  Allow the desktop application to send a list request to the mobile phone which will then reply with a JSON string describing the sensors available on the phone. (4 marks)
 
-- [ ] Adapt the desktop application to allow the user to use the keyboard to:
+- [X] Adapt the desktop application to allow the user to use the keyboard to:
     - [X] simulate the mobile being tilted forward, backward, left and right. (2 marks)
-    - [ ] simulate the mobile being rotated left and right, hence changing the compass heading. (2 marks)
+    - [X] simulate the mobile being rotated left and right, hence changing the compass heading. (2 marks)
 
 ## Task 3: (12 marks)
 Advanced Android features:

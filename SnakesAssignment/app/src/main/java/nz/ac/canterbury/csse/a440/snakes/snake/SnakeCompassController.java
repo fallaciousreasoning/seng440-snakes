@@ -41,7 +41,7 @@ public class SnakeCompassController implements SnakeController, SensorEventListe
             SensorManager.getRotationMatrix(mR, null, acceleration, magnetic);
             SensorManager.getOrientation(mR, mOrientation);
             float azimuthInRadians = mOrientation[0];
-            float azimuthInDegrees = (float) (Math.toDegrees(azimuthInRadians) + 405) % 360;
+            float azimuthInDegrees = (float) (Math.toDegrees(azimuthInRadians) + 45) % 360;
             int quartile = (int) azimuthInDegrees / 90;
             switch (quartile) {
                 case 0:

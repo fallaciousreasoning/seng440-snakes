@@ -57,9 +57,6 @@ public class MessageBuilder {
             case Accelerometer:
                 requiredSensors.add(InputMethod.Accelerometer.getType());
                 break;
-            case GPS:
-                requiredSensors.add(InputMethod.GPS.getType());
-                break;
             case Compass:
                 requiredSensors.add(InputMethod.Accelerometer.getType());
                 requiredSensors.add(InputMethod.Compass.getType());

@@ -6,6 +6,7 @@
 package androidsensorinjector;
 
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class SensorControllerGUI extends javax.swing.JFrame {
     /**
      * A map mapping keys to commands
      */
-    private HashMap<Integer, InputDirection> keymap = new HashMap<>();
+    private HashMap<Integer, List<InputDirection>> keymap = new HashMap<>();
 
     /**
      * Creates new form SensorController
@@ -31,12 +32,19 @@ public class SensorControllerGUI extends javax.swing.JFrame {
         //Setup accelerometer keys
         //W north
         registerKey(87, InputMethod.Accelerometer, Direction.NORTH);
+        registerKey(38, InputMethod.Compass, Direction.NORTH);
+
         //S north
         registerKey(83, InputMethod.Accelerometer, Direction.SOUTH);
+        registerKey(40, InputMethod.Compass, Direction.SOUTH);
+
         //D north
         registerKey(68, InputMethod.Accelerometer, Direction.EAST);
+        registerKey(39, InputMethod.Compass, Direction.EAST);
+
         //A north
         registerKey(65, InputMethod.Accelerometer, Direction.WEST);
+        registerKey(37, InputMethod.Compass, Direction.WEST);
 
         asi=AndroidSensorInjector.getInjector();
         if (asi==null){
@@ -46,7 +54,10 @@ public class SensorControllerGUI extends javax.swing.JFrame {
     }
 
     private void registerKey(int keyCode, InputMethod method, Direction direction) {
-        keymap.put(keyCode, new InputDirection(method, direction));
+        if (!keymap.containsKey(keyCode)) {
+            keymap.put(keyCode, new ArrayList<>());
+        }
+        keymap.get(keyCode).add(new InputDirection(method, direction));
     }
 
     /**
@@ -100,13 +111,22 @@ public class SensorControllerGUI extends javax.swing.JFrame {
             return;
         }
 
-        InputDirection inputDir = keymap.get(evt.getKeyCode());
-        List<SensorEvent> events = new MessageBuilder()
-                .setInputMethod(inputDir.getMethod())
-                .setDirection(inputDir.getDirection())
-                .createEvents();
-        for (SensorEvent event : events)
-            asi.addEvent(event);
+        List<InputDirection> inputDirs = keymap.get(evt.getKeyCode());
+
+        for (InputDirection inputDir : inputDirs) {
+            List<SensorEvent> events = new MessageBuilder()
+                    .setInputMethod(inputDir.getMethod())
+                    .setDirection(inputDir.getDirection())
+                    .createEvents();
+            for (SensorEvent event : events) {
+                asi.addEvent(event);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         //DEMO
     }//GEN-LAST:event_formKeyPressed
 

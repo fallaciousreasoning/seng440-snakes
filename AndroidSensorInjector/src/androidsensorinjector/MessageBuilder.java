@@ -43,6 +43,7 @@ public class MessageBuilder {
      */
     public MessageBuilder() {
         builders.put(InputMethod.Accelerometer, new AccelerometerValuesBuilder());
+        builders.put(InputMethod.Compass, new CompassValuesBuilder());
     }
 
     /**

@@ -284,9 +284,17 @@ public class MainActivity extends AppCompatActivity {
         InputMethod inputMethod = InputMethod.valueOf(PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString("input_method", "SWIPE"));
+        boolean is3d = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_3d_enabled", false);
+
+        //We only have button input in 3D
+        if (is3d) inputMethod = InputMethod.BUTTONS;
 
         LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
         buttonsLayout.setVisibility(View.GONE);
+
+        LinearLayout verticalButtonsLayout = (LinearLayout)findViewById(R.id.verticalButtonControlsContainer);
+        verticalButtonsLayout.setVisibility(View.GONE);
 
         switch (inputMethod){
             case SWIPE:
@@ -300,6 +308,9 @@ public class MainActivity extends AppCompatActivity {
             case BUTTONS:
                 //Initialize the button controller
                 buttonsLayout.setVisibility(View.VISIBLE);
+                if (is3d){
+                    verticalButtonsLayout.setVisibility(View.VISIBLE);
+                }
 
                 if (buttonController == null) {
                     buttonController = new SnakeButtonController();
@@ -307,6 +318,8 @@ public class MainActivity extends AppCompatActivity {
                     addControllerButton(buttonsLayout, Direction.SOUTH);
                     addControllerButton(buttonsLayout, Direction.WEST);
                     addControllerButton(buttonsLayout, Direction.EAST);
+                    addControllerButton(verticalButtonsLayout, Direction.UP);
+                    addControllerButton(verticalButtonsLayout, Direction.DOWN);
                 }
                 snakeController = buttonController;
                 break;

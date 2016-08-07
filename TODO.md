@@ -38,9 +38,9 @@ Software engineering:
 
 - [X] The key press method of controlling the game should be unit tested. (2 marks)
 - [X] The project should be held under version control using git.  You should create a git repository on https://eng-git.canterbury.ac.nz with master access granted to the account `dbo50’. (1 mark)
-- [ ] Marks will be allocated to individuals who make a significant contribution each week (2/3 mark per week per developer for at least three weeks, indicated by git pushes) (2 marks)
+- [X] Marks will be allocated to individuals who make a significant contribution each week (2/3 mark per week per developer for at least three weeks, indicated by git pushes) (2 marks)
 
 ## Task 6: (2 marks)
 Hard but fun
 
-- [ ] Make the game 3D! i.e. play occurs in x,y and z dimensions. (2 marks)
+- [X] Make the game 3D! i.e. play occurs in x,y and z dimensions. (2 marks) (this one is dubious)

@@ -69,11 +69,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
     private static final int LOCATION_COARSE_REQUEST=INITIAL_REQUEST+2;
     private static final int INTERNET_REQUEST=INITIAL_REQUEST+3;
+
+    //Indicates whether the game should be in 3D
+    private boolean is3d;
+
     private SensorManager sensorManager;
     private LocationManager locationManager;
 
     private GestureDetectorCompat gestureDetector;
     private AggregateGestureListener gestureListener;
+
+    private StartFinishGestureListener startFinishGestureListener;
 
     private SnakeSwipeController swipeController;
     private SnakeAccelerometerController accelerometerController;
@@ -82,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
     private SnakeGPSController gpsController;
 
     private SnakeController snakeController;
+
     private SnakeGLView gameGLRenderer;
+    private StartFinishRenderer startFinishRenderer;
+    private ScoreRenderer scoreRenderer;
 
     SnakeGame game;
     GameUpdater updater;
@@ -124,34 +133,20 @@ public class MainActivity extends AppCompatActivity {
         accelerometerController = new SnakeAccelerometerController();
         compassController = new SnakeCompassController();
 
-
-        game = new SnakeGame(20, 30, 1, 3);
-
-        CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
-        gameRenderer.setGame(game);
-
         gameGLRenderer = (SnakeGLView) findViewById(R.id.gameGLRenderer);
-        game.addRenderer(gameGLRenderer);
-        //Call this so the view is setup properly
-        gameGLRenderer.render(game);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
-        ScoreRenderer scoreRenderer = new ScoreRenderer();
+        scoreRenderer = new ScoreRenderer();
         scoreRenderer.setTextView(scoreText);
-        game.addRenderer(scoreRenderer);
 
         TextView gameStatusText = (TextView) findViewById(R.id.gameStatusText);
-        StartFinishRenderer startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
+        startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
         startFinishRenderer.setTextView(gameStatusText);
-        game.addRenderer(startFinishRenderer);
 
-        updater = new GameUpdater(game);
+        updater = new GameUpdater();
 
         gestureListener = new AggregateGestureListener();
         gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
-
-        StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
-        gestureListener.addGestureListener(startFinishGestureListener);
     }
 
     @Override
@@ -192,6 +187,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        is3d = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_3d_enabled", false);
+        gameGLRenderer.setUse3D(is3d);
+
+        if (game == null || game.getBounds().getDepth() == 1 && is3d || game.getBounds().getDepth() != 1 && !is3d) {
+            game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
+
+            game.addRenderer(gameGLRenderer);
+            game.addRenderer(scoreRenderer);
+            game.addRenderer(startFinishRenderer);
+
+            game.render();
+
+            updater.setGame(game);
+        }
+
         // register this class as a listener for the orientation and
         // accelerometer sensors
         SnakeApplication app = (SnakeApplication) this.getApplication();
@@ -284,8 +296,6 @@ public class MainActivity extends AppCompatActivity {
         InputMethod inputMethod = InputMethod.valueOf(PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString("input_method", "SWIPE"));
-        boolean is3d = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("allow_3d_enabled", false);
 
         //We only have button input in 3D
         if (is3d) inputMethod = InputMethod.BUTTONS;
@@ -333,6 +343,12 @@ public class MainActivity extends AppCompatActivity {
                 snakeController = gpsController;
                 break;
         }
+
+        if (startFinishGestureListener ==  null) {
+            startFinishGestureListener = new StartFinishGestureListener();
+            gestureListener.addGestureListener(startFinishGestureListener);
+        }
+        startFinishGestureListener.setGame(game);
 
         game.setSnakeController(snakeController);
     }

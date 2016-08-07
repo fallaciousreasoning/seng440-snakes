@@ -55,6 +55,14 @@ public class SnakeGLView extends GLSurfaceView implements Renderer {
         requestRender();
     }
 
+    /**
+     * Sets whether the renderer should use 3D
+     * @param use3D Whether the renderer should use 3D
+     */
+    public void setUse3D(boolean use3D) {
+        renderer.setRender3D(use3D);
+    }
+
     @Override
     public void render(SnakeGame game) {
         this.snakeGame = game;

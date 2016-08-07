@@ -62,9 +62,9 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         //Don't draw anything if the game is null
         if (snakeGame == null) return;
 
-        float tileWidth = 2*aspectRatio/(snakeGame.getBounds().getWidth() + 1);
-        float tileHeight = 2/(snakeGame.getBounds().getHeight() + 1);
-        float tileSize = Math.max(tileWidth, tileHeight);
+        float tileWidth = 2*aspectRatio/(snakeGame.getBounds().getWidth());
+        float tileHeight = 2/(snakeGame.getBounds().getHeight());
+        float tileSize = Math.min(tileWidth, tileHeight);
 
         Vector3 foodPosition = toGLCoordinates(
                 snakeGame
@@ -110,7 +110,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private Vector3 toGLCoordinates(Vector3 position, float tileSize) {
         Vector3 halfSize = new Vector3(tileSize, tileSize, tileSize).mul(0.5f);
         return position
-                .sub(new Vector3(0, 0, position.getZ()))
+                .sub(new Vector3(0, 0, 0))
                 .mul(tileSize)
                 .add(halfSize);
     }
@@ -125,7 +125,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, aspectRatio, -aspectRatio, 1, -1, 3, 7);
+        Matrix.frustumM(mProjectionMatrix, 0, aspectRatio, -aspectRatio, 1, -1, render3D ? 2 : 3, 7);
     }
 
     /**

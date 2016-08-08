@@ -5,11 +5,11 @@ The following tasks need to be completed as part of this assignment:
 ## Task 1: (10 marks)
 Simple and essential features:
 
-- [X] Create a simple version of the game using a 20x30 matrix to display the snake and the `food’ blocks which the snake can collect. (2 marks)
+- [X] Create a simple version of the game using a 20x30 matrix to display the snake and the `food` blocks which the snake can collect. (2 marks)
 - [X] The screen should also have four buttons which can be used to change the direction of travel of the snake. (2 marks)
 - [X] The application should have a setting screen which allows you to select the speed of the snake. (2 marks)
 - [X] Create a controller which moves the snake adding new blocks at the head of the snake and removing blocks from the tail of the snake. (2 marks)
-- [ ] Create a model of the game to persist the snake and the location of food blocks (2 marks)
+- [x] Create a model of the game to persist the snake and the location of food blocks (2 marks)
 
 ## Task 2: (8 marks)
 Develop the desktop application:
@@ -37,7 +37,7 @@ Minecraft integration:
 Software engineering:
 
 - [X] The key press method of controlling the game should be unit tested. (2 marks)
-- [X] The project should be held under version control using git.  You should create a git repository on https://eng-git.canterbury.ac.nz with master access granted to the account `dbo50’. (1 mark)
+- [X] The project should be held under version control using git.  You should create a git repository on https://eng-git.canterbury.ac.nz with master access granted to the account `dbo50`. (1 mark)
 - [X] Marks will be allocated to individuals who make a significant contribution each week (2/3 mark per week per developer for at least three weeks, indicated by git pushes) (2 marks)
 
 ## Task 6: (2 marks)

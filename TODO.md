@@ -16,9 +16,9 @@ Develop the desktop application:
 
 - [X] Currently the desktop application does not know what sensors the mobile device has.  Allow the desktop application to send a list request to the mobile phone which will then reply with a JSON string describing the sensors available on the phone. (4 marks)
 
-- [ ] Adapt the desktop application to allow the user to use the keyboard to:
+- [X] Adapt the desktop application to allow the user to use the keyboard to:
     - [X] simulate the mobile being tilted forward, backward, left and right. (2 marks)
-    - [ ] simulate the mobile being rotated left and right, hence changing the compass heading. (2 marks)
+    - [X] simulate the mobile being rotated left and right, hence changing the compass heading. (2 marks)
 
 ## Task 3: (12 marks)
 Advanced Android features:
@@ -38,9 +38,9 @@ Software engineering:
 
 - [X] The key press method of controlling the game should be unit tested. (2 marks)
 - [X] The project should be held under version control using git.  You should create a git repository on https://eng-git.canterbury.ac.nz with master access granted to the account `dbo50’. (1 mark)
-- [ ] Marks will be allocated to individuals who make a significant contribution each week (2/3 mark per week per developer for at least three weeks, indicated by git pushes) (2 marks)
+- [X] Marks will be allocated to individuals who make a significant contribution each week (2/3 mark per week per developer for at least three weeks, indicated by git pushes) (2 marks)
 
 ## Task 6: (2 marks)
 Hard but fun
 
-- [ ] Make the game 3D! i.e. play occurs in x,y and z dimensions. (2 marks)
+- [X] Make the game 3D! i.e. play occurs in x,y and z dimensions. (2 marks) (this one is dubious)

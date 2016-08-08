@@ -7,10 +7,7 @@ import java.util.List;
  */
 public enum InputMethod {
     Accelerometer("android.sensor.accelerometer"),
-    Compass("android.sensor.magnetic_field"),
-
-    //Not sure if thte last one is right
-    GPS("android.sensor.gps");
+    Compass("android.sensor.magnetic_field");
 
     private InputMethod(String name) {
         this.name = name;

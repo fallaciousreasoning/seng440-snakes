@@ -43,6 +43,7 @@ public class MessageBuilder {
      */
     public MessageBuilder() {
         builders.put(InputMethod.Accelerometer, new AccelerometerValuesBuilder());
+        builders.put(InputMethod.Compass, new CompassValuesBuilder());
     }
 
     /**
@@ -56,9 +57,6 @@ public class MessageBuilder {
         switch (method) {
             case Accelerometer:
                 requiredSensors.add(InputMethod.Accelerometer.getType());
-                break;
-            case GPS:
-                requiredSensors.add(InputMethod.GPS.getType());
                 break;
             case Compass:
                 requiredSensors.add(InputMethod.Accelerometer.getType());

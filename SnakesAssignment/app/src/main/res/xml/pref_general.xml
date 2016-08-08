@@ -17,4 +17,11 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_game_speed_title" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:summaryOn="@string/allow_3d_on"
+        android:summaryOff="@string/allow_3d_off"
+        android:key="allow_3d_enabled"
+        />
 </PreferenceScreen>

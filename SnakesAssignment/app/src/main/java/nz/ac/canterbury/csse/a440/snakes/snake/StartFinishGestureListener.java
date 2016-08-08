@@ -14,15 +14,17 @@ public class StartFinishGestureListener extends GestureDetector.SimpleOnGestureL
     private SnakeGame game;
 
     /**
-     * Constructs a new start finish gesture listener for a game
+     * Sets the game
      * @param game The game
      */
-    public StartFinishGestureListener(SnakeGame game) {
+    public void setGame(SnakeGame game) {
         this.game = game;
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
+        if (game == null) return true;
+
         if (!game.started())
             game.start();
         if (game.finished())

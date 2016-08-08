@@ -18,7 +18,7 @@ public class GameUpdater {
     /**
      * The snake game to be updated by the updater
      */
-    private final SnakeGame game;
+    private SnakeGame game;
 
     /**
      * A timer to handle ticking the game clock
@@ -31,9 +31,7 @@ public class GameUpdater {
      */
     private Handler updateHandler = new Handler();
 
-    public GameUpdater(final SnakeGame game){
-        this.game = game;
-
+    public GameUpdater(){
         schedule();
     }
 
@@ -55,7 +53,7 @@ public class GameUpdater {
                 updateHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        game.step();
+                        if (game != null) game.step();
                     }
                 });
             }
@@ -69,5 +67,13 @@ public class GameUpdater {
     public void setUpdateRate(int updateRate) {
         this.updateRate = updateRate;
         schedule();
+    }
+
+    /**
+     * Sets the game the updater is working with
+     * @param game The game
+     */
+    public void setGame(SnakeGame game) {
+        this.game = game;
     }
 }

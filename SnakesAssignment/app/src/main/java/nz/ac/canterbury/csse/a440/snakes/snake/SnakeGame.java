@@ -103,7 +103,7 @@ public class SnakeGame implements Parcelable, Serializable {
      */
     public void start() {
         started = true;
-        notifyListeners();
+        render();
     }
 
     /**
@@ -139,13 +139,13 @@ public class SnakeGame implements Parcelable, Serializable {
             }
         }
 
-        notifyListeners();
+        render();
     }
 
     /**
      * Notifies listeners that the game has been updated
      */
-    private void notifyListeners() {
+    public void render() {
         //Tell all the renderers we've updated
         for (Renderer renderer : renderers)
             renderer.render(this);
@@ -166,7 +166,7 @@ public class SnakeGame implements Parcelable, Serializable {
             snakeController.reset();
         }
 
-        notifyListeners();
+        render();
     }
 
     /**

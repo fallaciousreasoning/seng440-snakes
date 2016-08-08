@@ -3,12 +3,15 @@ package nz.ac.canterbury.csse.a440.snakes.snake;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Represents an axis aligned bounding box
  */
-public class AABB implements Parcelable {
+public class AABB {
     private Vector3 min;
     private Vector3 max;
+
 
     /**
      * Creates a new AABB from a min and max point
@@ -42,25 +45,6 @@ public class AABB implements Parcelable {
         min = centre.sub(halfSize);
         max = centre.add(halfSize);
     }
-
-    protected AABB(Parcel in) {
-        //Fixme how does it identify min and max???
-        max = (Vector3) in.readParcelable(Vector3.class.getClassLoader());
-        min = (Vector3) in.readParcelable(Vector3.class.getClassLoader());
-    }
-
-    public static final Creator<AABB> CREATOR = new Creator<AABB>() {
-        @Override
-        public AABB createFromParcel(Parcel in) {
-            return new AABB(in);
-        }
-
-        @Override
-        public AABB[] newArray(int size) {
-            return new AABB[size];
-        }
-    };
-
     /**
      * Gets the width of the AABB
      * @return the width of the AABB
@@ -139,16 +123,5 @@ public class AABB implements Parcelable {
         return point.getX() >= min.getX() && point.getX() < max.getX() &&
                 point.getY() >= min.getY() && point.getY() < max.getY() &&
                 point.getZ() >= min.getZ() && point.getZ() < max.getZ();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(max, flags);
-        dest.writeParcelable(min, flags);
     }
 }

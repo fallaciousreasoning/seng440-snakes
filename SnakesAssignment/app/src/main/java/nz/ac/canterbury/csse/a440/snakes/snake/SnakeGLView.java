@@ -38,9 +38,6 @@ public class SnakeGLView extends GLSurfaceView implements Renderer {
                 R.styleable.CanvasViewRenderer,
                 0, 0);
 
-        snakeGame = new SnakeGame(20, 30, 20, 3);
-        snakeGame.addRenderer(this);
-
         setEGLContextClientVersion(2);
 
         renderer = new SnakeGLRenderer();

@@ -83,4 +83,5 @@ dependencies {
     compile 'com.crittercism.dexmaker:dexmaker:1.4'
     compile 'com.crittercism.dexmaker:dexmaker-dx:1.4'
     compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.google.code.gson:gson:2.4'
 }

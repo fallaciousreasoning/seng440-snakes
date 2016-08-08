@@ -3,13 +3,14 @@ package nz.ac.canterbury.csse.a440.snakes.snake;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A class representing a point in 3D space and various
  * helper methods for mathematical operations
  */
-public class Vector3 implements Parcelable {
+public class Vector3 {
     private final float x;
     private final float y;
     private final float z;
@@ -34,24 +35,6 @@ public class Vector3 implements Parcelable {
         this.y = y;
         this.z = z;
     }
-
-    protected Vector3(Parcel in) {
-        x = in.readFloat();
-        y = in.readFloat();
-        z = in.readFloat();
-    }
-
-    public static final Creator<Vector3> CREATOR = new Creator<Vector3>() {
-        @Override
-        public Vector3 createFromParcel(Parcel in) {
-            return new Vector3(in);
-        }
-
-        @Override
-        public Vector3[] newArray(int size) {
-            return new Vector3[size];
-        }
-    };
 
     /**
      * Gets the x coordinate of the vector
@@ -191,16 +174,4 @@ public class Vector3 implements Parcelable {
     public static final Vector3 UnitX = new Vector3(1, 0, 0);
     public static final Vector3 UnitY = new Vector3(0, 1, 0);
     public static final Vector3 UnitZ = new Vector3(0, 0, 1);
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeFloat(x);
-        dest.writeFloat(y);
-        dest.writeFloat(z);
-    }
 }

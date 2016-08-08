@@ -119,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
         accelerometerController = new SnakeAccelerometerController();
         compassController = new SnakeCompassController();
 
-        gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
-        assert gameRenderer != null;
         gameGLRenderer = (SnakeGLView) findViewById(R.id.gameGLRenderer);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
@@ -177,28 +175,32 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         game = Util.readGame(this);
-        if (game == null) {
-            game = new SnakeGame(20, 30, 1, 3);
+        is3d = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("allow_3d_enabled", false);
+        gameGLRenderer.setUse3D(is3d);
+
+        if (game == null || game.getBounds().getDepth() == 1 && is3d || game.getBounds().getDepth() != 1 && !is3d) {
+            game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
         }
-
-        gameRenderer.setGame(game);
-
+        game.addRenderer(gameGLRenderer);
         game.addRenderer(scoreRenderer);
 
         game.addRenderer(startFinishRenderer);
-
         if (updater == null) {
-            updater = new GameUpdater(game);
+            updater = new GameUpdater();
+//            updater.setGame(game);
         }
 
         if (gestureListener == null) {
             gestureListener = new AggregateGestureListener();
-            StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
+            StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener();
+            startFinishGestureListener.setGame(game);
             gestureListener.addGestureListener(startFinishGestureListener);
         }
         if (gestureDetector == null) {
             gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
         }
+
 
 
     }
@@ -213,22 +215,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        game.render();
 
-        is3d = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("allow_3d_enabled", false);
-        gameGLRenderer.setUse3D(is3d);
-
-        if (game == null || game.getBounds().getDepth() == 1 && is3d || game.getBounds().getDepth() != 1 && !is3d) {
-            game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
-
-            game.addRenderer(gameGLRenderer);
-            game.addRenderer(scoreRenderer);
-            game.addRenderer(startFinishRenderer);
-
-            game.render();
-
-            updater.setGame(game);
-        }
+        updater.setGame(game);
 
         // register this class as a listener for the orientation and
         // accelerometer sensors

@@ -11,18 +11,17 @@ import java.util.Random;
 /**
  * A Game of Snake
  */
-public class SnakeGame implements Parcelable, Serializable {
-
-    private static final long serialVersionUID = -29238982928391L;
+public class SnakeGame {
     /**
      * The active renderer for the game
      */
-    private Collection<Renderer> renderers = new ArrayList<>();
+
+    private transient Collection<Renderer> renderers = new ArrayList<>();
 
     /**
      * The controller that tells the snake how it should move
      */
-    private SnakeController snakeController;
+    private transient SnakeController snakeController;
 
     /**
      * The snake
@@ -62,7 +61,7 @@ public class SnakeGame implements Parcelable, Serializable {
     /**
      * A random number generator
      */
-    private static Random random = new Random();
+    private static transient Random random = new Random();
 
     /**
      * The food the snake is currently trying to eat
@@ -75,28 +74,6 @@ public class SnakeGame implements Parcelable, Serializable {
 
         reset();
     }
-
-    protected SnakeGame(Parcel in) {
-        tileSize = in.readFloat();
-        startingLength = in.readInt();
-        hitWall = in.readByte() != 0;
-        hitSelf = in.readByte() != 0;
-        started = in.readByte() != 0;
-        bounds = (AABB) in.readParcelable(AABB.class.getClassLoader());
-        snake = (Snake) in.readParcelable(Snake.class.getClassLoader());
-    }
-
-    public static final Creator<SnakeGame> CREATOR = new Creator<SnakeGame>() {
-        @Override
-        public SnakeGame createFromParcel(Parcel in) {
-            return new SnakeGame(in);
-        }
-
-        @Override
-        public SnakeGame[] newArray(int size) {
-            return new SnakeGame[size];
-        }
-    };
 
     /**
      * Initializes the snake game. The game will not run until this method has been called.
@@ -147,6 +124,8 @@ public class SnakeGame implements Parcelable, Serializable {
      */
     public void render() {
         //Tell all the renderers we've updated
+        if (renderers ==  null) return;
+
         for (Renderer renderer : renderers)
             renderer.render(this);
     }
@@ -198,6 +177,7 @@ public class SnakeGame implements Parcelable, Serializable {
      * @param renderer The renderer to add to the game
      */
     public void addRenderer(Renderer renderer) {
+        if (renderers == null) renderers = new ArrayList<>();
         this.renderers.add(renderer);
     }
 
@@ -296,22 +276,6 @@ public class SnakeGame implements Parcelable, Serializable {
      */
     public void setSnakeController(SnakeController snakeController) {
         this.snakeController = snakeController;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeFloat(tileSize);
-        dest.writeInt(startingLength);
-        dest.writeByte((byte) (hitWall ? 1 : 0));
-        dest.writeByte((byte) (hitSelf ? 1 : 0));
-        dest.writeByte((byte) (started ? 1 : 0));
-        dest.writeParcelable(bounds, flags);
-        dest.writeParcelable(snake, flags);
     }
 
     @Override

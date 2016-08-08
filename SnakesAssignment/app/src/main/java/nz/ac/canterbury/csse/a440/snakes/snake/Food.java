@@ -1,5 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import java.io.Serializable;
+
 /**
  * A piece of food for the snake to eat
  */

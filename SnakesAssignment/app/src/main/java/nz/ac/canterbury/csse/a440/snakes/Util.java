@@ -2,9 +2,16 @@ package nz.ac.canterbury.csse.a440.snakes;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -18,10 +25,13 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
  */
 public class Util {
 
+    private static final Gson gson = new Gson();
+
     public static void writeGame(Context ctx, SnakeGame game) {
         try {
-            ObjectOutput out = new ObjectOutputStream(ctx.openFileOutput("snakes.txt", Context.MODE_PRIVATE));
-            out.writeObject(game);
+            FileOutputStream out = ctx.openFileOutput("snakesOnAPlane", Context.MODE_PRIVATE);
+            String json = gson.toJson(game);
+            out.write(json.getBytes());
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,13 +40,19 @@ public class Util {
 
     public static SnakeGame readGame(Context ctx) {
         try {
-            ObjectInputStream input = new ObjectInputStream(ctx.openFileInput("snakes.txt"));
-            SnakeGame game = (SnakeGame) input.readObject();
+            BufferedReader input = new BufferedReader(new InputStreamReader(ctx.openFileInput("snakesOnAPlane")));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = input.readLine()) != null) {
+                sb.append(line);
+            }
+            SnakeGame game = (SnakeGame) gson.fromJson(sb.toString(), SnakeGame.class);
             input.close();
             return game;
         } catch (FileNotFoundException e) {
             // Game never saved
-        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

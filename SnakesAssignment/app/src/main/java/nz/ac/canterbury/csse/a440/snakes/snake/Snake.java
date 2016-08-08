@@ -1,8 +1,6 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.List;
 /**
  * A class representing a snake in the game
  */
-public class Snake implements Parcelable {
+public class Snake {
     /**
      * The size of the blocks the snake consists of
      */
@@ -51,26 +49,6 @@ public class Snake implements Parcelable {
             positions.add(nextPos);
         }
     }
-
-    protected Snake(Parcel in) {
-        blockSize = in.readFloat();
-        grow = in.readInt();
-        //Fixme how to read a linkedLIst???
-        in.readTypedList(positions, Vector3.CREATOR);
-        direction = (Direction) in.readParcelable(Direction.class.getClassLoader());
-    }
-
-    public static final Creator<Snake> CREATOR = new Creator<Snake>() {
-        @Override
-        public Snake createFromParcel(Parcel in) {
-            return new Snake(in);
-        }
-
-        @Override
-        public Snake[] newArray(int size) {
-            return new Snake[size];
-        }
-    };
 
     /**
      * Gets the amount that the snake will be moved by
@@ -139,17 +117,19 @@ public class Snake implements Parcelable {
      * Makes the snake take a step
      */
     public void step() {
-        //If the snake hasn't eaten, we should remove the last block (we put a new one
-        //on the front each step)
-        if (grow <= 0) {
-            positions.removeLast();
-        } else grow--;
+        synchronized (this) {
+            //If the snake hasn't eaten, we should remove the last block (we put a new one
+            //on the front each step)
+            if (grow <= 0) {
+                positions.removeLast();
+            } else grow--;
 
-        //Get the next position of the snake
-        Vector3 nextPos = nextPosition();
+            //Get the next position of the snake
+            Vector3 nextPos = nextPosition();
 
-        //Set it as our new head position
-        positions.addFirst(nextPos);
+            //Set it as our new head position
+            positions.addFirst(nextPos);
+        }
     }
 
     /**
@@ -232,18 +212,5 @@ public class Snake implements Parcelable {
 
         //If we didn't find anything, we're all good
         return false;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeFloat(blockSize);
-        dest.writeInt(grow);
-        dest.writeTypedList(positions);
-        dest.writeParcelable(direction, flags);
     }
 }

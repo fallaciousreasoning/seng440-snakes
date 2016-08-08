@@ -1,12 +1,15 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * An enum for relating directions to vectors.
  * NORTH/SOUTH: Y axis
  * EAST/WEST: X axis
  * UP/DOWN: Z axis
  */
-public enum Direction {
+public enum Direction implements Parcelable {
     NORTH(new Vector3(0, -1, 0)),
     SOUTH(new Vector3(0, 1, 0)),
     EAST(new Vector3(1, 0, 0)),
@@ -33,5 +36,15 @@ public enum Direction {
      */
     public Vector3 getDirection() {
         return direction;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

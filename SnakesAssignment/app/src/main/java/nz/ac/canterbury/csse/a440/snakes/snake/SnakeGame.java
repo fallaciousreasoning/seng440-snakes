@@ -1,5 +1,9 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -7,7 +11,9 @@ import java.util.Random;
 /**
  * A Game of Snake
  */
-public class SnakeGame {
+public class SnakeGame implements Parcelable, Serializable {
+
+    private static final long serialVersionUID = -29238982928391L;
     /**
      * The active renderer for the game
      */
@@ -69,6 +75,28 @@ public class SnakeGame {
 
         reset();
     }
+
+    protected SnakeGame(Parcel in) {
+        tileSize = in.readFloat();
+        startingLength = in.readInt();
+        hitWall = in.readByte() != 0;
+        hitSelf = in.readByte() != 0;
+        started = in.readByte() != 0;
+        bounds = (AABB) in.readParcelable(AABB.class.getClassLoader());
+        snake = (Snake) in.readParcelable(Snake.class.getClassLoader());
+    }
+
+    public static final Creator<SnakeGame> CREATOR = new Creator<SnakeGame>() {
+        @Override
+        public SnakeGame createFromParcel(Parcel in) {
+            return new SnakeGame(in);
+        }
+
+        @Override
+        public SnakeGame[] newArray(int size) {
+            return new SnakeGame[size];
+        }
+    };
 
     /**
      * Initializes the snake game. The game will not run until this method has been called.
@@ -268,5 +296,31 @@ public class SnakeGame {
      */
     public void setSnakeController(SnakeController snakeController) {
         this.snakeController = snakeController;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(tileSize);
+        dest.writeInt(startingLength);
+        dest.writeByte((byte) (hitWall ? 1 : 0));
+        dest.writeByte((byte) (hitSelf ? 1 : 0));
+        dest.writeByte((byte) (started ? 1 : 0));
+        dest.writeParcelable(bounds, flags);
+        dest.writeParcelable(snake, flags);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
     }
 }

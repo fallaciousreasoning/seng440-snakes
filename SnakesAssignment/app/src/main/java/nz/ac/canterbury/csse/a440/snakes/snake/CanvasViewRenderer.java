@@ -50,8 +50,8 @@ public class CanvasViewRenderer extends View implements Renderer {
             a.recycle();
         }
 
-        snakeGame = new SnakeGame(20, 30, 1, 3);
-        snakeGame.addRenderer(this);
+//        snakeGame = new SnakeGame(20, 30, 1, 3);
+//        snakeGame.addRenderer(this);
 
         snakePaint = new Paint();
         snakePaint.setStyle(Paint.Style.FILL);
@@ -151,16 +151,19 @@ public class CanvasViewRenderer extends View implements Renderer {
      * @param game The new game
      */
     public void setGame(SnakeGame game) {
-        //If we're listening to something else; stop
-        if (this.snakeGame != null) {
-            this.snakeGame.getRenderers().remove(this);
+        if (!this.snakeGame.equals(game)) {
+
+            //If we're listening to something else; stop
+            if (this.snakeGame != null) {
+                this.snakeGame.getRenderers().remove(this);
+            }
+
+            this.snakeGame = game;
+
+            if (game == null) return;
+
+            game.addRenderer(this);
+            invalidate();
         }
-
-        this.snakeGame = game;
-
-        if (game == null) return;
-
-        game.addRenderer(this);
-        invalidate();
     }
 }

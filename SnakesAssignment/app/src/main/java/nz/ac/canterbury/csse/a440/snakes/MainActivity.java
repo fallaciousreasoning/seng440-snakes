@@ -6,37 +6,26 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.hardware.InjectableSensorManager;
-import android.hardware.MySensorEvent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.dx.rop.code.Exceptions;
 
 import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
@@ -59,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.INTERNET
     };
-    private static final String[] LOCATION_PERMS={
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
     private static final int INITIAL_REQUEST=1337;
     private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
     private static final int LOCATION_COARSE_REQUEST=INITIAL_REQUEST+2;
@@ -80,8 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
     private SnakeController snakeController;
 
-    SnakeGame game;
+    static SnakeGame game;
     GameUpdater updater;
+    private ScoreRenderer scoreRenderer;
+    private StartFinishRenderer startFinishRenderer;
+    private CanvasViewRenderer gameRenderer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,33 +109,20 @@ public class MainActivity extends AppCompatActivity {
         accelerometerController = new SnakeAccelerometerController();
         compassController = new SnakeCompassController();
 
-
-        game = new SnakeGame(20, 30, 1, 3);
-
-        CanvasViewRenderer gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
-        gameRenderer.setGame(game);
+        gameRenderer = (CanvasViewRenderer) findViewById(R.id.gameRenderer);
+        assert gameRenderer != null;
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
-        ScoreRenderer scoreRenderer = new ScoreRenderer();
+        scoreRenderer = new ScoreRenderer();
         scoreRenderer.setTextView(scoreText);
-        game.addRenderer(scoreRenderer);
 
         TextView gameStatusText = (TextView) findViewById(R.id.gameStatusText);
-        StartFinishRenderer startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
+        startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
         startFinishRenderer.setTextView(gameStatusText);
-        game.addRenderer(startFinishRenderer);
-
-        updater = new GameUpdater(game);
-
-        gestureListener = new AggregateGestureListener();
-        gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
-
-        StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
-        gestureListener.addGestureListener(startFinishGestureListener);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch(requestCode) {
             case LOCATION_REQUEST:
                 break;
@@ -181,6 +157,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        game = Util.readGame(this);
+        if (game == null) {
+            game = new SnakeGame(20, 30, 1, 3);
+        }
+
+        gameRenderer.setGame(game);
+
+        game.addRenderer(scoreRenderer);
+
+        game.addRenderer(startFinishRenderer);
+
+        if (updater == null) {
+            updater = new GameUpdater(game);
+        }
+
+        if (gestureListener == null) {
+            gestureListener = new AggregateGestureListener();
+            StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener(game);
+            gestureListener.addGestureListener(startFinishGestureListener);
+        }
+        if (gestureDetector == null) {
+            gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
+        }
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Util.writeGame(this, game);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // register this class as a listener for the orientation and
@@ -193,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 .getBoolean("sensor_injector_enabled", false);
         InjectableSensorManager.setUseSystem(!sensor_injector_enabled);
         sensorManager = app.ism;
-        if (sensorManager instanceof InjectableSensorManager) {
+        if (sensorManager != null) {
             InjectableSensorManager ism = (InjectableSensorManager) sensorManager;
             //Get the ip for the sensor injector
             String ip = PreferenceManager
@@ -202,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             ism.createRemoteListener(ip, 51234);
         }
 
+        assert sensorManager != null;
         sensorManager.registerListener(accelerometerController,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -232,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
         // unregister listener
         super.onPause();
         sensorManager.unregisterListener(accelerometerController);
+        sensorManager.unregisterListener(compassController);
         try {
             locationManager.removeUpdates(gpsController);
         }
@@ -273,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
                 .getString("input_method", "SWIPE"));
 
         LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
+        assert buttonsLayout != null;
         buttonsLayout.setVisibility(View.GONE);
 
         switch (inputMethod){

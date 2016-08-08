@@ -1,5 +1,8 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * A class representing a snake in the game
  */
-public class Snake {
+public class Snake implements Parcelable {
     /**
      * The size of the blocks the snake consists of
      */
@@ -48,6 +51,26 @@ public class Snake {
             positions.add(nextPos);
         }
     }
+
+    protected Snake(Parcel in) {
+        blockSize = in.readFloat();
+        grow = in.readInt();
+        //Fixme how to read a linkedLIst???
+        in.readTypedList(positions, Vector3.CREATOR);
+        direction = (Direction) in.readParcelable(Direction.class.getClassLoader());
+    }
+
+    public static final Creator<Snake> CREATOR = new Creator<Snake>() {
+        @Override
+        public Snake createFromParcel(Parcel in) {
+            return new Snake(in);
+        }
+
+        @Override
+        public Snake[] newArray(int size) {
+            return new Snake[size];
+        }
+    };
 
     /**
      * Gets the amount that the snake will be moved by
@@ -209,5 +232,18 @@ public class Snake {
 
         //If we didn't find anything, we're all good
         return false;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(blockSize);
+        dest.writeInt(grow);
+        dest.writeTypedList(positions);
+        dest.writeParcelable(direction, flags);
     }
 }

@@ -45,25 +45,27 @@ public class SSLClientWithResources extends SSLClient {
             systemKeyStore.load(null);
 
             KeyStore keyStore = KeyStore.getInstance("BKS");
-            keyStore.load(resources.openRawResource(R.raw.clientkeystore), pwd);//nb creates a new one from the resource
+            for (int i : new int[] {R.raw.clientkeystore, R.raw.clienttrusts}) {
+                keyStore.load(resources.openRawResource(i), pwd);//nb creates a new one from the resource
 
-            Enumeration<String> la = keyStore.aliases();
-            while (la.hasMoreElements()) {
-                String alias = la.nextElement();
-                System.out.println(alias);
+                Enumeration<String> la = keyStore.aliases();
+                while (la.hasMoreElements()) {
+                    String alias = la.nextElement();
+                    System.out.println(alias);
 
 
-                if (keyStore.isKeyEntry(alias)) {
-                    PrivateKey key = (PrivateKey) keyStore.getKey(alias, pwd);
-                    Certificate[] certs = keyStore.getCertificateChain(alias);
-                    systemKeyStore.setKeyEntry(alias, key, null, certs);
+                    if (keyStore.isKeyEntry(alias)) {
+                        PrivateKey key = (PrivateKey) keyStore.getKey(alias, pwd);
+                        Certificate[] certs = keyStore.getCertificateChain(alias);
+                        systemKeyStore.setKeyEntry(alias, key, null, certs);
+                    }
+                    if (keyStore.isCertificateEntry(alias)) {
+                        Certificate cert = keyStore.getCertificate(alias);
+                        systemKeyStore.setCertificateEntry(alias, cert);
+                    }
+
+
                 }
-                if (keyStore.isCertificateEntry(alias)) {
-                    Certificate cert = keyStore.getCertificate(alias);
-                    systemKeyStore.setCertificateEntry(alias, cert);
-                }
-
-
             }
 
 

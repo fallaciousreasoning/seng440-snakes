@@ -1,10 +1,5 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
-
 /**
  * Represents an axis aligned bounding box
  */
@@ -15,6 +10,7 @@ public class AABB {
 
     /**
      * Creates a new AABB from a min and max point
+     *
      * @param min The minimum point
      * @param max The maximum point
      */
@@ -25,8 +21,9 @@ public class AABB {
 
     /**
      * Creates a new AABB around a point with a width and height
+     *
      * @param centre The centre
-     * @param width The width
+     * @param width  The width
      * @param height The height
      */
     public AABB(Vector3 centre, float width, float height) {
@@ -35,18 +32,21 @@ public class AABB {
 
     /**
      * Creates a new AABB around a point with a width, height and depth
+     *
      * @param centre The centre
-     * @param width The width
+     * @param width  The width
      * @param height The height
-     * @param depth The depth
+     * @param depth  The depth
      */
     public AABB(Vector3 centre, float width, float height, float depth) {
         Vector3 halfSize = new Vector3(width, height, depth).mul(0.5f);
         min = centre.sub(halfSize);
         max = centre.add(halfSize);
     }
+
     /**
      * Gets the width of the AABB
+     *
      * @return the width of the AABB
      */
     public float getWidth() {
@@ -55,6 +55,7 @@ public class AABB {
 
     /**
      * gets the height of the bounding box
+     *
      * @return The height of the bounding box
      */
     public float getHeight() {
@@ -63,6 +64,7 @@ public class AABB {
 
     /**
      * Gets the depth of the bounding box
+     *
      * @return The depth of the bounding box
      */
     public float getDepth() {
@@ -71,6 +73,7 @@ public class AABB {
 
     /**
      * Gets the centre of the bounding box
+     *
      * @return The centre of the bounding box
      */
     public Vector3 getCentre() {
@@ -81,6 +84,7 @@ public class AABB {
 
     /**
      * Gets the minimum coordinate of the bounding box
+     *
      * @return The minimum coordinate
      */
     public Vector3 getMin() {
@@ -89,6 +93,7 @@ public class AABB {
 
     /**
      * Gets the maximum coordinate of the bounding box
+     *
      * @return the maximum coordinate of the bounding box
      */
     public Vector3 getMax() {
@@ -97,13 +102,14 @@ public class AABB {
 
     /**
      * Determines whether an AABB intersects this one
+     *
      * @param other The AABB to check for intersection with
      * @return Whether the boxes intersect
      */
     public boolean intersects(AABB other) {
         //Check if the boxes don't overlap on any axis. If they don't we know there is no overlap
         return !(
-                        max.getX() < other.min.getX() ||
+                max.getX() < other.min.getX() ||
                         min.getX() > other.max.getX() ||
 
                         max.getY() < other.min.getY() ||
@@ -116,6 +122,7 @@ public class AABB {
 
     /**
      * Checks to see if the AABB contains a point
+     *
      * @param point The point
      * @return whether the AABB contains it
      */

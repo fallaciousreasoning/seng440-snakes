@@ -1,6 +1,5 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.graphics.drawable.Drawable;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -33,6 +32,49 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
     private SnakeGame snakeGame;
     private boolean render3D = true;
 
+    /**
+     * Utility method for compiling a OpenGL shader.
+     * <p/>
+     * <p><strong>Note:</strong> When developing shaders, use the checkGlError()
+     * method to debug shader coding errors.</p>
+     *
+     * @param type       - Vertex or fragment shader type.
+     * @param shaderCode - String containing the shader code.
+     * @return - Returns an id for the shader.
+     */
+    public static int loadShader(int type, String shaderCode) {
+
+        // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
+        // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
+        int shader = GLES20.glCreateShader(type);
+
+        // add the source code to the shader and compile it
+        GLES20.glShaderSource(shader, shaderCode);
+        GLES20.glCompileShader(shader);
+
+        return shader;
+    }
+
+    /**
+     * Utility method for debugging OpenGL calls. Provide the name of the call
+     * just after making it:
+     * <p/>
+     * <pre>
+     * mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
+     * MyGLRenderer.checkGlError("glGetUniformLocation");</pre>
+     * <p/>
+     * If the operation is not successful, the check throws an error.
+     *
+     * @param glOperation - Name of the OpenGL call to check.
+     */
+    public static void checkGlError(String glOperation) {
+        int error;
+        while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+            Log.e(TAG, glOperation + ": glError " + error);
+            throw new RuntimeException(glOperation + ": glError " + error);
+        }
+    }
+
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -62,14 +104,14 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         //Don't draw anything if the game is null
         if (snakeGame == null) return;
 
-        float tileWidth = 2*aspectRatio/(snakeGame.getBounds().getWidth());
-        float tileHeight = 2/(snakeGame.getBounds().getHeight());
+        float tileWidth = 2 * aspectRatio / (snakeGame.getBounds().getWidth());
+        float tileHeight = 2 / (snakeGame.getBounds().getHeight());
         float tileSize = Math.min(tileWidth, tileHeight);
 
         Vector3 foodPosition = toGLCoordinates(
                 snakeGame
-                .getFood()
-                .getPosition(), tileSize);
+                        .getFood()
+                        .getPosition(), tileSize);
 
         GLDrawable food = getDrawable(foodPosition, tileSize, foodColor);
 
@@ -93,9 +135,10 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
 
     /**
      * Creates a new drawable
+     *
      * @param position The position
      * @param tileSize The tilesize
-     * @param color The color
+     * @param color    The color
      * @return The drawable
      */
     private GLDrawable getDrawable(Vector3 position, float tileSize, float[] color) {
@@ -106,6 +149,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
 
     /**
      * Gets the GL coordinates for a game position
+     *
      * @param position The position of the snake
      * @return The gl coordinates
      */
@@ -130,49 +174,6 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
         Matrix.frustumM(mProjectionMatrix, 0, aspectRatio, -aspectRatio, 1, -1, render3D ? 2 : 3, 7);
     }
 
-    /**
-     * Utility method for compiling a OpenGL shader.
-     *
-     * <p><strong>Note:</strong> When developing shaders, use the checkGlError()
-     * method to debug shader coding errors.</p>
-     *
-     * @param type - Vertex or fragment shader type.
-     * @param shaderCode - String containing the shader code.
-     * @return - Returns an id for the shader.
-     */
-    public static int loadShader(int type, String shaderCode){
-
-        // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
-        // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
-        int shader = GLES20.glCreateShader(type);
-
-        // add the source code to the shader and compile it
-        GLES20.glShaderSource(shader, shaderCode);
-        GLES20.glCompileShader(shader);
-
-        return shader;
-    }
-
-    /**
-     * Utility method for debugging OpenGL calls. Provide the name of the call
-     * just after making it:
-     *
-     * <pre>
-     * mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
-     * MyGLRenderer.checkGlError("glGetUniformLocation");</pre>
-     *
-     * If the operation is not successful, the check throws an error.
-     *
-     * @param glOperation - Name of the OpenGL call to check.
-     */
-    public static void checkGlError(String glOperation) {
-        int error;
-        while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-            Log.e(TAG, glOperation + ": glError " + error);
-            throw new RuntimeException(glOperation + ": glError " + error);
-        }
-    }
-
     @Override
     public void render(SnakeGame game) {
         this.snakeGame = game;
@@ -180,6 +181,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
 
     /**
      * Indicates whether the game should be rendered in 3D
+     *
      * @return Whether the game should render in 3D
      */
     public boolean isRender3D() {
@@ -188,6 +190,7 @@ public class SnakeGLRenderer implements GLSurfaceView.Renderer, Renderer {
 
     /**
      * Sets whether the game is rendered in 3D
+     *
      * @param render3D Whether the game should be rendered in 3D
      */
     public void setRender3D(boolean render3D) {

@@ -2,8 +2,6 @@ package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import android.widget.TextView;
 
-import nz.ac.canterbury.csse.a440.snakes.R;
-
 /**
  * Handles updating the text telling the player to start or restart the game
  */
@@ -14,7 +12,8 @@ public class StartFinishRenderer implements Renderer {
 
     /**
      * Creates a new start finish renderer
-     * @param startText The start text
+     *
+     * @param startText  The start text
      * @param finishText The finish text
      */
     public StartFinishRenderer(String startText, String finishText) {
@@ -24,6 +23,7 @@ public class StartFinishRenderer implements Renderer {
 
     /**
      * Sets the text view this uses to display the start and finish text
+     *
      * @param textView
      */
     public void setTextView(TextView textView) {

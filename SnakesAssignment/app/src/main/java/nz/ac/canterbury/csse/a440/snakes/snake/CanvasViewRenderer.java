@@ -93,8 +93,8 @@ public class CanvasViewRenderer extends View implements Renderer {
         float widthInTiles = bounds.getWidth();
         float heightInTiles = bounds.getHeight();
 
-        float tileWidth = contentWidth/widthInTiles;
-        float tileHeight = contentHeight/heightInTiles;
+        float tileWidth = contentWidth / widthInTiles;
+        float tileHeight = contentHeight / heightInTiles;
 
         float tileSize = Math.min(tileWidth, tileHeight);
 
@@ -108,7 +108,7 @@ public class CanvasViewRenderer extends View implements Renderer {
         canvas.drawRect(offset.getX(), offset.getY(), offset.getX() + boardWidth, offset.getY() + boardHeight, boardPaint);
 
         //Paint the snake
-        for (Vector3 position : snakeGame.getSnake().getPositions()){
+        for (Vector3 position : snakeGame.getSnake().getPositions()) {
             //TODO we should also divide by the size of the grid
             Vector3 normalized = position.sub(bounds.getMin());
 
@@ -126,11 +126,11 @@ public class CanvasViewRenderer extends View implements Renderer {
 
         Vector3 foodPos = snakeGame.getFood().getPosition();
         foodPos = foodPos.sub(bounds.getMin())
-            //TODO divide by the tile size
-            .mul(tileSize)
-            .add(offset);
+                //TODO divide by the tile size
+                .mul(tileSize)
+                .add(offset);
 
-        canvas.drawRect(foodPos.getX(), foodPos.getY(), foodPos.getX()+ tileSize, foodPos.getY() + tileSize, foodPaint);
+        canvas.drawRect(foodPos.getX(), foodPos.getY(), foodPos.getX() + tileSize, foodPos.getY() + tileSize, foodPaint);
     }
 
     @Override
@@ -140,14 +140,16 @@ public class CanvasViewRenderer extends View implements Renderer {
 
     /**
      * Gets the current game
+     *
      * @return The current game
      */
-    public SnakeGame getGame(){
+    public SnakeGame getGame() {
         return snakeGame;
     }
 
     /**
      * Sets the current game
+     *
      * @param game The new game
      */
     public void setGame(SnakeGame game) {

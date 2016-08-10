@@ -10,57 +10,34 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import nz.ac.canterbury.csse.a440.snakes.minecraft.SSLClient;
 import nz.ac.canterbury.csse.a440.snakes.minecraft.SSLClientWithResources;
-import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * Created by wooll on 09-Aug-16.
  */
 public class MinecraftControls {
 
-    private final SSLClientWithResources sslClient;
-
-    public enum BLOCKTYPE {
-        CLEAR(0),
-        HEAD(4),
-        BODY(2),
-        FOOD(3);
-
-        private final int value;
-
-        BLOCKTYPE(final int newValue) {
-            value = newValue;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
-    private Context context;
     private static final String defaultUrl = "csse-minecraft2.canterbury.ac.nz";
     private static final int defaultPort = 25555;
     private static final String defaultToken = "03e699db46ee679c79277f11368aa289";
-    private String url;
-    private int port;
-    private BufferedReader reader;
-    private BufferedWriter writer;
-    private Socket socket;
     private static final int XMAX = 100;
     private static final int XMIN = 0;
     private static final int YMIN = 0;
     private static final int YMAX = 100;
     private static final int ZMIN = 0;
     private static final int ZMAX = 100;
+    private final SSLClientWithResources sslClient;
+    private String url;
+    private int port;
+    private BufferedReader reader;
+    private BufferedWriter writer;
+    private Socket socket;
 
     public MinecraftControls(Context context) {
         this(context, defaultUrl, defaultPort);
     }
 
     public MinecraftControls(Context context, String url, int port) {
-        this.context = context;
         this.url = url;
         this.port = port;
         sslClient = new SSLClientWithResources(context, "password".toCharArray());
@@ -73,14 +50,13 @@ public class MinecraftControls {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             writeToSocket(defaultToken);
             readFromSocket();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void writeBlock(int x, int y, int z, BLOCKTYPE type) throws IOException {
-        writeToSocket("world.setBlock(" + x + "," + y + "," + z + "," + type.getValue() +")");
+        writeToSocket("world.setBlock(" + x + "," + y + "," + z + "," + type.getValue() + ")");
     }
 
     public int readBlock(int x, int y, int z) throws IOException {
@@ -94,7 +70,7 @@ public class MinecraftControls {
     private String readFromSocket() throws IOException {
         StringBuilder output = new StringBuilder();
         String line;
-        while((line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             output.append(line);
         }
         return output.toString();
@@ -109,8 +85,7 @@ public class MinecraftControls {
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -124,8 +99,7 @@ public class MinecraftControls {
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -141,9 +115,25 @@ public class MinecraftControls {
             writer.close();
             reader.close();
             socket.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public enum BLOCKTYPE {
+        CLEAR(0),
+        HEAD(4),
+        BODY(2),
+        FOOD(3);
+
+        private final int value;
+
+        BLOCKTYPE(final int newValue) {
+            value = newValue;
+        }
+
+        public int getValue() {
+            return value;
         }
     }
 }

@@ -15,19 +15,19 @@
  */
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
+import android.opengl.GLES20;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-import android.opengl.GLES20;
-
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLRenderer;
-
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
  */
 public class GLSquare implements GLDrawable {
+    // number of coordinates per vertex in this array
+    static final int COORDS_PER_VERTEX = 3;
     private final String vertexShaderCode =
             // This matrix member variable provides a hook to manipulate
             // the coordinates of the objects that use this vertex shader
@@ -39,30 +39,22 @@ public class GLSquare implements GLDrawable {
                     // for the matrix multiplication product to be correct.
                     "  gl_Position = uMVPMatrix * vPosition;" +
                     "}";
-
     private final String fragmentShaderCode =
             "precision mediump float;" +
                     "uniform vec4 vColor;" +
                     "void main() {" +
                     "  gl_FragColor = vColor;" +
                     "}";
-
     private final FloatBuffer vertexBuffer;
     private final ShortBuffer drawListBuffer;
     private final int mProgram;
+    private final float squareCoords[] = new float[12];
+    private final short drawOrder[] = {0, 1, 2, 0, 2, 3}; // order to draw vertices
+    private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
+    private final float color[];
     private int mPositionHandle;
     private int mColorHandle;
     private int mMVPMatrixHandle;
-
-    // number of coordinates per vertex in this array
-    static final int COORDS_PER_VERTEX = 3;
-    private final float squareCoords[] = new float[12];
-
-    private final short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; // order to draw vertices
-
-    private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
-
-    private final float color[];
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.

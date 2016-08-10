@@ -1,7 +1,6 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import android.os.Handler;
-import android.os.Message;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,7 +12,7 @@ public class GameUpdater {
     /**
      * The number of times per second the snake should be updated
      */
-    private int updateRate = (1000/60);
+    private int updateRate = (1000 / 60);
 
     /**
      * The snake game to be updated by the updater
@@ -31,7 +30,7 @@ public class GameUpdater {
      */
     private Handler updateHandler = new Handler();
 
-    public GameUpdater(){
+    public GameUpdater() {
         schedule();
     }
 
@@ -62,6 +61,7 @@ public class GameUpdater {
 
     /**
      * Sets the update rate for the game
+     *
      * @param updateRate The update rate
      */
     public void setUpdateRate(int updateRate) {
@@ -71,6 +71,7 @@ public class GameUpdater {
 
     /**
      * Sets the game the updater is working with
+     *
      * @param game The game
      */
     public void setGame(SnakeGame game) {

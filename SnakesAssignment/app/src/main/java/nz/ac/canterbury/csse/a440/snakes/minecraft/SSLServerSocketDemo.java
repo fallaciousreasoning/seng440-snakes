@@ -30,14 +30,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
+
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 
 /**
- *
  * @author pi
  */
 public class SSLServerSocketDemo {
+
+    private static SSLServerSocketFactory sslsf = null;
 
     /**
      * @param args the command line arguments
@@ -47,8 +49,8 @@ public class SSLServerSocketDemo {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
         // TODO code application logic here
 
-        SSLServerSocket sslServerSocket=creatSSLServerSocket(25555);
-        
+        SSLServerSocket sslServerSocket = creatSSLServerSocket(25555);
+
         Socket ssock;
 
         while ((ssock = sslServerSocket.accept()) != null) {
@@ -64,8 +66,6 @@ public class SSLServerSocketDemo {
             }
         }
     }
-
-    private static SSLServerSocketFactory sslsf = null;
 
     public static SSLServerSocket creatSSLServerSocket(int port) throws IOException {
         if (sslsf == null) {

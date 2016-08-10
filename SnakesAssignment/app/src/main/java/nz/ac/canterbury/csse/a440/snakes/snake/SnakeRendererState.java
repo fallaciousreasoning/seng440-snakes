@@ -1,7 +1,5 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import nz.ac.canterbury.csse.a440.snakes.MinecraftControls;
-
 /**
  * Created by wooll on 10-Aug-16.
  */

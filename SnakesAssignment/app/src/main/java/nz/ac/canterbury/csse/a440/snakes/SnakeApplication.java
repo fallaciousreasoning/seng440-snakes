@@ -8,7 +8,7 @@ import android.hardware.InjectableSensorManager;
 /**
  * Created by comqdhb on 18/07/2016.
  */
-public class SnakeApplication  extends Application {
+public class SnakeApplication extends Application {
 
     public InjectableSensorManager ism;
 
@@ -20,7 +20,7 @@ public class SnakeApplication  extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ism=InjectableSensorManager.getInstance(this);
+        ism = InjectableSensorManager.getInstance(this);
         //load up the settings
     }
 

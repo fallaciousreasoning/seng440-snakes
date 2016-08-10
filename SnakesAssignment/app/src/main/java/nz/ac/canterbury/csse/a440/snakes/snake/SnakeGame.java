@@ -1,9 +1,5 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -13,63 +9,53 @@ import java.util.Random;
  */
 public class SnakeGame {
     /**
-     * The active renderer for the game
+     * A random number generator
      */
-
-    private transient Collection<Renderer> renderers = new ArrayList<>();
-
-    /**
-     * The controller that tells the snake how it should move
-     */
-    private transient SnakeController snakeController;
-
-    /**
-     * The snake
-     */
-    private Snake snake;
-
-    /**
-     * The bounds the game should be played within
-     */
-    private AABB bounds;
-
-    /**
-     * The size of a tile
-     */
-    private float tileSize = 1;
-
+    private static transient Random random = new Random();
     /**
      * The starting length of the snake. Used when resetting.
      */
     private final int startingLength;
+    /**
+     * The active renderer for the game
+     */
 
+    private transient Collection<Renderer> renderers = new ArrayList<>();
+    /**
+     * The controller that tells the snake how it should move
+     */
+    private transient SnakeController snakeController;
+    /**
+     * The snake
+     */
+    private Snake snake;
+    /**
+     * The bounds the game should be played within
+     */
+    private AABB bounds;
+    /**
+     * The size of a tile
+     */
+    private float tileSize = 1;
     /**
      * Indicates the snake hit a wall
      */
     private boolean hitWall;
-
     /**
      * Indicates the snake hit itself
      */
     private boolean hitSelf;
-
     /**
      * Indicates whether the snake game has started
      */
     private boolean started;
-
-    /**
-     * A random number generator
-     */
-    private static transient Random random = new Random();
-
     /**
      * The food the snake is currently trying to eat
      */
     private Food food;
 
     public SnakeGame(int width, int height, int depth, int startingLength) {
-        this.bounds = new AABB(Vector3.Zero, width*tileSize, height*tileSize, depth*tileSize);
+        this.bounds = new AABB(Vector3.Zero, width * tileSize, height * tileSize, depth * tileSize);
         this.startingLength = startingLength;
 
         reset();
@@ -98,7 +84,7 @@ public class SnakeGame {
         }
 
         //If the snake is off bounds, set the finished flag
-        if (!bounds.contains(snake.nextPosition())){
+        if (!bounds.contains(snake.nextPosition())) {
             hitWall = true;
         }
         //If the snake will intersect itself, set the finished flag
@@ -110,7 +96,7 @@ public class SnakeGame {
             snake.step();
 
             //Check if we're close enough to the food to eat it
-            if (Vector3.distance(snake.headPosition(), food.getPosition()) < tileSize){
+            if (Vector3.distance(snake.headPosition(), food.getPosition()) < tileSize) {
                 snake.grow(food.getGrowth());
                 spawnFood();
             }
@@ -124,7 +110,7 @@ public class SnakeGame {
      */
     public void render() {
         //Tell all the renderers we've updated
-        if (renderers ==  null) return;
+        if (renderers == null) return;
 
         for (Renderer renderer : renderers)
             renderer.render(this);
@@ -159,13 +145,14 @@ public class SnakeGame {
             float y = (float) Math.floor(random.nextFloat() * bounds.getHeight() + bounds.getMin().getY() / tileSize) * tileSize;
             float z = (float) Math.round(random.nextFloat() * bounds.getDepth() + bounds.getMin().getZ() / tileSize) * tileSize;
             position = new Vector3(x, y, z);
-        }while (getSnake().onSnake(position));
+        } while (getSnake().onSnake(position));
 
         food = new Food(1, position);
     }
 
     /**
      * Gets the current renderers for the game
+     *
      * @return gets the current game renderers
      */
     public Collection<Renderer> getRenderers() {
@@ -174,6 +161,7 @@ public class SnakeGame {
 
     /**
      * Adds a renderer to the game
+     *
      * @param renderer The renderer to add to the game
      */
     public void addRenderer(Renderer renderer) {
@@ -183,6 +171,7 @@ public class SnakeGame {
 
     /**
      * Gets the snake
+     *
      * @return The current snake
      */
     public Snake getSnake() {
@@ -191,6 +180,7 @@ public class SnakeGame {
 
     /**
      * Gets the starting length of the snake
+     *
      * @return The starting length of the snake
      */
     public int startingLength() {
@@ -199,6 +189,7 @@ public class SnakeGame {
 
     /**
      * Gets the bounds of the game
+     *
      * @return The bounds
      */
     public AABB getBounds() {
@@ -207,6 +198,7 @@ public class SnakeGame {
 
     /**
      * Indicates the snake has hit a wall
+     *
      * @return Whether the snake has hit the wall
      */
     public boolean hitWall() {
@@ -215,6 +207,7 @@ public class SnakeGame {
 
     /**
      * Indicates the snake has hit itself
+     *
      * @return Whether the snake has hit itself
      */
     public boolean hitSelf() {
@@ -223,6 +216,7 @@ public class SnakeGame {
 
     /**
      * Indicates the game is over
+     *
      * @return Whether the game has been finished
      */
     public boolean finished() {
@@ -231,6 +225,7 @@ public class SnakeGame {
 
     /**
      * Indicates whether the game has been started
+     *
      * @return Whether the game has been started
      */
     public boolean started() {
@@ -239,6 +234,7 @@ public class SnakeGame {
 
     /**
      * Calculates the current score for the game
+     *
      * @return The score
      */
     public int score() {
@@ -248,6 +244,7 @@ public class SnakeGame {
 
     /**
      * Gets the size of a tile on the board
+     *
      * @return The size of a tile on the board
      */
     public float getTileSize() {
@@ -256,6 +253,7 @@ public class SnakeGame {
 
     /**
      * The food the snake is trying to eat
+     *
      * @return The food the snake is trying to eat
      */
     public Food getFood() {
@@ -264,6 +262,7 @@ public class SnakeGame {
 
     /**
      * Gets the current controller for the snake
+     *
      * @return The controller for the snake
      */
     public SnakeController getSnakeController() {
@@ -272,6 +271,7 @@ public class SnakeGame {
 
     /**
      * Sets the controller for the snake
+     *
      * @param snakeController The controller for the snake
      */
     public void setSnakeController(SnakeController snakeController) {

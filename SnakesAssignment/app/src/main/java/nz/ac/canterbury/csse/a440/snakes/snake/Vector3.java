@@ -1,22 +1,22 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
-import java.util.Objects;
-
 /**
  * A class representing a point in 3D space and various
  * helper methods for mathematical operations
  */
 public class Vector3 {
+    public static final Vector3 One = new Vector3(1, 1, 1);
+    public static final Vector3 Zero = new Vector3(0, 0, 0);
+    public static final Vector3 UnitX = new Vector3(1, 0, 0);
+    public static final Vector3 UnitY = new Vector3(0, 1, 0);
+    public static final Vector3 UnitZ = new Vector3(0, 0, 1);
     private final float x;
     private final float y;
     private final float z;
 
     /**
      * Creates a point from an x and y coordinate
+     *
      * @param x The x coordinate
      * @param y The y coordinate
      */
@@ -26,6 +26,7 @@ public class Vector3 {
 
     /**
      * Creates a point from an x, y and z coordinate
+     *
      * @param x The x coordinate
      * @param y The y coordinate
      * @param z The z coordinate
@@ -37,7 +38,19 @@ public class Vector3 {
     }
 
     /**
+     * Gets the distance between two vectors
+     *
+     * @param first  The first vector
+     * @param second The second vector
+     * @return The distance between them
+     */
+    public static float distance(Vector3 first, Vector3 second) {
+        return first.sub(second).length();
+    }
+
+    /**
      * Gets the x coordinate of the vector
+     *
      * @return The x coordinate
      */
     public float getX() {
@@ -46,6 +59,7 @@ public class Vector3 {
 
     /**
      * Gets the y coordinate of the vector
+     *
      * @return The y coordinate
      */
     public float getY() {
@@ -54,6 +68,7 @@ public class Vector3 {
 
     /**
      * Gets the z coordinate of the vector
+     *
      * @return The z coordinate
      */
     public float getZ() {
@@ -62,6 +77,7 @@ public class Vector3 {
 
     /**
      * Returns the addition of this vector3 and another
+     *
      * @param vector3 The vector3 to add
      * @return A new vector3 representing the combination
      */
@@ -71,6 +87,7 @@ public class Vector3 {
 
     /**
      * Returns the subtraction of another vector3 from this one
+     *
      * @param vector3 The vector3 to subtract
      * @return A new vector3 representing the combination
      */
@@ -80,6 +97,7 @@ public class Vector3 {
 
     /**
      * Returns the multiplication of this vector3 and another
+     *
      * @param vector3 The vector3 to multiply
      * @return A new vector3 representing the combination
      */
@@ -89,6 +107,7 @@ public class Vector3 {
 
     /**
      * Returns the multiplication of the vector by a scaler
+     *
      * @param multiplier The scaler
      * @return The scaled vector
      */
@@ -98,6 +117,7 @@ public class Vector3 {
 
     /**
      * Returns the division of this vector3 by another another
+     *
      * @param vector3 The vector3 to divide by
      * @return A new vector3 representing the combination
      */
@@ -107,6 +127,7 @@ public class Vector3 {
 
     /**
      * Divides the vector by a scaler
+     *
      * @param by The scaler
      * @return The scaled vector
      */
@@ -117,25 +138,28 @@ public class Vector3 {
     /**
      * Returns the length squared of the point. Length squared is provided because square rooting
      * is slow and you can do a fair bit without it
+     *
      * @return The squared length of the vector
      */
     public float lengthSquared() {
-        return x*x + y*y + z*z;
+        return x * x + y * y + z * z;
     }
 
     /**
      * Gets the length of the vector
+     *
      * @return The length of the vector
      */
     public float length() {
-        return (float)Math.sqrt(lengthSquared());
+        return (float) Math.sqrt(lengthSquared());
     }
 
     /**
      * Returns a normalized form of this vector
+     *
      * @return The normalized vector
      */
-    public Vector3 normalized(){
+    public Vector3 normalized() {
         return this.div(length());
     }
 
@@ -145,33 +169,17 @@ public class Vector3 {
 
         final float epsilon = 0.00001f;
 
-        Vector3 o = (Vector3)other;
+        Vector3 o = (Vector3) other;
         return Math.abs(x - o.x) < epsilon && Math.abs(y - o.y) < epsilon && Math.abs(z - o.z) < epsilon;
     }
 
     @Override
     public int hashCode() {
-        return (int)(x + y + z);
+        return (int) (x + y + z);
     }
 
     @Override
     public String toString() {
         return "Vector3: [X: " + x + ", Y: " + y + ", Z: " + z + "]";
     }
-
-    /**
-     * Gets the distance between two vectors
-     * @param first The first vector
-     * @param second The second vector
-     * @return The distance between them
-     */
-    public static float distance(Vector3 first, Vector3 second) {
-        return first.sub(second).length();
-    }
-
-    public static final Vector3 One = new Vector3(1, 1, 1);
-    public static final Vector3 Zero = new Vector3(0, 0, 0);
-    public static final Vector3 UnitX = new Vector3(1, 0, 0);
-    public static final Vector3 UnitY = new Vector3(0, 1, 0);
-    public static final Vector3 UnitZ = new Vector3(0, 0, 1);
 }

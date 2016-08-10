@@ -12,7 +12,6 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
-import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,15 +19,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
@@ -37,7 +35,6 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeCompassController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLView;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGPSController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
@@ -47,36 +44,30 @@ import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String[] INITIAL_PERMS={
+    private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.INTERNET
     };
-    private static final int INITIAL_REQUEST=1337;
-    private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
-    private static final int LOCATION_COARSE_REQUEST=INITIAL_REQUEST+2;
-    private static final int INTERNET_REQUEST=INITIAL_REQUEST+3;
-
+    private static final int INITIAL_REQUEST = 1337;
+    private static final int LOCATION_REQUEST = INITIAL_REQUEST + 1;
+    private static final int LOCATION_COARSE_REQUEST = INITIAL_REQUEST + 2;
+    private static final int INTERNET_REQUEST = INITIAL_REQUEST + 3;
+    SnakeGame game;
+    GameUpdater updater;
     //Indicates whether the game should be in 3D
     private boolean is3d;
-
     private SensorManager sensorManager;
     private LocationManager locationManager;
-
     private GestureDetectorCompat gestureDetector;
     private AggregateGestureListener gestureListener;
     private StartFinishGestureListener startFinishGestureListener;
-
     private SnakeSwipeController swipeController;
     private SnakeAccelerometerController accelerometerController;
     private SnakeCompassController compassController;
     private SnakeButtonController buttonController;
     private SnakeGPSController gpsController;
     private SnakeController snakeController;
-
-    SnakeGame game;
-    GameUpdater updater;
-
     private SnakeGLView gameGLRenderer;
     private StartFinishRenderer startFinishRenderer;
     private ScoreRenderer scoreRenderer;
@@ -112,8 +103,7 @@ public class MainActivity extends AppCompatActivity {
             LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
             Location location = locationManager.getLastKnownLocation(provider.getName());
             gpsController = new SnakeGPSController(location);
-        }
-        catch (SecurityException e) {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
 
@@ -139,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode) {
+        switch (requestCode) {
             case LOCATION_REQUEST:
                 break;
             case LOCATION_COARSE_REQUEST:
@@ -204,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     @Override
@@ -255,8 +244,7 @@ public class MainActivity extends AppCompatActivity {
         setupControls();
         try {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, (float) 0.1, gpsController);
-        }
-        catch (SecurityException e) {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
 
@@ -276,8 +264,7 @@ public class MainActivity extends AppCompatActivity {
         sensorManager.unregisterListener(compassController);
         try {
             locationManager.removeUpdates(gpsController);
-        }
-        catch (SecurityException e) {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
 
@@ -285,26 +272,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean canAccessLocation() {
-        return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
     }
 
     private boolean canAccessLocationCoarse() {
-        return(hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+        return (hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
     }
 
     private boolean canAccessInternet() {
-        return(hasPermission(Manifest.permission.INTERNET));
+        return (hasPermission(Manifest.permission.INTERNET));
     }
 
     private boolean hasPermission(String perm) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(perm));
+            return (PackageManager.PERMISSION_GRANTED == checkSelfPermission(perm));
         }
         return true;
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         if (this.gestureDetector != null) {
             this.gestureDetector.onTouchEvent(event);
         }
@@ -319,14 +306,14 @@ public class MainActivity extends AppCompatActivity {
         //We only have button input in 3D
         if (is3d) inputMethod = InputMethod.BUTTONS;
 
-        LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonControlsContainer);
+        LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.buttonControlsContainer);
         assert buttonsLayout != null;
         buttonsLayout.setVisibility(View.GONE);
 
-        LinearLayout verticalButtonsLayout = (LinearLayout)findViewById(R.id.verticalButtonControlsContainer);
+        LinearLayout verticalButtonsLayout = (LinearLayout) findViewById(R.id.verticalButtonControlsContainer);
         verticalButtonsLayout.setVisibility(View.GONE);
 
-        switch (inputMethod){
+        switch (inputMethod) {
             case SWIPE:
                 //Initialize the swipe controller
                 if (swipeController == null) {
@@ -338,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
             case BUTTONS:
                 //Initialize the button controller
                 buttonsLayout.setVisibility(View.VISIBLE);
-                if (is3d){
+                if (is3d) {
                     verticalButtonsLayout.setVisibility(View.VISIBLE);
                 }
 
@@ -364,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if (startFinishGestureListener ==  null) {
+        if (startFinishGestureListener == null) {
             startFinishGestureListener = new StartFinishGestureListener();
             gestureListener.addGestureListener(startFinishGestureListener);
         }
@@ -375,10 +362,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Adds a controller button for the specified direction to a pane
-     * @param to The pane to add the button to
+     *
+     * @param to        The pane to add the button to
      * @param direction The direction for the button
      */
-    private void addControllerButton(LinearLayout to, Direction direction){
+    private void addControllerButton(LinearLayout to, Direction direction) {
         Button button = new Button(this);
 
         int resourceId = android.R.style.TextAppearance_Small;

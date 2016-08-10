@@ -1,9 +1,7 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 /**
@@ -40,16 +38,13 @@ public class SnakeGPSController implements SnakeController, LocationListener {
         if (Math.abs(changeLat) > Math.abs(changeLong)) {
             if (changeLat > 0.00002) {
                 direction = Direction.NORTH;
-            }
-            else {
+            } else {
                 direction = Direction.SOUTH;
             }
-        }
-        else {
+        } else {
             if (changeLong > 0.00002) {
                 direction = Direction.EAST;
-            }
-            else {
+            } else {
                 direction = Direction.WEST;
             }
         }

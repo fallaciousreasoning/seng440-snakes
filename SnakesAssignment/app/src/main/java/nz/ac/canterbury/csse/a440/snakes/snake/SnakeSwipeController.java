@@ -1,13 +1,12 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 /**
  * A simple listener for detecting swipe gestures
  */
-public class SnakeSwipeController extends GestureDetector.SimpleOnGestureListener implements SnakeController{
+public class SnakeSwipeController extends GestureDetector.SimpleOnGestureListener implements SnakeController {
     private Direction direction;
 
     public SnakeSwipeController(SnakeGame game) {

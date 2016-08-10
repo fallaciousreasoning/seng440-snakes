@@ -304,12 +304,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        minecraftRenderer.shutdown();
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event){
         if (this.gestureDetector != null) {
             this.gestureDetector.onTouchEvent(event);

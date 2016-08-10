@@ -20,6 +20,8 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
  */
 public class MinecraftControls {
 
+    private final SSLClientWithResources sslClient;
+
     public enum BLOCKTYPE {
         CLEAR(0),
         HEAD(4),
@@ -61,18 +63,16 @@ public class MinecraftControls {
         this.context = context;
         this.url = url;
         this.port = port;
+        sslClient = new SSLClientWithResources(context, "password".toCharArray());
     }
 
     public void connectToSocket() {
         try {
-            SSLClient sslClient = new SSLClientWithResources(context, "password".toCharArray());
             socket = sslClient.getSocket(url, port);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             writeToSocket(defaultToken);
             readFromSocket();
-
-            clearArea();
         }
         catch (Exception e) {
             e.printStackTrace();

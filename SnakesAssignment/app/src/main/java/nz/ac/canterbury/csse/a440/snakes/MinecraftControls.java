@@ -12,11 +12,13 @@ import java.net.Socket;
 
 import nz.ac.canterbury.csse.a440.snakes.minecraft.SSLClient;
 import nz.ac.canterbury.csse.a440.snakes.minecraft.SSLClientWithResources;
+import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * Created by wooll on 09-Aug-16.
  */
-public class MinecraftControls implements Runnable {
+public class MinecraftControls {
 
     public enum BLOCKTYPE {
         CLEAR(0),
@@ -61,13 +63,14 @@ public class MinecraftControls implements Runnable {
         this.port = port;
     }
 
-    public void ConnectToSocket() {
+    public void connectToSocket() {
         try {
             SSLClient sslClient = new SSLClientWithResources(context, "password".toCharArray());
             socket = sslClient.getSocket(url, port);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             writeToSocket(defaultToken);
+            readFromSocket();
 
             clearArea();
         }
@@ -82,19 +85,34 @@ public class MinecraftControls implements Runnable {
 
     public int readBlock(int x, int y, int z) throws IOException {
         writeToSocket("world.getBlock(" + x + "," + y + "," + z + ")");
-        String result = readToSocket();
+        String result = readFromSocket();
         //TODO parse result
         Log.w("Minecrat", result);
         return 0;
     }
 
-    private String readToSocket() throws IOException {
+    private String readFromSocket() throws IOException {
         StringBuilder output = new StringBuilder();
         String line;
         while((line = reader.readLine()) != null) {
             output.append(line);
         }
         return output.toString();
+    }
+
+    public void clearSpecificArea(int xmax, int ymax, int zmax) {
+        try {
+            for (int x = XMIN; x < xmax; x++) {
+                for (int y = YMIN; y < ymax; y++) {
+                    for (int z = ZMIN; z < zmax; z++) {
+                        writeBlock(x, y, z, BLOCKTYPE.CLEAR);
+                    }
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void clearArea() {
@@ -127,10 +145,5 @@ public class MinecraftControls implements Runnable {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void run() {
-        ConnectToSocket();
     }
 }

@@ -72,7 +72,7 @@ public class Snake {
      * @return The position of the head of the snake
      */
     public Vector3 headPosition() {
-        return positions.get(0);
+        return positions.getFirst();
     }
 
     /**
@@ -212,5 +212,9 @@ public class Snake {
 
         //If we didn't find anything, we're all good
         return false;
+    }
+
+    public Vector3 tailPosition() {
+        return positions.getLast();
     }
 }

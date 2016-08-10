@@ -41,6 +41,7 @@ import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLView;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGPSController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeMinecraftRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     private GestureDetectorCompat gestureDetector;
     private AggregateGestureListener gestureListener;
-
     private StartFinishGestureListener startFinishGestureListener;
 
     private SnakeSwipeController swipeController;
@@ -72,14 +72,15 @@ public class MainActivity extends AppCompatActivity {
     private SnakeCompassController compassController;
     private SnakeButtonController buttonController;
     private SnakeGPSController gpsController;
-
     private SnakeController snakeController;
 
     SnakeGame game;
     GameUpdater updater;
+
     private SnakeGLView gameGLRenderer;
     private StartFinishRenderer startFinishRenderer;
     private ScoreRenderer scoreRenderer;
+    private SnakeMinecraftRenderer minecraftRenderer;
 
 
     @Override
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         compassController = new SnakeCompassController();
 
         gameGLRenderer = (SnakeGLView) findViewById(R.id.gameGLRenderer);
+        minecraftRenderer = new SnakeMinecraftRenderer(this);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         scoreRenderer = new ScoreRenderer();
@@ -183,12 +185,12 @@ public class MainActivity extends AppCompatActivity {
             game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
         }
         game.addRenderer(gameGLRenderer);
+        game.addRenderer(minecraftRenderer);
         game.addRenderer(scoreRenderer);
-
         game.addRenderer(startFinishRenderer);
+
         if (updater == null) {
             updater = new GameUpdater();
-//            updater.setGame(game);
         }
 
         if (gestureListener == null) {
@@ -299,6 +301,12 @@ public class MainActivity extends AppCompatActivity {
             return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(perm));
         }
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        minecraftRenderer.shutdown();
     }
 
     @Override

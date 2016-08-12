@@ -18,9 +18,11 @@ public class SnakeGameTest {
     private SnakeController controller;
     private Direction direction = Direction.NORTH;
 
+    private int startingLength = 3;
+
     @Before
     public void setup() {
-        snakeGame = new SnakeGame(20, 30, 1, 3);
+        snakeGame = new SnakeGame(20, 30, 1, startingLength);
 
         controller = new SnakeController() {
             @Override
@@ -34,27 +36,48 @@ public class SnakeGameTest {
             }
         };
         snakeGame.setSnakeController(controller);
-
-        assertEquals(3, snakeGame.getSnake().length());
-        assertEquals(0, snakeGame.score());
-        assertEquals(3, snakeGame.startingLength());
     }
 
     @Test
-    public void testStart() {
+    public void testSetupLength() {
+        assertEquals(startingLength, snakeGame.getSnake().length());
+    }
+
+    @Test
+    public void testSetupScore() {
+        assertEquals(0, snakeGame.score());
+    }
+
+    @Test
+    public void testSetupStartLength() {
+        assertEquals(startingLength, snakeGame.startingLength());
+    }
+
+    @Test
+    public void testSetupNotStarted() {
         assertFalse(snakeGame.started());
+    }
+
+    @Test
+    public void testCantMoveBeforeStart() {
         Vector3 position = snakeGame.getSnake().headPosition();
         snakeGame.step();
 
         assertEquals(position, snakeGame.getSnake().headPosition());
+    }
+
+    @Test
+    public void testCanMoveOnceStarted() {
+        Vector3 position = snakeGame.getSnake().headPosition();
 
         snakeGame.start();
         snakeGame.step();
+
         assertNotEquals(position, snakeGame.getSnake().headPosition());
     }
 
     @Test
-    public void testReset() {
+    public void testResetSetsHeadPosition() {
         Vector3 headPosition = snakeGame.getSnake().headPosition();
         int length = snakeGame.getSnake().length();
         int score = snakeGame.score();
@@ -72,17 +95,57 @@ public class SnakeGameTest {
         //Step to grow
         snakeGame.step();
 
-        assertEquals(length + 1, snakeGame.getSnake().length());
-        assertEquals(score + 1, snakeGame.score());
+        //Step for fun
+        snakeGame.step();
+
+        snakeGame.reset();
+
+        assertEquals(headPosition, snakeGame.getSnake().headPosition());
+    }
+
+    @Test
+    public void testResetSetsScore() {
+        int score = snakeGame.score();
+
+        snakeGame.start();
+
+        snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition());
+
+        //Step to eat
+        snakeGame.step();
+
+        //Put the food somewhere we can't get it
+        snakeGame.getFood().setPosition(new Vector3(0, 0, 0));
+
+        //Step to grow
+        snakeGame.step();
 
         //Step for fun
         snakeGame.step();
 
-        assertNotEquals(headPosition, snakeGame.getSnake().headPosition());
+        snakeGame.reset();
+        assertEquals(score, snakeGame.score());
+    }
+
+    @Test
+    public void testResetSetsStartingLength() {
+        snakeGame.start();
+
+        snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition());
+
+        //Step to eat
+        snakeGame.step();
+
+        //Put the food somewhere we can't get it
+        snakeGame.getFood().setPosition(new Vector3(0, 0, 0));
+
+        //Step to grow
+        snakeGame.step();
+
+        //Step for fun
+        snakeGame.step();
 
         snakeGame.reset();
-        assertEquals(headPosition, snakeGame.getSnake().headPosition());
-        assertEquals(score, snakeGame.score());
         assertEquals(snakeGame.startingLength(), snakeGame.getSnake().length());
     }
 
@@ -132,11 +195,37 @@ public class SnakeGameTest {
 
             while (snakeGame.getBounds().contains(snakeGame.getSnake().nextPosition(this.direction))) {
                 snakeGame.step();
-                assertFalse(snakeGame.hitWall());
             }
 
             snakeGame.step();
             assertTrue(snakeGame.hitWall());
+            snakeGame.reset();
+        }
+    }
+
+    @Test
+    public void testCantMoveOnHitWall() {
+        for (Direction direction : Direction.values()) {
+            snakeGame.start();
+
+            if (snakeGame.getSnake().isBackwards(direction)) {
+                this.direction = Direction.WEST;
+                snakeGame.step();
+            }
+
+            this.direction = direction;
+
+            while (snakeGame.getBounds().contains(snakeGame.getSnake().nextPosition(this.direction))) {
+                snakeGame.step();
+            }
+
+            snakeGame.step();
+            //Now, we should have hit a wall
+
+            Vector3 position = snakeGame.getSnake().headPosition();
+            snakeGame.step();
+            assertEquals(position, snakeGame.getSnake().headPosition());
+
             snakeGame.reset();
         }
     }
@@ -160,8 +249,6 @@ public class SnakeGameTest {
         //Step to grow
         snakeGame.step();
 
-        assertEquals(5, snakeGame.getSnake().length());
-
         direction = Direction.WEST;
         snakeGame.step();
 
@@ -175,7 +262,45 @@ public class SnakeGameTest {
     }
 
     @Test
-    public void testEatFood() {
+    public void testCantMoveOnHitSelf() {
+        snakeGame.start();
+
+        //We need at least a length of five
+        snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition(direction));
+
+        //Step to eat
+        snakeGame.step();
+
+        //We need at least a length of five
+        snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition(direction));
+
+        //Step to eat and grow
+        snakeGame.step();
+
+        //Step to grow
+        snakeGame.step();
+
+        direction = Direction.WEST;
+        snakeGame.step();
+
+        direction = Direction.SOUTH;
+        snakeGame.step();
+
+        direction = Direction.EAST;
+        snakeGame.step();
+
+        //At this point we should have hit ourselves and should not be able to move
+
+        Vector3 position = snakeGame.getSnake().headPosition();
+
+        direction = Direction.SOUTH;
+        snakeGame.step();
+
+        assertEquals(position, snakeGame.getSnake().headPosition());
+    }
+
+    @Test
+    public void testEatFoodIncreasesScore() {
         snakeGame.start();
 
         int eat = 3;
@@ -187,6 +312,20 @@ public class SnakeGameTest {
 
         snakeGame.step();
         assertEquals(eat, snakeGame.score());
+    }
+
+    @Test
+    public void testEatFoodIncreasesLength() {
+        snakeGame.start();
+
+        int eat = 3;
+
+        for (int i = 0; i < eat; ++i){
+            snakeGame.getFood().setPosition(snakeGame.getSnake().nextPosition(direction));
+            snakeGame.step();
+        }
+
+        snakeGame.step();
         assertEquals(snakeGame.startingLength() + eat, snakeGame.getSnake().length());
     }
 }

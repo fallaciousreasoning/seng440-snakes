@@ -55,4 +55,19 @@ public class Vector3Test {
 
         assertEquals(new Vector3(1, 0, 0), unit);
     }
+
+    @Test
+    public void testEqual() {
+        assertEquals(first, first);
+    }
+
+    @Test
+    public void testNotEqual() {
+        assertNotEquals(first, second);
+    }
+
+    @Test
+    public void testDistance() {
+        assertEquals(1, Vector3.distance(first, second), 0.001f);
+    }
 }

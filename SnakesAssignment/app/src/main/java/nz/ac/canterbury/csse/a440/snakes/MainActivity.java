@@ -57,17 +57,21 @@ public class MainActivity extends AppCompatActivity {
     GameUpdater updater;
     //Indicates whether the game should be in 3D
     private boolean is3d;
+
     private SensorManager sensorManager;
+
     private LocationManager locationManager;
     private GestureDetectorCompat gestureDetector;
     private AggregateGestureListener gestureListener;
     private StartFinishGestureListener startFinishGestureListener;
+
     private SnakeSwipeController swipeController;
     private SnakeAccelerometerController accelerometerController;
     private SnakeCompassController compassController;
     private SnakeButtonController buttonController;
     private SnakeGPSController gpsController;
     private SnakeController snakeController;
+
     private SnakeGLView gameGLRenderer;
     private StartFinishRenderer startFinishRenderer;
     private SnakeScoreRenderer scoreRenderer;

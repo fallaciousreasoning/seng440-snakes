@@ -40,18 +40,15 @@ public class DataSender {
         sendQueue.offer(e);
 
         if (senderThread == null) {
-            Runnable r =new Runnable(){
-                @Override
-                public void run() {
-                    while (true) {
-                        try {
-                            JsonSerializable event = sendQueue.pollFirst(50, TimeUnit.MILLISECONDS);
-                            oos.writeObject(event.json());
-                            oos.flush();
-                        }
-                        catch (Exception exception) {
-                            exception.printStackTrace();
-                        }
+            Runnable r = () -> {
+                while (true) {
+                    try {
+                        JsonSerializable event = sendQueue.pollFirst(50, TimeUnit.MILLISECONDS);
+                        oos.writeObject(event.json());
+                        oos.flush();
+                    }
+                    catch (Exception exception) {
+                        exception.printStackTrace();
                     }
                 }
             };

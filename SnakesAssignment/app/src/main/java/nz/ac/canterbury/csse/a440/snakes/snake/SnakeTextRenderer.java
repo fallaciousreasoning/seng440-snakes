@@ -34,6 +34,14 @@ public class SnakeTextRenderer implements Renderer {
         //Set the text
         textView.setText(textGetter.getText(game));
     }
+
+    /**
+     * Sets the text getter for this renderer
+     * @param textGetter The text getter
+     */
+    public void setTextGetter(GetTextFromSnakeGame textGetter) {
+        this.textGetter = textGetter;
+    }
 }
 
 interface GetTextFromSnakeGame {

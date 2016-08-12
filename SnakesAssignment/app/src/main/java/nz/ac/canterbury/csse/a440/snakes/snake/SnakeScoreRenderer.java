@@ -5,24 +5,20 @@ import android.widget.TextView;
 /**
  * Renders the score of a snake game to a text view
  */
-public class SnakeScoreRenderer implements Renderer {
-    /**
-     * The text view we render with
-     */
-    private TextView textView;
-
+public class SnakeScoreRenderer extends SnakeTextRenderer {
     /**
      * The string we format with the score
      */
     private String formatString = "Score: %s";
 
-    /**
-     * Sets the textview that this score renderer draws to
-     *
-     * @param textView The text view to use
-     */
-    public void setTextView(TextView textView) {
-        this.textView = textView;
+    public SnakeScoreRenderer() {
+        super.setTextGetter(new GetTextFromSnakeGame() {
+            @Override
+            public String getText(SnakeGame game) {
+                int score = (game == null || game.getSnake() == null) ? 0 : game.score();
+                return String.format(formatString, score);
+            }
+        });
     }
 
     /**
@@ -38,14 +34,5 @@ public class SnakeScoreRenderer implements Renderer {
             throw new RuntimeException("You should have exactly 1 format operator");
 
         this.formatString = formatString;
-    }
-
-    @Override
-    public void render(SnakeGame game) {
-        //If we don't have a text view we have nothing to
-        if (textView == null) return;
-
-        //Set the text
-        textView.setText(String.format(formatString, game.score() + ""));
     }
 }

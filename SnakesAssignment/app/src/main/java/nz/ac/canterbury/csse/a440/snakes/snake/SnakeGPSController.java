@@ -74,8 +74,8 @@ public class SnakeGPSController implements SnakeController, LocationListener {
     }
 
     @Override
-    public void reset() {
-        direction = Direction.NORTH;
+    public void reset(Direction direction) {
+        this.direction = direction;
         previousLat = 0;
         prevousLong = 0;
     }

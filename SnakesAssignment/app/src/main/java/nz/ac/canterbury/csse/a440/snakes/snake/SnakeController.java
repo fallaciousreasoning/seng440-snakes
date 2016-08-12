@@ -14,6 +14,7 @@ public interface SnakeController {
 
     /**
      * Tells the controller to set its direction to the default
+     * @param direction The direction
      */
-    void reset();
+    void reset(Direction direction);
 }

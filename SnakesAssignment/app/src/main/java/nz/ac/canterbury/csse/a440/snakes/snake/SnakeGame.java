@@ -128,7 +128,7 @@ public class SnakeGame {
         hitSelf = false;
 
         if (snakeController != null) {
-            snakeController.reset();
+            snakeController.reset(Direction.NORTH);
         }
 
         render();

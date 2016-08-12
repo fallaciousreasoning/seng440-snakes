@@ -32,6 +32,7 @@ import org.w3c.dom.Text;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAlmost3DController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeDepthRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeFoodDepthRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeScoreRenderer;
@@ -323,8 +324,10 @@ public class MainActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this)
                 .getString("input_method", "SWIPE"));
 
-        //We only have button input in 3D
-        if (is3d) inputMethod = InputMethod.BUTTONS;
+        //Only swipe and buttons support 3D
+        if (is3d && inputMethod != InputMethod.SWIPE){
+            inputMethod = InputMethod.BUTTONS;
+        }
 
         LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.buttonControlsContainer);
         assert buttonsLayout != null;
@@ -332,6 +335,22 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout verticalButtonsLayout = (LinearLayout) findViewById(R.id.verticalButtonControlsContainer);
         verticalButtonsLayout.setVisibility(View.GONE);
+
+        //Make sure we set up our buttons
+        if (buttonController == null) {
+            buttonController = new SnakeButtonController();
+            addControllerButton(buttonsLayout, Direction.NORTH);
+            addControllerButton(buttonsLayout, Direction.SOUTH);
+            addControllerButton(buttonsLayout, Direction.WEST);
+            addControllerButton(buttonsLayout, Direction.EAST);
+            addControllerButton(verticalButtonsLayout, Direction.UP);
+            addControllerButton(verticalButtonsLayout, Direction.DOWN);
+        }
+
+        //Make sure we set the vertical buttons to visible in 3d mode
+        if (is3d) {
+            verticalButtonsLayout.setVisibility(View.VISIBLE);
+        }
 
         switch (inputMethod) {
             case SWIPE:
@@ -345,19 +364,6 @@ public class MainActivity extends AppCompatActivity {
             case BUTTONS:
                 //Initialize the button controller
                 buttonsLayout.setVisibility(View.VISIBLE);
-                if (is3d) {
-                    verticalButtonsLayout.setVisibility(View.VISIBLE);
-                }
-
-                if (buttonController == null) {
-                    buttonController = new SnakeButtonController();
-                    addControllerButton(buttonsLayout, Direction.NORTH);
-                    addControllerButton(buttonsLayout, Direction.SOUTH);
-                    addControllerButton(buttonsLayout, Direction.WEST);
-                    addControllerButton(buttonsLayout, Direction.EAST);
-                    addControllerButton(verticalButtonsLayout, Direction.UP);
-                    addControllerButton(verticalButtonsLayout, Direction.DOWN);
-                }
                 snakeController = buttonController;
                 break;
             case ACCELEROMETER:
@@ -377,6 +383,9 @@ public class MainActivity extends AppCompatActivity {
         }
         startFinishGestureListener.setGame(game);
 
+        if (is3d && inputMethod != InputMethod.BUTTONS) {
+            snakeController = new SnakeAlmost3DController(snakeController, buttonController);
+        }
         game.setSnakeController(snakeController);
     }
 

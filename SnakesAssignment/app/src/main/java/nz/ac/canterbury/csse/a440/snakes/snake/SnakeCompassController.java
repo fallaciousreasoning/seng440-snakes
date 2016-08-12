@@ -74,8 +74,8 @@ public class SnakeCompassController implements SnakeController, SensorEventListe
     }
 
     @Override
-    public void reset() {
-        direction = Direction.NORTH;
+    public void reset(Direction direction) {
+        this.direction = direction;
         acceleration = null;
         magnetic = null;
     }

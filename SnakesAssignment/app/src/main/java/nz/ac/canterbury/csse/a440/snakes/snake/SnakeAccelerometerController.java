@@ -17,9 +17,10 @@ public class SnakeAccelerometerController implements SnakeController, SensorEven
         return direction;
     }
 
+
     @Override
-    public void reset() {
-        direction = Direction.NORTH;
+    public void reset(Direction direction) {
+        this.direction = direction;
         initPitch = 0;
         initRoll = 0;
     }

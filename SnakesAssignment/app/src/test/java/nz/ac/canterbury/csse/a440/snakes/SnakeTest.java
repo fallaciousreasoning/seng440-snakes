@@ -14,10 +14,12 @@ import static org.junit.Assert.*;
  */
 public class SnakeTest {
     private Snake snake;
+    private Vector3 startPosition;
 
     @Before
     public void setup() {
-        snake = new Snake(new Vector3(0, 0), Direction.EAST, 1, 3);
+        startPosition = Vector3.Zero;
+        snake = new Snake(startPosition, Direction.EAST, 1, 3);
 
         assertEquals(new Vector3(0, 0), snake.headPosition());
         assertEquals(new Vector3(1, 0), snake.stepAmount());

@@ -68,6 +68,6 @@ public class Vector3Test {
 
     @Test
     public void testDistance() {
-        assertEquals(1, Vector3.distance(first, second), 0.001f);
+        assertEquals(0.707, Vector3.distance(first, second), 0.001f);
     }
 }

@@ -120,11 +120,6 @@ public class SensorControllerGUI extends javax.swing.JFrame {
                     .createEvents();
             for (SensorEvent event : events) {
                 asi.addEvent(event);
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         }
         //DEMO

@@ -30,7 +30,7 @@ import android.widget.TextView;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
-import nz.ac.canterbury.csse.a440.snakes.snake.ScoreRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeScoreRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeCompassController;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private SnakeController snakeController;
     private SnakeGLView gameGLRenderer;
     private StartFinishRenderer startFinishRenderer;
-    private ScoreRenderer scoreRenderer;
+    private SnakeScoreRenderer scoreRenderer;
     private SnakeMinecraftRenderer minecraftRenderer;
 
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         minecraftRenderer = new SnakeMinecraftRenderer(this);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
-        scoreRenderer = new ScoreRenderer();
+        scoreRenderer = new SnakeScoreRenderer();
         scoreRenderer.setTextView(scoreText);
 
         TextView gameStatusText = (TextView) findViewById(R.id.gameStatusText);

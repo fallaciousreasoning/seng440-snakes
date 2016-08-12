@@ -5,7 +5,7 @@ import android.widget.TextView;
 /**
  * Renders the score of a snake game to a text view
  */
-public class ScoreRenderer implements Renderer {
+public class SnakeScoreRenderer implements Renderer {
     /**
      * The text view we render with
      */

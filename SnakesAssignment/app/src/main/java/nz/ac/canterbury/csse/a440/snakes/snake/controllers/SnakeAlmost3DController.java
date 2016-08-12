@@ -27,11 +27,14 @@ public class SnakeAlmost3DController implements SnakeController{
         if (xyDirection != Direction.UP && xyDirection != lastXYDirection) {
             zController.reset(Direction.NORTH);
             lastXYDirection = xyDirection;
+            lastZDirection = zController.getDirection();
             onZ = false;
         }
 
         if (zDirection != Direction.NORTH && zDirection != lastZDirection) {
             xyController.reset(Direction.UP);
+            lastXYDirection = xyController.getDirection();
+
             lastZDirection = zDirection;
             onZ = true;
         }

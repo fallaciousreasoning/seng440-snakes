@@ -13,7 +13,7 @@ import nz.ac.canterbury.csse.a440.snakes.R;
 /**
  * TODO: document your custom view class.
  */
-public class CanvasViewRenderer extends View implements Renderer {
+public class SnakeCanvasViewRenderer extends View implements Renderer {
     private Paint snakePaint;
     private Paint boardPaint;
     private Paint foodPaint;
@@ -23,17 +23,17 @@ public class CanvasViewRenderer extends View implements Renderer {
      */
     private SnakeGame snakeGame;
 
-    public CanvasViewRenderer(Context context) {
+    public SnakeCanvasViewRenderer(Context context) {
         super(context);
         init(null, 1);
     }
 
-    public CanvasViewRenderer(Context context, AttributeSet attrs) {
+    public SnakeCanvasViewRenderer(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 1);
     }
 
-    public CanvasViewRenderer(Context context, AttributeSet attrs, int defStyle) {
+    public SnakeCanvasViewRenderer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -41,7 +41,7 @@ public class CanvasViewRenderer extends View implements Renderer {
     private void init(AttributeSet attrs, int defStyle) {
         TypedArray a = getContext().getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.CanvasViewRenderer,
+                R.styleable.SnakeCanvasViewRenderer,
                 0, 0);
 
         try {

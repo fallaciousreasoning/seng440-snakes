@@ -33,7 +33,7 @@ public class SnakeGLView extends GLSurfaceView implements Renderer {
     private void init(AttributeSet attrs, int defStyle) {
         TypedArray a = getContext().getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.CanvasViewRenderer,
+                R.styleable.SnakeCanvasViewRenderer,
                 0, 0);
 
         setEGLContextClientVersion(2);

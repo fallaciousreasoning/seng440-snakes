@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <nz.ac.canterbury.csse.a440.snakes.snake.CanvasViewRenderer
+            <nz.ac.canterbury.csse.a440.snakes.snake.SnakeCanvasViewRenderer
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ccc"

@@ -27,10 +27,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeDepthRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeFoodDepthRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeScoreRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private StartFinishRenderer startFinishRenderer;
     private SnakeScoreRenderer scoreRenderer;
     private SnakeDepthRenderer snakeDepthRenderer;
+    private SnakeFoodDepthRenderer snakeFoodDepthRenderer;
     private SnakeMinecraftRenderer minecraftRenderer;
 
 
@@ -126,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
         TextView depthText = (TextView)findViewById(R.id.depthText);
         snakeDepthRenderer = new SnakeDepthRenderer();
         snakeDepthRenderer.setTextView(depthText);
+
+        TextView foodDepthText = (TextView)findViewById(R.id.foodDepthText);
+        snakeFoodDepthRenderer = new SnakeFoodDepthRenderer();
+        snakeFoodDepthRenderer.setTextView(foodDepthText);
 
         TextView gameStatusText = (TextView) findViewById(R.id.gameStatusText);
         startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
@@ -189,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         game.addRenderer(scoreRenderer);
         game.addRenderer(startFinishRenderer);
         game.addRenderer(snakeDepthRenderer);
+        game.addRenderer(snakeFoodDepthRenderer);
 
         if (updater == null) {
             updater = new GameUpdater();

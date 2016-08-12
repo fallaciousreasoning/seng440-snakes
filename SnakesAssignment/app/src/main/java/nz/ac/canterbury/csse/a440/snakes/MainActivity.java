@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
             game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
         }
         game.addRenderer(gameGLRenderer);
-        game.addRenderer(minecraftRenderer);
+        //game.addRenderer(minecraftRenderer);
         game.addRenderer(scoreRenderer);
         game.addRenderer(startFinishRenderer);
 

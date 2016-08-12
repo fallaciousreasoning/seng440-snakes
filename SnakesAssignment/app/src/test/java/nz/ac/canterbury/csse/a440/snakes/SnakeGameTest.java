@@ -155,30 +155,22 @@ public class SnakeGameTest {
 
         snakeGame.start();
 
-        direction = Direction.WEST;
+        Direction[] directions = new Direction[] {
+            Direction.WEST,
+            Direction.SOUTH,
+            Direction.EAST,
+            Direction.NORTH
+        };
 
-        snakeGame.step();
-        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
+        for (Direction direction : directions) {
+            this.direction = direction;
 
-        startPosition = snakeGame.getSnake().headPosition();
-        direction = Direction.SOUTH;
-        snakeGame.step();
-        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
+            Vector3 expectedPosition = snakeGame.getSnake().stepAmount(direction).add(snakeGame.getSnake().headPosition());
 
-        startPosition = snakeGame.getSnake().headPosition();
-        snakeGame.step();
-        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
+            snakeGame.step();
 
-        startPosition = snakeGame.getSnake().headPosition();
-        direction = Direction.EAST;
-        snakeGame.step();
-        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
-
-        startPosition = snakeGame.getSnake().headPosition();
-        direction = Direction.NORTH;
-        snakeGame.step();
-        assertEquals(startPosition.add(snakeGame.getSnake().stepAmount(direction)), snakeGame.getSnake().headPosition());
-
+            assertEquals(expectedPosition, snakeGame.getSnake().headPosition());
+        }
     }
 
     @Test

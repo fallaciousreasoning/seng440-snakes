@@ -1,4 +1,7 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 
 /**
  * Created by wooll on 10-Aug-16.

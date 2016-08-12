@@ -1,7 +1,10 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * A simple listener for detecting swipe gestures
@@ -39,7 +42,7 @@ public class SnakeSwipeController extends GestureDetector.SimpleOnGestureListene
     }
 
     @Override
-    public void reset() {
-        direction = Direction.NORTH;
+    public void reset(Direction direction) {
+        this.direction = direction;
     }
 }

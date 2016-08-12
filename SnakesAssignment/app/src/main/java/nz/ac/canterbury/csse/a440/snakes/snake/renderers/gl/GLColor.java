@@ -1,4 +1,4 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl;
 
 /**
  * A simple class containing some hard coded gl colors

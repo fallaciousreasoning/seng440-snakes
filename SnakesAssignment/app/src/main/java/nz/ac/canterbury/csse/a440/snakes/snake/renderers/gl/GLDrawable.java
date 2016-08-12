@@ -1,4 +1,4 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl;
 
 /**
  * An interface that indicates that something can be drawn with opengl

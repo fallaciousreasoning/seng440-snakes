@@ -30,18 +30,21 @@ import android.widget.TextView;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
-import nz.ac.canterbury.csse.a440.snakes.snake.ScoreRenderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeCompassController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLView;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGPSController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeAlmost3DController;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeDepthRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeFoodDepthRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeScoreRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeAccelerometerController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeButtonController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeCompassController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeGLView;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeGPSController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeMinecraftRenderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeMinecraftRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeSwipeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
-import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] INITIAL_PERMS = {
@@ -57,20 +60,26 @@ public class MainActivity extends AppCompatActivity {
     GameUpdater updater;
     //Indicates whether the game should be in 3D
     private boolean is3d;
+
     private SensorManager sensorManager;
+
     private LocationManager locationManager;
     private GestureDetectorCompat gestureDetector;
     private AggregateGestureListener gestureListener;
     private StartFinishGestureListener startFinishGestureListener;
+
     private SnakeSwipeController swipeController;
     private SnakeAccelerometerController accelerometerController;
     private SnakeCompassController compassController;
     private SnakeButtonController buttonController;
     private SnakeGPSController gpsController;
     private SnakeController snakeController;
+
     private SnakeGLView gameGLRenderer;
     private StartFinishRenderer startFinishRenderer;
-    private ScoreRenderer scoreRenderer;
+    private SnakeScoreRenderer scoreRenderer;
+    private SnakeDepthRenderer snakeDepthRenderer;
+    private SnakeFoodDepthRenderer snakeFoodDepthRenderer;
     private SnakeMinecraftRenderer minecraftRenderer;
 
 
@@ -114,8 +123,16 @@ public class MainActivity extends AppCompatActivity {
         minecraftRenderer = new SnakeMinecraftRenderer(this);
 
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
-        scoreRenderer = new ScoreRenderer();
+        scoreRenderer = new SnakeScoreRenderer();
         scoreRenderer.setTextView(scoreText);
+
+        TextView depthText = (TextView)findViewById(R.id.depthText);
+        snakeDepthRenderer = new SnakeDepthRenderer();
+        snakeDepthRenderer.setTextView(depthText);
+
+        TextView foodDepthText = (TextView)findViewById(R.id.foodDepthText);
+        snakeFoodDepthRenderer = new SnakeFoodDepthRenderer();
+        snakeFoodDepthRenderer.setTextView(foodDepthText);
 
         TextView gameStatusText = (TextView) findViewById(R.id.gameStatusText);
         startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
@@ -181,9 +198,11 @@ public class MainActivity extends AppCompatActivity {
             game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
         }
         game.addRenderer(gameGLRenderer);
-        game.addRenderer(minecraftRenderer);
+        //game.addRenderer(minecraftRenderer);
         game.addRenderer(scoreRenderer);
         game.addRenderer(startFinishRenderer);
+        game.addRenderer(snakeDepthRenderer);
+        game.addRenderer(snakeFoodDepthRenderer);
 
         if (updater == null) {
             updater = new GameUpdater();
@@ -309,8 +328,10 @@ public class MainActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this)
                 .getString("input_method", "SWIPE"));
 
-        //We only have button input in 3D
-        if (is3d) inputMethod = InputMethod.BUTTONS;
+        //Only swipe and buttons support 3D
+        if (is3d && inputMethod != InputMethod.SWIPE){
+            inputMethod = InputMethod.BUTTONS;
+        }
 
         LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.buttonControlsContainer);
         assert buttonsLayout != null;
@@ -318,6 +339,22 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout verticalButtonsLayout = (LinearLayout) findViewById(R.id.verticalButtonControlsContainer);
         verticalButtonsLayout.setVisibility(View.GONE);
+
+        //Make sure we set up our buttons
+        if (buttonController == null) {
+            buttonController = new SnakeButtonController();
+            addControllerButton(buttonsLayout, Direction.NORTH);
+            addControllerButton(buttonsLayout, Direction.SOUTH);
+            addControllerButton(buttonsLayout, Direction.WEST);
+            addControllerButton(buttonsLayout, Direction.EAST);
+            addControllerButton(verticalButtonsLayout, Direction.UP);
+            addControllerButton(verticalButtonsLayout, Direction.DOWN);
+        }
+
+        //Make sure we set the vertical buttons to visible in 3d mode
+        if (is3d) {
+            verticalButtonsLayout.setVisibility(View.VISIBLE);
+        }
 
         switch (inputMethod) {
             case SWIPE:
@@ -331,19 +368,6 @@ public class MainActivity extends AppCompatActivity {
             case BUTTONS:
                 //Initialize the button controller
                 buttonsLayout.setVisibility(View.VISIBLE);
-                if (is3d) {
-                    verticalButtonsLayout.setVisibility(View.VISIBLE);
-                }
-
-                if (buttonController == null) {
-                    buttonController = new SnakeButtonController();
-                    addControllerButton(buttonsLayout, Direction.NORTH);
-                    addControllerButton(buttonsLayout, Direction.SOUTH);
-                    addControllerButton(buttonsLayout, Direction.WEST);
-                    addControllerButton(buttonsLayout, Direction.EAST);
-                    addControllerButton(verticalButtonsLayout, Direction.UP);
-                    addControllerButton(verticalButtonsLayout, Direction.DOWN);
-                }
                 snakeController = buttonController;
                 break;
             case ACCELEROMETER:
@@ -363,6 +387,9 @@ public class MainActivity extends AppCompatActivity {
         }
         startFinishGestureListener.setGame(game);
 
+        if (is3d && inputMethod != InputMethod.BUTTONS) {
+            snakeController = new SnakeAlmost3DController(snakeController, buttonController);
+        }
         game.setSnakeController(snakeController);
     }
 

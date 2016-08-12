@@ -1,4 +1,4 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,6 +6,10 @@ import android.util.Log;
 import java.io.IOException;
 
 import nz.ac.canterbury.csse.a440.snakes.MinecraftControls;
+import nz.ac.canterbury.csse.a440.snakes.snake.MinecraftSubscriber;
+import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 
 /**
  * Created by wooll on 10-Aug-16.

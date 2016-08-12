@@ -1,9 +1,11 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 
 /**
  * Created by wooll on 29-Jul-16.
@@ -74,8 +76,8 @@ public class SnakeCompassController implements SnakeController, SensorEventListe
     }
 
     @Override
-    public void reset() {
-        direction = Direction.NORTH;
+    public void reset(Direction direction) {
+        this.direction = direction;
         acceleration = null;
         magnetic = null;
     }

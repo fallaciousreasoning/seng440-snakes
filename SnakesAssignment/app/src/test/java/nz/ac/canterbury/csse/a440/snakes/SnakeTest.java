@@ -14,24 +14,45 @@ import static org.junit.Assert.*;
  */
 public class SnakeTest {
     private Snake snake;
+    private Vector3 startPosition;
+    private int startLength;
 
     @Before
     public void setup() {
-        snake = new Snake(new Vector3(0, 0), Direction.EAST, 1, 3);
-
-        assertEquals(new Vector3(0, 0), snake.headPosition());
-        assertEquals(new Vector3(1, 0), snake.stepAmount());
-        assertEquals(3, snake.length());
+        startPosition = Vector3.Zero;
+        this.startLength = 3;
+        snake = new Snake(startPosition, Direction.EAST, 1, startLength);
     }
 
     @Test
-    public void testGetHead() {
+    public void testSetupHeadPosition() {
+        assertEquals(startPosition, snake.headPosition());
+    }
+
+    @Test
+    public void testSetupStepAmount() {
+        assertEquals(new Vector3(1, 0), snake.stepAmount());
+    }
+
+    @Test
+    public void testSetupLength() {
+
+        assertEquals(startLength, snake.length());
+    }
+
+    @Test
+    public void testGetHead1() {
         Vector3 expectedHead = snake.headPosition().add(snake.stepAmount());
 
         snake.step();
         assertEquals(expectedHead, snake.headPosition());
+    }
 
-        expectedHead = snake.headPosition().add(snake.stepAmount());
+    @Test
+    public void testGetHead2() {
+        Vector3 expectedHead = snake.headPosition().add(snake.stepAmount().mul(2));
+
+        snake.step();
         snake.grow();
         snake.step();
         assertEquals(expectedHead, snake.headPosition());
@@ -46,10 +67,7 @@ public class SnakeTest {
         snake.grow(grow);
 
         for (int i = 0; i < tests; ++i){
-            Vector3 expectedHead = snake.headPosition().add(snake.stepAmount());
-
             snake.step();
-            assertEquals(expectedHead, snake.headPosition());
 
             assertEquals(length + Math.min(i + 1, grow), snake.length());
         }

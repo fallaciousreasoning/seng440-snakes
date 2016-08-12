@@ -1,7 +1,9 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
 
 import android.view.View;
 import android.widget.Button;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 
 /**
  * A method of controlling the snake through buttons
@@ -30,7 +32,7 @@ public class SnakeButtonController implements SnakeController {
     }
 
     @Override
-    public void reset() {
-        direction = Direction.NORTH;
+    public void reset(Direction direction) {
+        this.direction = direction;
     }
 }

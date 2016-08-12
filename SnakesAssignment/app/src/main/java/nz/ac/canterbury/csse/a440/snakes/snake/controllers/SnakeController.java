@@ -1,4 +1,6 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 
 /**
  * An interface for controlling the snake.
@@ -14,6 +16,7 @@ public interface SnakeController {
 
     /**
      * Tells the controller to set its direction to the default
+     * @param direction The direction
      */
-    void reset();
+    void reset(Direction direction);
 }

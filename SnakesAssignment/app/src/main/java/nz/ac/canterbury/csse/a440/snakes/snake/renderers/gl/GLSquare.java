@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl;
 
 import android.opengl.GLES20;
 
@@ -21,6 +21,9 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeGLRenderer;
 
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.

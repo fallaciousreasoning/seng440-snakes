@@ -30,6 +30,7 @@ import android.widget.TextView;
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeDepthRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeScoreRenderer;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private SnakeGLView gameGLRenderer;
     private StartFinishRenderer startFinishRenderer;
     private SnakeScoreRenderer scoreRenderer;
+    private SnakeDepthRenderer snakeDepthRenderer;
     private SnakeMinecraftRenderer minecraftRenderer;
 
 
@@ -120,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         scoreRenderer = new SnakeScoreRenderer();
         scoreRenderer.setTextView(scoreText);
+
+        TextView depthText = (TextView)findViewById(R.id.depthText);
+        snakeDepthRenderer = new SnakeDepthRenderer();
+        snakeDepthRenderer.setTextView(depthText);
 
         TextView gameStatusText = (TextView) findViewById(R.id.gameStatusText);
         startFinishRenderer = new StartFinishRenderer(getString(R.string.gameStatusStart), getString(R.string.gameStatusReset));
@@ -182,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         //game.addRenderer(minecraftRenderer);
         game.addRenderer(scoreRenderer);
         game.addRenderer(startFinishRenderer);
+        game.addRenderer(snakeDepthRenderer);
 
         if (updater == null) {
             updater = new GameUpdater();

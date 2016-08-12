@@ -46,6 +46,6 @@ public class SnakeDepthRenderer implements Renderer {
         if (textView == null) return;
 
         //Set the text
-        textView.setText(String.format(formatString, game.getSnake().headPosition() + ""));
+        textView.setText(String.format(formatString, game.getSnake().headPosition().getZ() + ""));
     }
 }

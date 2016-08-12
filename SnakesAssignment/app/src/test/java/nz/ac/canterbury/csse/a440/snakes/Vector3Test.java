@@ -24,8 +24,18 @@ public class Vector3Test {
     }
 
     @Test
+    public void testMulFloat() {
+        assertEquals(new Vector3(1, 2,  4), first.mul(2));
+    }
+
+    @Test
     public void testMul() {
         assertEquals(new Vector3(0.5f, 0.5f, 4), first.mul(second));
+    }
+
+    @Test
+    public void testDivFloat() {
+        assertEquals(new Vector3(0.25f, 0.5f, 1), first.div(2));
     }
 
     @Test

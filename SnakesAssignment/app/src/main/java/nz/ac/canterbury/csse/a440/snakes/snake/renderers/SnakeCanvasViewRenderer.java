@@ -1,4 +1,4 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,6 +9,10 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import nz.ac.canterbury.csse.a440.snakes.R;
+import nz.ac.canterbury.csse.a440.snakes.snake.AABB;
+import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 
 /**
  * TODO: document your custom view class.

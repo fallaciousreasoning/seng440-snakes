@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeController;
+
 /**
  * A Game of Snake
  */

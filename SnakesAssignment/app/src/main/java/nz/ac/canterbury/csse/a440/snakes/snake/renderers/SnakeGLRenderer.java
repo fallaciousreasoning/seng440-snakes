@@ -1,4 +1,4 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -10,6 +10,14 @@ import java.util.List;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl.GLColor;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl.GLCube;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl.GLDrawable;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl.GLSquare;
+import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
+import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 
 /**
  * A renderer for the snake game implemented in opengl

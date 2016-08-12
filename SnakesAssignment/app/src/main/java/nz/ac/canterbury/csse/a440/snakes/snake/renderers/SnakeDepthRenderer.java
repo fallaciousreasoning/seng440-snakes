@@ -1,19 +1,21 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
- * Renders the food depth of the snake game to a text view
+ * Renders the depth of the snake to a text view
  */
-public class SnakeFoodDepthRenderer extends SnakeTextRenderer {
+public class SnakeDepthRenderer extends SnakeTextRenderer {
     /**
-     * The string we format with the food depth
+     * The string we format with the depth
      */
-    private String formatString = "Food Depth: %s";
+    private String formatString = "Depth: %s";
 
-    public SnakeFoodDepthRenderer() {
+    public SnakeDepthRenderer() {
         super.setTextGetter(new GetTextFromSnakeGame() {
             @Override
             public String getText(SnakeGame game) {
-                int depth = (game == null || game.getFood() == null) ? 0 : (int)game.getFood().getPosition().getZ();
+                int depth = (game == null || game.getSnake() == null) ? 0 : (int)game.getSnake().headPosition().getZ();
                 return String.format(formatString, depth);
             }
         });

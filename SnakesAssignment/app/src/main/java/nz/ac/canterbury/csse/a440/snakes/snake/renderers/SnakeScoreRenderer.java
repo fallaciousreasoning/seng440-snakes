@@ -1,6 +1,6 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
 
-import android.widget.TextView;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * Renders the score of a snake game to a text view

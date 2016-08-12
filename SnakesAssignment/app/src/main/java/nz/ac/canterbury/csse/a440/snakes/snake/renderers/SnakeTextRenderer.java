@@ -1,6 +1,9 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
 
 import android.widget.TextView;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * Renders some text relating to the snake game to a text view

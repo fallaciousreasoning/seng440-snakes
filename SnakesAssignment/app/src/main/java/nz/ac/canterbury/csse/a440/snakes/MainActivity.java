@@ -27,26 +27,24 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAlmost3DController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeDepthRenderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeFoodDepthRenderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeScoreRenderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeAccelerometerController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeButtonController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeCompassController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGLView;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGPSController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeAlmost3DController;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeDepthRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeFoodDepthRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeScoreRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeAccelerometerController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeButtonController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeCompassController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeGLView;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeGPSController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeMinecraftRenderer;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeSwipeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeMinecraftRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeSwipeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishGestureListener;
-import nz.ac.canterbury.csse.a440.snakes.snake.StartFinishRenderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.StartFinishRenderer;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] INITIAL_PERMS = {

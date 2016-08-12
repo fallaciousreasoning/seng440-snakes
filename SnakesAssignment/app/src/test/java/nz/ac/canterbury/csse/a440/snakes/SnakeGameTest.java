@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
-import nz.ac.canterbury.csse.a440.snakes.snake.SnakeController;
+import nz.ac.canterbury.csse.a440.snakes.snake.controllers.SnakeController;
 import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 

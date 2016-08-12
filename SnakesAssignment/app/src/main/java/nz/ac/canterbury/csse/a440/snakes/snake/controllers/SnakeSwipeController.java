@@ -1,7 +1,10 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * A simple listener for detecting swipe gestures

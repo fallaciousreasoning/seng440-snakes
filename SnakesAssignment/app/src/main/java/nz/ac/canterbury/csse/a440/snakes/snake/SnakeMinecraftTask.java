@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import java.io.IOException;
 
 import nz.ac.canterbury.csse.a440.snakes.MinecraftControls;
+import nz.ac.canterbury.csse.a440.snakes.snake.renderers.SnakeRendererState;
 
 /**
  * Created by wooll on 10-Aug-16.

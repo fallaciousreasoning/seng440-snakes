@@ -1,4 +1,4 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,6 +7,8 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
 import nz.ac.canterbury.csse.a440.snakes.R;
+import nz.ac.canterbury.csse.a440.snakes.snake.Renderer;
+import nz.ac.canterbury.csse.a440.snakes.snake.SnakeGame;
 
 /**
  * An open gl renderer for the snake game

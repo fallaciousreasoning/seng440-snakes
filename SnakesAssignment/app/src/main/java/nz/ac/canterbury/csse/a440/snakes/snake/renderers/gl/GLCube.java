@@ -1,6 +1,8 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.renderers.gl;
 
 import android.opengl.Matrix;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Vector3;
 
 /**
  * A cube for drawing in opengl

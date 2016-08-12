@@ -1,4 +1,6 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 
 /**
  * An interface for controlling the snake.

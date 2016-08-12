@@ -1,8 +1,10 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 
 /**
  * Created by wooll on 31-Jul-16.

@@ -1,8 +1,10 @@
-package nz.ac.canterbury.csse.a440.snakes.snake;
+package nz.ac.canterbury.csse.a440.snakes.snake.controllers;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 
 /**
  * A controller for the snake that makes use of accelerometer data

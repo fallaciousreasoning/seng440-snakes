@@ -1,10 +1,5 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
-
 /**
  * An enum for relating directions to vectors.
  * NORTH/SOUTH: Y axis
@@ -20,7 +15,13 @@ public enum Direction {
     DOWN(new Vector3(0, 0, 1));
 
     /**
+     * A vector representation of the direction
+     */
+    private Vector3 direction;
+
+    /**
      * Instantiates a new direction
+     *
      * @param direction The direction vector
      */
     Direction(Vector3 direction) {
@@ -28,12 +29,8 @@ public enum Direction {
     }
 
     /**
-     * A vector representation of the direction
-     */
-    private Vector3 direction;
-
-    /**
      * Gets the vector representing the direction
+     *
      * @return The direction vector
      */
     public Vector3 getDirection() {

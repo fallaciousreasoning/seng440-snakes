@@ -18,6 +18,7 @@ public class ScoreRenderer implements Renderer {
 
     /**
      * Sets the textview that this score renderer draws to
+     *
      * @param textView The text view to use
      */
     public void setTextView(TextView textView) {
@@ -26,13 +27,15 @@ public class ScoreRenderer implements Renderer {
 
     /**
      * Sets the format string we use to display the score
+     *
      * @param formatString The format string
      */
     public void setFormatString(String formatString) {
         int first = formatString.indexOf("%s");
         int last = formatString.indexOf("%s");
 
-        if (first == -1 || first != last) throw new RuntimeException("You should have exactly 1 format operator");
+        if (first == -1 || first != last)
+            throw new RuntimeException("You should have exactly 1 format operator");
 
         this.formatString = formatString;
     }

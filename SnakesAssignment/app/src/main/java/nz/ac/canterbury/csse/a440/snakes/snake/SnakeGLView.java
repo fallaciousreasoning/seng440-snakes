@@ -2,8 +2,6 @@ package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
@@ -54,6 +52,7 @@ public class SnakeGLView extends GLSurfaceView implements Renderer {
 
     /**
      * Sets whether the renderer should use 3D
+     *
      * @param use3D Whether the renderer should use 3D
      */
     public void setUse3D(boolean use3D) {

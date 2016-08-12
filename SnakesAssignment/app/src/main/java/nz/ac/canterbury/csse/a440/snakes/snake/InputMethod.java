@@ -13,6 +13,7 @@ public enum InputMethod {
 
     /**
      * Gets a InputMethod from a number
+     *
      * @param value The value
      * @return The input method
      */

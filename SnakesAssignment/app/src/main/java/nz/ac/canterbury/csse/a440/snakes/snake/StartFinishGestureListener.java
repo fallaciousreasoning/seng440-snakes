@@ -1,7 +1,6 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 
 /**
@@ -15,6 +14,7 @@ public class StartFinishGestureListener extends GestureDetector.SimpleOnGestureL
 
     /**
      * Sets the game
+     *
      * @param game The game
      */
     public void setGame(SnakeGame game) {

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -15,48 +13,44 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Exchanger;
 
 /**
  * Created by comqdhb on 17/07/2016.
  */
 public class InjectableSensorManager extends SensorManager {
 
-private static boolean useSystem=true;
-
+    private static boolean useSystem = true;
+    private static InjectableSensorManager instance = null;
     private final SensorManager sm;
-
-    private final Map<SensorListener,Set<Integer>> listeners;
-    private final Map<SensorEventListener,Set<Sensor>> listenersE;
+    private final Map<SensorListener, Set<Integer>> listeners;
+    private final Map<SensorEventListener, Set<Sensor>> listenersE;
     private final Context context;
     private final Handler handler;
-    private  RemoteListener remoteListener;
+    private final Map<TriggerEventListener, Set<Sensor>> triggers;
+    private RemoteListener remoteListener;
 
-
-    private static InjectableSensorManager instance=null;
-
-    public static InjectableSensorManager getInstance(Application a) {
-        if (instance==null){
-            instance=new InjectableSensorManager(a);
-        }
-        return instance;
-    }
     /**
      * {@hide}
      */
     private InjectableSensorManager(Context c) {
-        context=c;
-        handler=new Handler();
-        sm=(SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
-        listeners=new HashMap<>();
-        listenersE=new HashMap<>();
-        triggers=new HashMap<>();
+        context = c;
+        handler = new Handler();
+        sm = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
+        listeners = new HashMap<>();
+        listenersE = new HashMap<>();
+        triggers = new HashMap<>();
+    }
+
+    public static InjectableSensorManager getInstance(Application a) {
+        if (instance == null) {
+            instance = new InjectableSensorManager(a);
+        }
+        return instance;
     }
 
     public static boolean isUseSystem() {
@@ -67,11 +61,11 @@ private static boolean useSystem=true;
         InjectableSensorManager.useSystem = useSystem;
     }
 
-    public boolean createRemoteListener(String host,int port){
-        boolean done=false;
+    public boolean createRemoteListener(String host, int port) {
+        boolean done = false;
         try {
-            remoteListener=new RemoteListener(host,port,this);
-            done=true;
+            remoteListener = new RemoteListener(host, port, this);
+            done = true;
             System.out.println("New RemoteListener created");
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,20 +89,13 @@ private static boolean useSystem=true;
         return sm.getDefaultSensor(type);
     }
 
+
+    ////////////////
+
     @Override
     public Sensor getDefaultSensor(int type, boolean wakeUp) {
         return sm.getDefaultSensor(type, wakeUp);
     }
-
-
-
-
-
-
-    ////////////////
-
-
-
 
     @Override
     public boolean registerListener(SensorListener listener, int sensors) {
@@ -120,11 +107,11 @@ private static boolean useSystem=true;
 
     }
 
-    private boolean regList(SensorListener listener, int sensors){
+    private boolean regList(SensorListener listener, int sensors) {
 
-        Set<Integer> s=listeners.get(listener);
-        if (s==null){
-            s=new HashSet<>();
+        Set<Integer> s = listeners.get(listener);
+        if (s == null) {
+            s = new HashSet<>();
         }
         s.add(sensors);
         return true;
@@ -132,7 +119,9 @@ private static boolean useSystem=true;
 
     @Override
     public boolean registerListener(SensorListener listener, int sensors, int rate) {
-        if (!isUseSystem()) { return regList(listener,sensors);}
+        if (!isUseSystem()) {
+            return regList(listener, sensors);
+        }
         return sm.registerListener(listener, sensors, rate);
     }
 
@@ -145,12 +134,12 @@ private static boolean useSystem=true;
     @Override
     public void unregisterListener(SensorListener listener, int sensors) {
         sm.unregisterListener(listener, sensors);
-        removeSensor(listener,sensors);
+        removeSensor(listener, sensors);
     }
 
-    private boolean removeSensor(SensorListener listener, int sensors){
-        Set<Integer> s=listeners.get(listener);
-        if (s!=null){
+    private boolean removeSensor(SensorListener listener, int sensors) {
+        Set<Integer> s = listeners.get(listener);
+        if (s != null) {
             s.remove(sensors);
         }
         return true;
@@ -161,13 +150,13 @@ private static boolean useSystem=true;
         if (isUseSystem()) {
             sm.unregisterListener(listener, sensor);
         }
-            removeSensorE(listener, sensor.getType());
+        removeSensorE(listener, sensor.getType());
 
     }
 
-    private void removeSensorE(SensorEventListener listener, int sensors){
-        Set<Sensor> s=listenersE.get(listener);
-        if (s!=null){
+    private void removeSensorE(SensorEventListener listener, int sensors) {
+        Set<Sensor> s = listenersE.get(listener);
+        if (s != null) {
             s.remove(sensors);
         }
     }
@@ -178,37 +167,45 @@ private static boolean useSystem=true;
         listenersE.remove(listener);
     }
 
-    private boolean regListE(SensorEventListener listener, Sensor sensor){
-        Set<Sensor> s=listenersE.get(listener);
-        if (s==null){
-            s=new HashSet<>();
+    private boolean regListE(SensorEventListener listener, Sensor sensor) {
+        Set<Sensor> s = listenersE.get(listener);
+        if (s == null) {
+            s = new HashSet<>();
         }
         s.add(sensor);
-        listenersE.put(listener,s);
+        listenersE.put(listener, s);
         return true;
     }
 
     @Override
     public boolean registerListener(SensorEventListener listener, Sensor sensor, int samplingPeriodUs) {
-        if (!isUseSystem()) { return regListE(listener,sensor);}
+        if (!isUseSystem()) {
+            return regListE(listener, sensor);
+        }
         return sm.registerListener(listener, sensor, samplingPeriodUs);
     }
 
     @Override
     public boolean registerListener(SensorEventListener listener, Sensor sensor, int samplingPeriodUs, int maxReportLatencyUs) {
-        if (!isUseSystem()) { return regListE(listener, sensor);}
+        if (!isUseSystem()) {
+            return regListE(listener, sensor);
+        }
         return sm.registerListener(listener, sensor, samplingPeriodUs, maxReportLatencyUs);
     }
 
     @Override
     public boolean registerListener(SensorEventListener listener, Sensor sensor, int samplingPeriodUs, Handler handler) {
-        if (!isUseSystem()) { return regListE(listener,sensor);}
+        if (!isUseSystem()) {
+            return regListE(listener, sensor);
+        }
         return sm.registerListener(listener, sensor, samplingPeriodUs, handler);
     }
 
     @Override
     public boolean registerListener(SensorEventListener listener, Sensor sensor, int samplingPeriodUs, int maxReportLatencyUs, Handler handler) {
-        if (!isUseSystem()) { return regListE(listener, sensor);}
+        if (!isUseSystem()) {
+            return regListE(listener, sensor);
+        }
         return sm.registerListener(listener, sensor, samplingPeriodUs, maxReportLatencyUs, handler);
     }
 
@@ -217,65 +214,48 @@ private static boolean useSystem=true;
         return sm.flush(listener);
     }
 
-
-    private final Map<TriggerEventListener,Set<Sensor>> triggers;
-
     @Override
     public boolean requestTriggerSensor(TriggerEventListener listener, Sensor sensor) {
-        Set<Sensor> s= triggers.get(listener);
-        if (s==null){
-            s=new HashSet<>();
+        Set<Sensor> s = triggers.get(listener);
+        if (s == null) {
+            s = new HashSet<>();
         }
         s.add(sensor);
-        triggers.put(listener,s);
+        triggers.put(listener, s);
         return sm.requestTriggerSensor(listener, sensor);
     }
 
     @Override
     public boolean cancelTriggerSensor(TriggerEventListener listener, Sensor sensor) {
-        Set<Sensor> s= triggers.get(listener);
-        if (s==null){
-            s=new HashSet<>();
+        Set<Sensor> s = triggers.get(listener);
+        if (s == null) {
+            s = new HashSet<>();
         }
         s.remove(sensor);
-        triggers.put(listener,s);
+        triggers.put(listener, s);
         return sm.cancelTriggerSensor(listener, sensor);
     }
 
 
-
-
-
-
-
-
-    public  void raiseSensorEvent(final MySensorEvent lr) {
-        Runnable r=new Runnable(){
-          public void run(){
-              for (SensorEventListener l:listenersE.keySet()){
-                  Set<Sensor> s=listenersE.get(l);
-                  if (s.contains(lr.sensor) ){
-                      Log.d("SENSOR_DATA", lr.toString());
-                      l.onSensorChanged(lr);
-                  }
-              }
-          }
+    public void raiseSensorEvent(final MySensorEvent lr) {
+        Runnable r = new Runnable() {
+            public void run() {
+                for (SensorEventListener l : listenersE.keySet()) {
+                    Set<Sensor> s = listenersE.get(l);
+                    if (s.contains(lr.sensor)) {
+                        Log.d("SENSOR_DATA", lr.toString());
+                        l.onSensorChanged(lr);
+                    }
+                }
+            }
         };
         handler.post(r);
     }
 
 
-
-
-
-
-
-
-
-
     public Sensor getSensor(int i) {
-        for (Sensor s:sm.getSensorList(Sensor.TYPE_ALL)){
-            if (s.getType()==i){
+        for (Sensor s : sm.getSensorList(Sensor.TYPE_ALL)) {
+            if (s.getType() == i) {
                 return s;
             }
         }
@@ -305,7 +285,7 @@ private static boolean useSystem=true;
 
             //TODO make the json actually have a list of sensors on the device
             remoteListener.sendString(json.toString());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -315,21 +295,22 @@ private static boolean useSystem=true;
         private final String host;
         private final InjectableSensorManager ism;
         private final int port;
+        public EventSender es = null;
         private EventReceiver er = null;
-        public  EventSender es=null;
 
-        RemoteListener (String host,int port,InjectableSensorManager ism)  {
-            this.host=host;
-            this.ism=ism;
-            this.port=port;
-            this.start();}
+        RemoteListener(String host, int port, InjectableSensorManager ism) {
+            this.host = host;
+            this.ism = ism;
+            this.port = port;
+            this.start();
+        }
 
-        public void run(){
+        public void run() {
             Socket s;
             try {
-                s= new Socket(host,port);
-                er = new EventReceiver(s.getInputStream(),ism);
-                es= new EventSender(s.getOutputStream());
+                s = new Socket(host, port);
+                er = new EventReceiver(s.getInputStream(), ism);
+                es = new EventSender(s.getOutputStream());
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -344,18 +325,19 @@ private static boolean useSystem=true;
 
         private class EventReceiver extends Thread {
             private final ObjectInputStream ois;
-            private  InjectableSensorManager ism;
+            private InjectableSensorManager ism;
 
             public EventReceiver(InputStream inputStream, InjectableSensorManager ism) throws IOException {
                 this.ism = ism;
                 ois = new ObjectInputStream(inputStream);
                 this.start();
             }
+
             public void run() {
                 String data;
                 try {
-                    while ( (data=(String) ois.readObject())!=null){
-                        DataHandlerFactory.respondToData(data,ism);
+                    while ((data = (String) ois.readObject()) != null) {
+                        DataHandlerFactory.respondToData(data, ism);
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -366,18 +348,18 @@ private static boolean useSystem=true;
         }
 
         public class EventSender {
-            private ObjectOutputStream ous=null;
+            private ObjectOutputStream ous = null;
 
             public EventSender(OutputStream outputStream) throws IOException, ClassNotFoundException {
                 try {
-                    ous= new ObjectOutputStream(outputStream);
+                    ous = new ObjectOutputStream(outputStream);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
-            public void sendData(final String data){
-                Runnable r=new Runnable(){
+            public void sendData(final String data) {
+                Runnable r = new Runnable() {
                     @Override
                     public void run() {
                         try {

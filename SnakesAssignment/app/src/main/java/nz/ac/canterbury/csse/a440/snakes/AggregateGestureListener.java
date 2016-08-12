@@ -14,6 +14,7 @@ public class AggregateGestureListener implements GestureDetector.OnGestureListen
 
     /**
      * Adds a listener to the gesture listener
+     *
      * @param listener The listener
      */
     public void addGestureListener(GestureDetector.OnGestureListener listener) {
@@ -22,7 +23,7 @@ public class AggregateGestureListener implements GestureDetector.OnGestureListen
 
     @Override
     public boolean onDown(MotionEvent e) {
-        for (GestureDetector.OnGestureListener listener: listeners) {
+        for (GestureDetector.OnGestureListener listener : listeners) {
             if (listener.onDown(e)) return true;
         }
         return false;
@@ -30,14 +31,14 @@ public class AggregateGestureListener implements GestureDetector.OnGestureListen
 
     @Override
     public void onShowPress(MotionEvent e) {
-        for (GestureDetector.OnGestureListener listener: listeners) {
+        for (GestureDetector.OnGestureListener listener : listeners) {
             listener.onShowPress(e);
         }
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        for (GestureDetector.OnGestureListener listener: listeners) {
+        for (GestureDetector.OnGestureListener listener : listeners) {
             if (listener.onSingleTapUp(e)) return true;
         }
         return false;
@@ -45,7 +46,7 @@ public class AggregateGestureListener implements GestureDetector.OnGestureListen
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        for (GestureDetector.OnGestureListener listener: listeners) {
+        for (GestureDetector.OnGestureListener listener : listeners) {
             if (listener.onScroll(e1, e2, distanceX, distanceY)) return true;
         }
         return false;
@@ -53,14 +54,14 @@ public class AggregateGestureListener implements GestureDetector.OnGestureListen
 
     @Override
     public void onLongPress(MotionEvent e) {
-        for (GestureDetector.OnGestureListener listener: listeners) {
+        for (GestureDetector.OnGestureListener listener : listeners) {
             listener.onLongPress(e);
         }
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        for (GestureDetector.OnGestureListener listener: listeners) {
+        for (GestureDetector.OnGestureListener listener : listeners) {
             if (listener.onFling(e1, e2, velocityX, velocityY)) return true;
         }
         return false;

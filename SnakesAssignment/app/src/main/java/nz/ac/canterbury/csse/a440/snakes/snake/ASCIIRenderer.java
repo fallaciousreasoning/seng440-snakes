@@ -8,11 +8,11 @@ import java.io.PrintStream;
 public class ASCIIRenderer implements Renderer {
     private PrintStream output;
 
-    private String snakeChar= "*";
+    private String snakeChar = "*";
     private String columnSeparator = "|";
     private String rowSeparator = "\n";
 
-    public ASCIIRenderer(){
+    public ASCIIRenderer() {
         this(System.out);
     }
 
@@ -24,12 +24,12 @@ public class ASCIIRenderer implements Renderer {
     public void render(SnakeGame game) {
         AABB bounds = game.getBounds();
 
-        int width = (int)bounds.getWidth();
-        int height = (int)bounds.getHeight();
+        int width = (int) bounds.getWidth();
+        int height = (int) bounds.getHeight();
 
         char[][] board = new char[height][width];
         for (int x = 0; x < width; ++x)
-            for (int y = 0; y < height; ++y){
+            for (int y = 0; y < height; ++y) {
                 board[y][x] = ' ';
             }
 

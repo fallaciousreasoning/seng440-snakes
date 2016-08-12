@@ -5,10 +5,10 @@ package nz.ac.canterbury.csse.a440.snakes.snake;
  */
 public interface GLDrawable {
     /**
-            * Encapsulates the OpenGL ES instructions for drawing this shape.
-    *
-            * @param mvpMatrix - The Model View Project matrix in which to draw
-    * this shape.
-    */
+     * Encapsulates the OpenGL ES instructions for drawing this shape.
+     *
+     * @param mvpMatrix - The Model View Project matrix in which to draw
+     *                  this shape.
+     */
     void draw(float[] mvpMatrix);
 }

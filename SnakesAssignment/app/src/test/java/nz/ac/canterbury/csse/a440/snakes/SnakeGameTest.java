@@ -31,8 +31,8 @@ public class SnakeGameTest {
             }
 
             @Override
-            public void reset() {
-                direction = Direction.NORTH;
+            public void reset(Direction d) {
+                direction = d;
             }
         };
         snakeGame.setSnakeController(controller);

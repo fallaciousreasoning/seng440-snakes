@@ -27,6 +27,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import nz.ac.canterbury.csse.a440.snakes.snake.Direction;
 import nz.ac.canterbury.csse.a440.snakes.snake.GameUpdater;
 import nz.ac.canterbury.csse.a440.snakes.snake.InputMethod;
@@ -57,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOCATION_COARSE_REQUEST = INITIAL_REQUEST + 2;
     private static final int INTERNET_REQUEST = INITIAL_REQUEST + 3;
     SnakeGame game;
+
+    Map<Direction, Button> controlButtons = new HashMap<>();
+    InputMethod actuallyUse = null;
+
     GameUpdater updater;
     //Indicates whether the game should be in 3D
     private boolean is3d;
@@ -347,10 +357,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    private void setupControls() {
+    void setupControls() {
         InputMethod inputMethod = InputMethod.valueOf(PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString("input_method", "SWIPE"));
+
+        if (this.actuallyUse != null)
+            inputMethod = actuallyUse;
 
         //Only swipe and buttons support 3D
         if (is3d && inputMethod != InputMethod.SWIPE){
@@ -428,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
      * @param direction The direction for the button
      */
     private void addControllerButton(LinearLayout to, Direction direction) {
-        Button button = new Button(this);
+        final Button button = new Button(this);
 
         int resourceId = android.R.style.TextAppearance_Small;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -444,5 +457,6 @@ public class MainActivity extends AppCompatActivity {
         to.addView(button);
 
         buttonController.bindButton(button, direction);
+        controlButtons.put(direction, button);
     }
 }

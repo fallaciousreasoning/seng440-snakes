@@ -72,6 +72,9 @@ android {
         targetCompatibility 1.7
         sourceCompatibility 1.7
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {

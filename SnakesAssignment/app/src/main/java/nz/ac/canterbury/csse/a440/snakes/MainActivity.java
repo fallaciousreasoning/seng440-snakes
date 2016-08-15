@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
+        game.setStarted(false);
         Util.writeGame(this, game);
     }
 
@@ -300,6 +301,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         // unregister listener
         super.onPause();
+
+        //Cancel the timer
+        updater.setUpdateRate(Integer.MAX_VALUE);
+
         sensorManager.unregisterListener(accelerometerController);
         sensorManager.unregisterListener(compassController);
         try {

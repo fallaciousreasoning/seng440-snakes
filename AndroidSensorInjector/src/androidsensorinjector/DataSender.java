@@ -44,6 +44,7 @@ public class DataSender {
                 while (true) {
                     try {
                         JsonSerializable event = sendQueue.pollFirst(50, TimeUnit.MILLISECONDS);
+                        if (event == null) continue;
                         oos.writeObject(event.json());
                         oos.flush();
                     }

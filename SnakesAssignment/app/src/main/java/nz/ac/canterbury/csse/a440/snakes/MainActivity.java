@@ -285,7 +285,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the update rate
         String speedString = PreferenceManager.getDefaultSharedPreferences(this).getString("game_speed", "1");
-        updater.setUpdateRate((int) (1000 / Float.parseFloat(speedString)));
+        try {
+            updater.setUpdateRate((int) (1000 / Float.parseFloat(speedString)));
+        } catch (Exception e) {
+            //We'll get here if the user entered something dumb like foo
+            //default to 1 second
+            updater.setUpdateRate(1000);
+        }
 
         gameGLRenderer.onResume();
     }

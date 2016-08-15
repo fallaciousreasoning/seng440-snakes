@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             game = new SnakeGame(20, 30, is3d ? 20 : 1, 3);
         }
         game.addRenderer(gameGLRenderer);
-        //game.addRenderer(minecraftRenderer);
+        game.addRenderer(minecraftRenderer);
         game.addRenderer(scoreRenderer);
         game.addRenderer(startFinishRenderer);
         game.addRenderer(snakeDepthRenderer);
@@ -218,6 +218,15 @@ public class MainActivity extends AppCompatActivity {
             gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
         }
 
+        if (gpsController == null) {
+            try {
+                LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+                Location location = locationManager.getLastKnownLocation(provider.getName());
+                gpsController = new SnakeGPSController(location);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

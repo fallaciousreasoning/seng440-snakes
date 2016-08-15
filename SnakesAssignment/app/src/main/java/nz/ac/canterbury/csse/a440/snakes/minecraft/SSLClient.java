@@ -6,61 +6,102 @@
 package nz.ac.canterbury.csse.a440.snakes.minecraft;
 
 import android.content.Context;
+import android.content.res.Resources;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
+import java.util.Enumeration;
 
-import javax.net.SocketFactory;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLHandshakeException;
-import javax.net.ssl.SSLSession;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
+
+import nz.ac.canterbury.csse.a440.snakes.R;
 
 /**
- * @author comqdhb
+ * @author pi
  */
-public abstract class SSLClient {
+public class SSLClient {
 
-    protected static final String host = "127.0.0.1";
-    protected static final int port = 25555;
-    protected static final int i = 1;
-    protected SocketFactory socketFactory;
+    private static final String host = "csse-minecraft2.canterbury.ac.nz";
+    private static final int port = 25555;
+    private SSLSocketFactory socketFactory;
 
     public SSLClient(Context applicationContext, char[] pwd) {
         setupSSLKeysAndTrusts(applicationContext, pwd);
     }
 
-    public void doit(Socket socket) throws IOException {
-        socket.getOutputStream().write("hello\r\n".getBytes());
-        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        String line = br.readLine();
-        System.out.println("<" + line);
+    protected void setupSSLKeysAndTrusts(Context applicationContext, char[] pwd) {
+        try {
+
+
+            // Create a memory KeyStore containing our trusted CAs
+            //String keyStoreType = KeyStore.getDefaultType();
+
+            Resources resources = applicationContext.getResources();
+
+            KeyStore systemKeyStore = KeyStore.getInstance("AndroidKeyStore");
+
+            systemKeyStore.load(null);
+
+            KeyStore keyStore = KeyStore.getInstance("BKS");
+            for (int i : new int[] {R.raw.clientkeystore, R.raw.clienttrusts}) {
+                keyStore.load(resources.openRawResource(i), pwd);//nb creates a new one from the resource
+
+                Enumeration<String> la = keyStore.aliases();
+                while (la.hasMoreElements()) {
+                    String alias = la.nextElement();
+                    System.out.println(alias);
+
+
+                    if (keyStore.isKeyEntry(alias)) {
+                        PrivateKey key = (PrivateKey) keyStore.getKey(alias, pwd);
+                        Certificate[] certs = keyStore.getCertificateChain(alias);
+                        systemKeyStore.setKeyEntry(alias, key, null, certs);
+                    }
+                    if (keyStore.isCertificateEntry(alias)) {
+                        Certificate cert = keyStore.getCertificate(alias);
+                        systemKeyStore.setCertificateEntry(alias, cert);
+                    }
+
+
+                }
+            }
+
+
+            // Create a TrustManager that trusts the CAs in our systemKeyStore
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(systemKeyStore);
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+
+            kmf.init(systemKeyStore, null);
+
+            // Create an SSLContext that uses our kmf and TrustManager
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+            socketFactory = context.getSocketFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //System.exit(1);// may be a bit harsh
+        }
     }
 
-    public Socket getSocket(String host, int port) throws Exception {
-        SSLSocket sslSocket = null;
-        sslSocket = (SSLSocket) socketFactory.createSocket(host, port);
-
-        HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
-        SSLSession socketSession = sslSocket.getSession();
-//if (!hv.verify(host, s)){err}
-        String name = socketSession.getPeerPrincipal().getName();
-        String cn = name.split(",")[0].split("=")[1];
-        System.out.println("server cn=" + cn);
-        if (!host.equals(cn) && !"127.0.0.1".equals(host)) {
-            throw new SSLHandshakeException("Expected " + host + ", "
-                    + "found " + cn);
+    public SSLSocket getSocket() {
+        try {
+            SSLSocket sslSocket = (SSLSocket) socketFactory.createSocket(host, port);
+            sslSocket.setTcpNoDelay(true);
+            sslSocket.setKeepAlive(true);
+            sslSocket.setTrafficClass(0x10);
+            return sslSocket;
+        } catch (IOException e) {
+            throw new RuntimeException("Well that failed");
         }
-
-        if (!host.equals(socketSession.getPeerHost())) {
-            throw new SSLHandshakeException("Expected " + host + ", "
-                    + "found " + cn);
-        }
-        return sslSocket;
     }
-
-    protected abstract void setupSSLKeysAndTrusts(Context applicationContext, char[] pwd);
 }

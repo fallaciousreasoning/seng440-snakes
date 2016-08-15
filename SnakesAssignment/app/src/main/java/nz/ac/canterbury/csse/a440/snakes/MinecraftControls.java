@@ -83,6 +83,11 @@ public class MinecraftControls implements Runnable {
                     e.printStackTrace();
                 }
             }
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -94,13 +99,6 @@ public class MinecraftControls implements Runnable {
 
     public void close() {
         stop = true;
-        try {
-            writer.close();
-            reader.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void writeBlocks(int x, int y, int z, int x2, int y2, int z2, BLOCKTYPE type) throws IOException {
@@ -155,6 +153,8 @@ public class MinecraftControls implements Runnable {
                     writeToSocket(messageQueue.poll());
                 }
             }
+            writer.close();
+            socket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

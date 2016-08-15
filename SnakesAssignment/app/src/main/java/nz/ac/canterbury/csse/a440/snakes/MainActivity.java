@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private SnakeDepthRenderer snakeDepthRenderer;
     private SnakeFoodDepthRenderer snakeFoodDepthRenderer;
     private SnakeMinecraftRenderer minecraftRenderer;
+    private boolean gpsGranted = false;
 
 
     @Override
@@ -106,12 +107,20 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
             }
+            else {
+                gpsGranted = true;
+            }
+        }
+        else {
+            gpsGranted = true;
         }
 
         try {
-            LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
-            Location location = locationManager.getLastKnownLocation(provider.getName());
-            gpsController = new SnakeGPSController(location);
+            if (gpsGranted) {
+                LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+                Location location = locationManager.getLastKnownLocation(provider.getName());
+                gpsController = new SnakeGPSController(location);
+            }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -144,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
         gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
     }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -158,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             case LOCATION_COARSE_REQUEST:
                 break;
             case INITIAL_REQUEST:
-                break;
+                gpsGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
     }
 
@@ -207,27 +218,6 @@ public class MainActivity extends AppCompatActivity {
         if (updater == null) {
             updater = new GameUpdater();
         }
-
-        if (gestureListener == null) {
-            gestureListener = new AggregateGestureListener();
-            StartFinishGestureListener startFinishGestureListener = new StartFinishGestureListener();
-            startFinishGestureListener.setGame(game);
-            gestureListener.addGestureListener(startFinishGestureListener);
-        }
-        if (gestureDetector == null) {
-            gestureDetector = new GestureDetectorCompat(getBaseContext(), gestureListener);
-        }
-
-        if (gpsController == null) {
-            try {
-                LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
-                Location location = locationManager.getLastKnownLocation(provider.getName());
-                gpsController = new SnakeGPSController(location);
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
     @Override
@@ -275,10 +265,22 @@ public class MainActivity extends AppCompatActivity {
                 sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
+        if (gpsController == null && gpsGranted) {
+            try {
+                LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+                Location location = locationManager.getLastKnownLocation(provider.getName());
+                gpsController = new SnakeGPSController(location);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+
         //Setup the controls
         setupControls();
         try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, (float) 0.1, gpsController);
+            if (gpsGranted) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, (float) 0.1, gpsController);
+            }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -308,7 +310,9 @@ public class MainActivity extends AppCompatActivity {
         sensorManager.unregisterListener(accelerometerController);
         sensorManager.unregisterListener(compassController);
         try {
-            locationManager.removeUpdates(gpsController);
+            if (gpsGranted) {
+                locationManager.removeUpdates(gpsController);
+            }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -397,7 +401,10 @@ public class MainActivity extends AppCompatActivity {
                 snakeController = compassController;
                 break;
             case GPS:
-                snakeController = gpsController;
+                if (gpsGranted) {
+                    snakeController = gpsController;
+                }
+                snakeController = swipeController;
                 break;
         }
 
@@ -405,6 +412,7 @@ public class MainActivity extends AppCompatActivity {
             startFinishGestureListener = new StartFinishGestureListener();
             gestureListener.addGestureListener(startFinishGestureListener);
         }
+
         startFinishGestureListener.setGame(game);
 
         if (is3d && inputMethod != InputMethod.BUTTONS) {

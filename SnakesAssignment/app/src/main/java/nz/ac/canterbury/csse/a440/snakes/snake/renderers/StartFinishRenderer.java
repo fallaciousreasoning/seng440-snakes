@@ -39,7 +39,7 @@ public class StartFinishRenderer implements Renderer {
     public void render(SnakeGame game) {
         if (textView == null) return;
 
-        if (!game.started()) textView.setText(startText);
+        if (!game.isStarted()) textView.setText(startText);
         else if (game.finished()) textView.setText(finishText);
         else textView.setText("");
     }

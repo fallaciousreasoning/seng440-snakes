@@ -25,7 +25,7 @@ public class StartFinishGestureListener extends GestureDetector.SimpleOnGestureL
     public boolean onSingleTapUp(MotionEvent e) {
         if (game == null) return true;
 
-        if (!game.started())
+        if (!game.isStarted())
             game.start();
         if (game.finished())
             game.reset();

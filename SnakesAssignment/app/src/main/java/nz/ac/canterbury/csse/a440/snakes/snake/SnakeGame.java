@@ -48,9 +48,10 @@ public class SnakeGame {
      */
     private boolean hitSelf;
     /**
-     * Indicates whether the snake game has started
+     * Indicates whether the snake game has isStarted
      */
     private boolean started;
+
     /**
      * The food the snake is currently trying to eat
      */
@@ -76,7 +77,7 @@ public class SnakeGame {
      */
     public void step() {
         //If we've finished, we shouldn't be attempting to step
-        if (finished() || !started()) {
+        if (finished() || !isStarted()) {
             return;
         }
 
@@ -226,12 +227,20 @@ public class SnakeGame {
     }
 
     /**
-     * Indicates whether the game has been started
+     * Indicates whether the game has been Started
      *
-     * @return Whether the game has been started
+     * @return Whether the game has been Started
      */
-    public boolean started() {
+    public boolean isStarted() {
         return started;
+    }
+
+    /**
+     * Sets whether the game has been started.
+     * @param started Whether the game has been started
+     */
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
     /**
@@ -240,7 +249,7 @@ public class SnakeGame {
      * @return The score
      */
     public int score() {
-        //The score is the length of the snake minus however long we were when we started
+        //The score is the length of the snake minus however long we were when we isStarted
         return getSnake().length() - startingLength();
     }
 

@@ -55,7 +55,7 @@ public class SnakeGameTest {
 
     @Test
     public void testSetupNotStarted() {
-        assertFalse(snakeGame.started());
+        assertFalse(snakeGame.isStarted());
     }
 
     @Test

@@ -288,14 +288,4 @@ public class SnakeGame {
     public void setSnakeController(SnakeController snakeController) {
         this.snakeController = snakeController;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return 1;
-    }
 }

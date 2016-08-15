@@ -1,8 +1,12 @@
 package nz.ac.canterbury.csse.a440.snakes.snake;
 
 import java.util.Collections;
+import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * A class representing a snake in the game
@@ -16,7 +20,7 @@ public class Snake {
     /**
      * The positions making up a snake
      */
-    private LinkedList<Vector3> positions = new LinkedList<>();
+    private ConcurrentLinkedDeque<Vector3> positions = new ConcurrentLinkedDeque<>();
 
     /**
      * The direction the snake is heading in
@@ -169,8 +173,8 @@ public class Snake {
      *
      * @return The positions
      */
-    public List<Vector3> getPositions() {
-        return Collections.unmodifiableList(positions);
+    public Deque<Vector3> getPositions() {
+        return positions;
     }
 
     /**
@@ -192,7 +196,11 @@ public class Snake {
      */
     public boolean isBackwards(Direction direction) {
         //The snake is going backwards if our new next position would be the second block of the snake
-        return nextPosition(direction).equals(positions.get(1));
+        Iterator<Vector3> i = positions.iterator();
+        Vector3 head = i.next();
+        assert head.equals(headPosition());
+
+        return nextPosition(direction).equals(i.next());
     }
 
     /**
